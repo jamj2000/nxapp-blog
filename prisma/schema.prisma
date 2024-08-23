@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String?   @unique
+  password      String?
+  emailVerified DateTime?
+  image         String?
+  role          String?   @default("USER")
+  accounts      Account[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Posts {
+  id         Int        @id @default(autoincrement())
+  author     String
+  title      String
+  image      String
+  post       String
+  created    DateTime   @default(now())
+  modified   DateTime   @updatedAt
+  is_draft   Boolean    @default(true)
+  slug       String     @unique
+  views      Int?       @default(0)
+  categories Category[] //@relation("CategoryToPosts")
+}
+
+model Category {
+  id    Int     @id @default(autoincrement())
+  name  String  @unique
+  slug  String  @unique
+  posts Posts[] // @relation("CategoryToPosts")
+}
+
+
+
+
+

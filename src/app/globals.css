@@ -1,0 +1,338 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+:root {
+  --header-height: 40px;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+
+header {
+  padding: 0 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: var(--header-height);
+  background-color: gainsboro;
+}
+
+
+h1 { 
+  font-size: 2.6rem;
+}
+
+h1, h2 {
+  margin-top: 50px;
+}
+
+a {
+  text-decoration: none; 
+  font-weight: 700;
+}
+
+a:hover {
+  text-shadow: 0 0 1px black;
+}
+
+.info {
+  border-radius: 4px;
+  padding: 15px;
+  height: 3rem;
+  font-size: .8rem; 
+  margin-bottom: 10px;
+}
+
+.success::before {
+  content: '✅ '
+}
+
+.success { 
+  background-color: rgb(227, 250, 215);
+}
+
+
+.error::before {
+  content: '❌ ';
+}
+
+.error {
+  background-color: rgb(250, 224, 215);  
+}
+
+
+section.auth {
+  height: calc( 100vh - var(--header-height));
+  /* border: solid 1px darkgray; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+div.form {
+  /* height: calc( 100vh - var(--header-height) ); */
+  display: grid;
+  place-content: center;
+}
+
+div.form h1 {
+  text-align: center;
+}
+
+form.oauth, form.credentials {
+  width: 300px;
+  border: solid 1px lightgray;
+  background-color:rgb(245, 249, 255);
+  /* border-radius: 10px; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 40px;
+}
+
+form.credentials div {
+  display: grid;
+  gap: 10px;
+}
+
+form input[type=text] {
+  width: 100%;
+  padding: 10px;
+}
+
+form button {
+  padding: 10px;
+  font-size: inherit;
+  background-color: whitesmoke;
+  border-radius: 5px;
+  border: solid 1px lightgray;
+  margin: 1px;
+}
+
+form button:hover {
+  background-color: white;
+  outline: solid 1px gray;
+}
+
+
+fieldset{
+  text-align: left;
+  padding-block: 20px;
+
+}
+
+nav button {
+  border: none;
+  font-size: inherit;
+  font-weight: 700;
+  background-color: transparent;
+}
+
+nav button:hover {
+    color:blue;
+    text-shadow: 0 0 1px rgb(0, 0, 0)
+}
+
+.social-button {
+  font-size: inherit;
+  background-color: whitesmoke;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 16px;
+  border-radius: 5px;
+  border: solid 1px lightgray;
+  margin: 1px;
+}
+
+.social-button:hover {
+  background-color: white;
+  outline: solid 1px gray;
+}
+
+.social-button:active {
+  outline: solid 2px black;
+}
+
+input[type=color] {
+  display: none;
+  margin: 0;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  translate: 0 -6px
+}
+
+input[type=color]:hover {
+  translate: -1px -7px
+}
+
+/*  Estilos de la barra de menús del editor */
+.editor-option {
+  display: inline-block;
+  padding: 4px;
+  background-color: whitesmoke;
+  color: black;
+  border-radius: 4px;
+  border: solid 1px lightgray;
+}
+
+.editor-option:hover {
+  translate: -1px -1px;
+  /* margin: -1px -1px; */
+  box-shadow: 1px 1px 2px lightgray;
+}
+
+.is-active {
+  background-color: darkgray;
+  color: white;
+  border: solid 1px whitesmoke;
+}
+
+
+
+/*  Estilos del editor y su interior */
+.tiptap {
+  background-color: whitesmoke;
+  border-radius: 8px;
+  border: solid 1px lightgray;
+  padding: 20px;
+}
+
+.tiptap h1 {
+  all: unset;
+  font-size: 2.4rem;
+}
+
+.tiptap h2 {
+  all: unset;
+  font-size: 2rem;
+}
+
+.tiptap ul {
+  list-style-type: disc;
+}
+
+.tiptap ol {
+  list-style-type: decimal;
+}
+
+.tiptap blockquote::before {
+  content: '❝'
+}
+
+.tiptap blockquote::after {
+  content: '❞'
+}
+
+.tiptap p {
+  padding-top: 0;
+  margin: 0;
+}
+
+
+/* Estilos de los iconos */
+.lucide {
+  width: 16px;
+  height: 16px;
+
+}
+
+input[type=color] {
+  display: none;
+  margin: 0;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  translate: 0 -6px
+}
+
+input[type=color]:hover {
+  translate: -1px -7px
+}
+
+/*  Estilos de la barra de menús del editor */
+.editor-option {
+  display: inline-block;
+  padding: 4px;
+  background-color: whitesmoke;
+  color: black;
+  border-radius: 4px;
+  border: solid 1px lightgray;
+}
+
+.editor-option:hover {
+  translate: -1px -1px;
+  /* margin: -1px -1px; */
+  box-shadow: 1px 1px 2px lightgray;
+}
+
+.is-active {
+  background-color: darkgray;
+  color: white;
+  border: solid 1px whitesmoke;
+}
+
+
+
+/*  Estilos del editor y su interior */
+.tiptap {
+  background-color: whitesmoke;
+  border-radius: 8px;
+  border: solid 1px lightgray;
+  padding: 20px;
+}
+
+.tiptap h1 {
+  all: unset;
+  font-size: 2.4rem;
+}
+
+.tiptap h2 {
+  all: unset;
+  font-size: 2rem;
+}
+
+.tiptap ul {
+  list-style-type: disc;
+}
+
+.tiptap ol {
+  list-style-type: decimal;
+}
+
+.tiptap blockquote::before {
+  content: '❝'
+}
+
+.tiptap blockquote::after {
+  content: '❞'
+}
+
+.tiptap p {
+  padding-top: 0;
+  margin: 0;
+}
+
+
+/* Estilos de los iconos */
+.lucide {
+  width: 30px;
+  height: 30px;
+  /* Propiedades de ejemplo: 
+  color: #ffadff;
+  width: 56px;
+  height: 56px;
+  stroke-width: 1px;
+  */
+}

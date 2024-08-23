@@ -1,0 +1,31 @@
+POST http://localhost:3000/api/posts HTTP/1.1
+content-type: application/json
+
+{
+"author": "Isabel", "title": "isa", "image": "ffff", "post": "aaa", "slug": "isa", "views": 22}
+
+
+###
+
+GET http://localhost:3000/api/posts/17 HTTP/1.1
+content-type: application/json
+
+
+###
+DELETE http://localhost:3000/api/posts/17 HTTP/1.1
+
+
+###
+
+PUT http://localhost:3000/api/posts/15 HTTP/1.1
+content-type: application/json
+
+{
+  "author": "Juana Smith",
+    "title": "The Art of Cooking",
+    "image": "cooking.jpg",
+    "post": "<h1>Dive into the world of culinary arts.</h1><p>Explore the wonders of gastronomy.</p>",
+    "is_draft": true,
+    "slug": "art-of-cooking",
+    "views": 28
+}
