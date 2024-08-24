@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { auth } from "@/auth";
 import { logout } from '@/lib/actions';
+import Button from './button-form';
 
 async function Header() {
     const session = await auth();
@@ -13,7 +14,7 @@ async function Header() {
                         <img src='/blog-logo.png' className="h-16 w-auto" alt="Logo" />
                     </Link>
                     <div className="bg-white h-16 w-1"></div>
-                    {session ? (
+                    {session && (
                         <>
                             <Link href="/posts" className="text-lg font-bold text-white hover:text-gray-100">
                                 Posts
@@ -22,25 +23,23 @@ async function Header() {
                                 Categorías
                             </Link>
                         </>
-                    ) : (
-                        <>
-                            <Link href="/auth/register" className="text-lg font-bold text-white hover:text-gray-100">
-                                registro
-                            </Link>
-                            <Link href="/auth/login" className="text-lg font-bold text-white hover:text-gray-100">
-                                iniciar sesión
-                            </Link>
-                        </>
                     )}
                 </div>
                 <div className="flex items-center space-x-4">
                     {session ? (
                         <form action={logout}>
-                            <button type="submit" className="inline-flex items-center px-4 py-2 bg-white text-gray-800 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-400">
-                                Desconectar
-                            </button>
+                            <Button title="Cerrar sesión" className='inline-flex items-center px-4 py-2 bg-white text-gray-800 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-400' />
                         </form>
-                    ) : null}
+                    ) : (
+                        <>
+                            <Link href="/auth/register" className="inline-flex items-center px-4 py-2 bg-white text-gray-800 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-400">
+                                Registro
+                            </Link>
+                            <Link href="/auth/login" className="inline-flex items-center px-4 py-2 bg-white text-gray-800 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-400">
+                                Iniciar sesión
+                            </Link>
+                        </>
+                    )}
                 </div>
             </div>
         </nav>

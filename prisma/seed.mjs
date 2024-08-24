@@ -37,11 +37,11 @@ const generateRandomPost = () => {
 const resetDatabase = async () => {
   // Eliminar posts y categories
   await prisma.category.deleteMany();
-  await prisma.posts.deleteMany();
+  await prisma.post.deleteMany();
 
   // Reiniciar el contador de ID en la tabla posts y categories
   await prisma.$executeRaw`ALTER SEQUENCE "Category_id_seq" RESTART WITH 1;`;
-  await prisma.$executeRaw`ALTER SEQUENCE "Posts_id_seq" RESTART WITH 1;`;
+  await prisma.$executeRaw`ALTER SEQUENCE "Post_id_seq" RESTART WITH 1;`;
 };
 
 const load = async () => {
@@ -52,7 +52,7 @@ const load = async () => {
     // Crear los posts
     for (let i = 0; i < N_POSTS; i++) { 
       const post = generateRandomPost();
-      const createdPost = await prisma.posts.create({
+      const createdPost = await prisma.post.create({
         data: {
           author: post.author,
           title: post.title,

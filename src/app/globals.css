@@ -101,11 +101,13 @@ form.credentials div {
   display: grid;
   gap: 10px;
 }
-
-form input[type=text] {
+/* 
+form input[type=text], 
+form input[type=email],
+form input[type=password] {
   width: 100%;
   padding: 10px;
-}
+} */
 
 form button {
   padding: 10px;

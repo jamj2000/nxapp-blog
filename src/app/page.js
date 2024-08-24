@@ -11,8 +11,9 @@ export default async function Home() {
     return (
         <main className="flex-grow flex justify-center items-center bg-cover bg-slate-50 overflow-y-hidden" >
             <div className="text-center bg-gr p-8 rounded-lg shadow-md">
+                { session && 'Sesión iniciada por ' + session?.user.name }
                 <h1 className="text-3xl font-bold mb-4">Blog</h1>
-                <ul className="space-y-4">
+                <ul className="space-y-4 list-none">
                     <li>
                         <Link href="/categories" className="text-blue-500 hover:underline">Listado de categorias</Link>
                     </li>

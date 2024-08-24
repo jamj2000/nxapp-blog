@@ -19,7 +19,7 @@ function RegisterForm() {
                     email: data.get('email'),
                     password: data.get('password'),
                     callbackUrl: '/'
-                })         
+                })
         } else {
             setTipo('error')
             setResultado(message.error);
@@ -28,21 +28,21 @@ function RegisterForm() {
     }
     return (
         <form action={wrapper} className='credentials'>
-    <div>
-        <label>Nombre</label>
-        <input type='text' name='name' placeholder="José García" />
-    </div>
-    <div>
-        <label>Email</label>
-        <input type='email' name='email' placeholder="jose@mail.com" />
-    </div>
-    <div>
-        <label>Contraseña</label>
-        <input type="password" name='password' placeholder="******" />
-    </div>
-    <p className={`info ${tipo}`}> {resultado} </p>
-    <Button title="Crear cuenta" />
-</form>
+            <div>
+                <label>Nombre</label>
+                <input type='text' name='name' placeholder="José García" className='w-full p-3'/>
+            </div>
+            <div>
+                <label>Email</label>
+                <input type='email' name='email' placeholder="jose@mail.com" className='w-full p-3'/>
+            </div>
+            <div>
+                <label>Contraseña</label>
+                <input type="password" name='password' placeholder="******"  className='w-full p-3' />
+            </div>
+            <p className={`info ${tipo}`}> {resultado} </p>
+            <Button title="Crear cuenta" className='px-8 py-4' />
+        </form>
 
 
     );

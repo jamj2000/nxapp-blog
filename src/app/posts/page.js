@@ -1,11 +1,10 @@
-// pages/posts/index.js
 import Link from 'next/link'
 import { auth } from "@/auth"
 import Post from '@/components/Post'
 import { getPostsWithCategory, getAllPosts } from '@/lib/actions'
 import PaginationControls from '@/components/PaginationControls'
 import { PAGE, PER_PAGE } from '@/lib/pagination'
-import { FaPlus, FaPen, FaTrash } from "react-icons/fa6";
+import { FaPlus, FaPen, FaTrash, FaArrowUpRightFromSquare } from "react-icons/fa6";
 
 
 export const dynamic = 'force-dynamic'
@@ -55,6 +54,12 @@ export default async function PostHome({ searchParams }) {
                     <Post key={post.id} post={post}>
                         {session?.user?.role === 'ADMIN' &&
                             <div className='flex gap-1 justify-center'>
+                                <Link
+                                    className='bg-blue-400 p-4 rounded-full self-end hover:shadow-md'
+                                    title='Publicar post'
+                                    href={{ pathname: '/posts/edit', query: { id: post.id } }}>
+                                    <FaArrowUpRightFromSquare size='1rem' color='white' />
+                                </Link>
                                 <Link
                                     className='bg-yellow-400 p-4 rounded-full self-end hover:shadow-md'
                                     title='Editar post'

@@ -123,7 +123,7 @@ async function getCategoryIds() {
 
 export async function getPostsWithCategory(categoryName) {
   try {
-    const posts = await prisma.posts.findMany({
+    const posts = await prisma.post.findMany({
       include: { categories: true },
       orderBy: [
         { author: 'asc' }, { slug: 'asc' }
@@ -151,7 +151,7 @@ export async function getPostsWithCategory(categoryName) {
 export async function getAllPosts() {
   try {
     // Consulta para obtener todos los posts
-    const posts = await prisma.posts.findMany({
+    const posts = await prisma.post.findMany({
       include: { categories: true },
       orderBy: [
         { author: 'asc' }, { title: 'asc' }
@@ -169,7 +169,7 @@ export async function getAllPosts() {
 
 export async function getPosts() {
   try {
-    const posts = await prisma.posts.findMany()
+    const posts = await prisma.post.findMany()
 
     return posts;
   } catch (error) {
@@ -182,7 +182,7 @@ export async function getPosts() {
 export async function getPost(postId) {
   const id = Number(postId)
   try {
-    const post = await prisma.posts.findUnique({
+    const post = await prisma.post.findUnique({
       where: { id },
       include: { categories: true }
     })
@@ -198,7 +198,7 @@ export async function getPost(postId) {
 
 export async function getPostBySlug(slug) {
   try {
-    const post = await prisma.posts.findUnique({
+    const post = await prisma.post.findUnique({
       where: { slug },
       include: { categories: true }
     })
@@ -246,7 +246,7 @@ export async function newPost(formData) {
     // const categories = Object.groupBy(categoriesID, ({ id }) => formData.get(id.toString()) !== null ? 'connect' : 'disconnect')
     // console.log('CATEGORIES ', categories);
 
-    const posts = await prisma.posts.create({
+    const posts = await prisma.post.create({
       data: {
         author, title, image, post, slug, views,
         categories: { connect }
@@ -300,7 +300,7 @@ export async function editPost(formData) {
 
 
   try {
-    const posts = await prisma.posts.update({
+    const posts = await prisma.post.update({
       where: { id },
       data: {
         author, title, image, post, slug, views,
@@ -322,7 +322,7 @@ export async function deletePost(formData) {
   try {
     const id = Number(formData.get('id'))
 
-    const posts = await prisma.posts.delete({
+    const posts = await prisma.post.delete({
       where: {
         id,
       },

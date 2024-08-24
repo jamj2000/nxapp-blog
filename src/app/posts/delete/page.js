@@ -5,7 +5,7 @@ import { deletePost } from "@/lib/actions"
 export const dynamic = 'force-dynamic'
 
 async function page({ searchParams }) {
-  const post = await prisma.posts.findUnique({
+  const post = await prisma.post.findUnique({
     where: {
       id: Number(searchParams.id),
     },

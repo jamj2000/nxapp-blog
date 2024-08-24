@@ -8,7 +8,7 @@ async function page({ searchParams }) {
   let post = null;
 
   try {
-    post = await prisma.posts.findUnique({
+    post = await prisma.post.findUnique({
       where: {
         id: Number(searchParams.id),
       },

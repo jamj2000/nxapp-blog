@@ -21,17 +21,17 @@ function LoginForm() {
     }
     return (
         <form action={wrapper} className='credentials'>
-    <div>
-        <label>Email</label>
-        <input type='email' name='email' placeholder="name@mail.com" />
-    </div>
-    <div>
-        <label>Contraseña</label>
-        <input type="password" name='password' placeholder="******" />
-    </div>
-    <p className={`info ${tipo}`}> {resultado} </p>
-    <Button title="Iniciar sesión" />
-</form>
+            <div>
+                <label>Email</label>
+                <input type='email' name='email' placeholder="name@mail.com"  className='w-full p-3'/>
+            </div>
+            <div>
+                <label>Contraseña</label>
+                <input type="password" name='password' placeholder="******"  className='w-full p-3' />
+            </div>
+            <p className={`info ${tipo}`}> {resultado} </p>
+            <Button title="Iniciar sesión" className='px-8 py-4' />
+        </form>
 
     );
 };

@@ -23,8 +23,6 @@ function page({ searchParams }) {
 
   return (
     <>
-
-
       <div className="form">
       {error && <h3>{errors.get(error)}</h3>}
         <h1>Iniciar sesión</h1>

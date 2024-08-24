@@ -2,6 +2,7 @@ import { Suspense } from 'react'
 import Categories from '../Categories';
 import TipTap from '@/components/TipTap';
 import Imagen from '@/components/imagen'
+import Button from '../button-form';
 
 function Form({ children, action, title, post, disabled }) {
 
@@ -76,7 +77,9 @@ function Form({ children, action, title, post, disabled }) {
             <Categories postId={post?.id} disabled={disabled} />
           </Suspense>
         </fieldset>
-        <button type='submit' className="w-full bg-blue-500 text-white px-4 py-2 rounded-md mt-4 hover:bg-blue-700 hover:text-gray-100">{title}</button>
+        <Button title={title} className="w-full bg-blue-500 text-white px-4 py-2 rounded-md mt-4 hover:bg-blue-700 hover:text-gray-100" />
+
+        {/* <button type='submit' className="w-full bg-blue-500 text-white px-4 py-2 rounded-md mt-4 hover:bg-blue-700 hover:text-gray-100">{title}</button> */}
       </form>
     </div>
   )

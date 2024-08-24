@@ -36,7 +36,7 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
-model Posts {
+model Post {
   id         Int        @id @default(autoincrement())
   author     String
   title      String
@@ -54,7 +54,7 @@ model Category {
   id    Int     @id @default(autoincrement())
   name  String  @unique
   slug  String  @unique
-  posts Posts[] // @relation("CategoryToPosts")
+  posts Post[] // @relation("CategoryToPosts")
 }
 
 
