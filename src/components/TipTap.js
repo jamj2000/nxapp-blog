@@ -42,14 +42,13 @@ import { useState } from 'react'
 const MenuBar = ({ setMessage }) => {
 
   const { editor } = useCurrentEditor()
-
+  const [color, setColor] = useState('#000000')
+  const [texto, setTexto] = useState( editor.getHTML())
+  
   if (!editor) {
     return null
   }
 
-  const [color, setColor] = useState('#000000')
-  const [texto, setTexto] = useState( editor.getHTML())
-  
   const showMessage = () => {
     const html = editor.getHTML()
     setMessage(html)
