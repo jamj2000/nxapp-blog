@@ -28,7 +28,7 @@ h1 {
 }
 
 h1, h2 {
-  margin-top: 50px;
+  margin-top: 40px;
 }
 
 a {
@@ -218,12 +218,22 @@ input[type=color]:hover {
   font-size: 2rem;
 }
 
-.tiptap ul {
-  list-style-type: disc;
+.tiptap br, br {
+  margin-bottom: 1em;
 }
 
-.tiptap ol {
+.tiptap ul, ul {
+  list-style-type: disc;
+  margin-block: 20px;
+}
+
+.tiptap ol, ol {
   list-style-type: decimal;
+  margin-block: 20px;
+}
+
+.tiptap li, li {
+  margin-left: 50px;
 }
 
 .tiptap blockquote::before {
@@ -285,44 +295,6 @@ input[type=color]:hover {
 
 
 
-/*  Estilos del editor y su interior */
-.tiptap {
-  background-color: whitesmoke;
-  border-radius: 8px;
-  border: solid 1px lightgray;
-  padding: 20px;
-}
-
-.tiptap h1 {
-  all: unset;
-  font-size: 2.4rem;
-}
-
-.tiptap h2 {
-  all: unset;
-  font-size: 2rem;
-}
-
-.tiptap ul {
-  list-style-type: disc;
-}
-
-.tiptap ol {
-  list-style-type: decimal;
-}
-
-.tiptap blockquote::before {
-  content: '❝'
-}
-
-.tiptap blockquote::after {
-  content: '❞'
-}
-
-.tiptap p {
-  padding-top: 0;
-  margin: 0;
-}
 
 
 /* Estilos de los iconos */

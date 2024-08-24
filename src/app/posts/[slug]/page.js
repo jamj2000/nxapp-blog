@@ -13,7 +13,7 @@ async function page({ params }) {
             <p className="text-xs text-gray-500">Última modificación: {post.modified.toLocaleString()}</p>  
            
             <div className="mt-10 flex flex-col md:flex-row gap-8">
-                <img src={post.image} alt="" className="w-full md:w-1/3" />
+                <img src={post.image || '/blog-logo.png'} alt="" className="w-full md:w-1/3 object-cover" />
                 <div dangerouslySetInnerHTML={{ __html: post.post }} />
             </div>
 

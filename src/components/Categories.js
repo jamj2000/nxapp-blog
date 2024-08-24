@@ -3,9 +3,9 @@ import { getPost, getCategories } from '@/lib/actions';
 async function Categories({ postId, disabled }) {
     // Variables para almacenar la categoría seleccionada y las categorías
     const categories = await getCategories();
-   
+
     let post = null;
-    let selectedCategories =[];
+    let selectedCategories = [];
 
     if (postId) {
         post = await getPost(postId)
@@ -14,19 +14,22 @@ async function Categories({ postId, disabled }) {
 
     return (
         <fieldset disabled={disabled}>
-            <legend><h1>Categorias</h1></legend>
-            {categories.map((category) => {
-                const idCat = `cat${category.id}`;
-                return (
-                    <div key={category.id}>
-                        <label htmlFor={idCat}>
-                            <input type='checkbox' id={idCat} name={category.id.toString()} value={category.id} 
-                                defaultChecked={selectedCategories.includes(category.id)} />
-                            {category.name}
-                        </label>
-                    </div>
-                );
-            })}
+            <legend><h1>Categorías</h1></legend>
+            <div className='flex flex-wrap gap-1'>
+            {categories.map((category) => (
+                <label key={category.id}>
+                    <input
+                        className='hidden peer'
+                        type='checkbox'
+                        name={category.id.toString()}
+                        value={category.id}
+                        defaultChecked={selectedCategories.includes(category.id)} />
+                    <p className='text-white bg-slate-400 peer-checked:bg-blue-400 w-fit px-4 py-2 rounded-lg'>
+                        {category.name}
+                    </p>
+                </label>
+            ))}
+            </div>
         </fieldset>
     );
 }

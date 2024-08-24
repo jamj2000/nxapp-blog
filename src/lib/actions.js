@@ -5,6 +5,8 @@ import { signIn, signOut } from '@/auth';
 import { getUserByEmail } from '@/lib/data';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
+import { faker } from '@faker-js/faker';
+import cloudinary from "@/lib/cloudinary";
 
 
 // REGISTER
@@ -77,6 +79,34 @@ export async function logout() {
     throw error
   }
 }
+
+
+
+async function imgUpload(file) {
+  // console.log(file);
+
+  const fileBuffer = await file.arrayBuffer();
+
+  let mime = file.type;
+  let encoding = "base64";
+  let base64Data = Buffer.from(fileBuffer).toString("base64");
+  let fileUri = "data:" + mime + ";" + encoding + "," + base64Data;
+
+  try {
+    const result = await cloudinary.uploader.upload(fileUri, {
+      invalidate: true,
+      folder: "blog",
+      public_id: file.name.split(".").slice(0, -1).join("."),
+      // width: 600,
+    });
+    // console.log(result);
+    return result.secure_url;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
 
 
 
@@ -187,11 +217,16 @@ export async function newPost(formData) {
   try {
     const author = formData.get('author');
     const title = formData.get('title');
-    const image = formData.get('image');
     const post = formData.get('post');
-    const slug = formData.get('slug');
+    const slug = faker.helpers.slugify(title.toLowerCase())
     const views = Number(formData.get('views'));
+    let image;
 
+    const imageFile = formData.get("file");
+
+    if (imageFile && imageFile.size > 0) {
+      image = await imgUpload(imageFile);
+    }
 
     // Array con IDs de todas las categorias
     const categoriesID = await getCategoryIds() // Formato: [ {id: 1}, {id: 2}, ...]
@@ -204,7 +239,7 @@ export async function newPost(formData) {
     const disconnect = categoriesID.filter(({ id }) => formData.get(id.toString()) === null)
 
     // Información para depuración
-    console.log('CATEGORIES ', { connect, disconnect });
+    console.log('POST CATEGORIES ', { connect, disconnect });
 
     // -> Si disponemos de NodeJS 21+
     // Objecto con 2 arrays: connect con IDs de categorias marcadas por el usuario y disconnect con IDs no marcados
@@ -231,14 +266,19 @@ export async function editPost(formData) {
   const id = Number(formData.get('id'))
   const author = formData.get('author');
   const title = formData.get('title');
-  const image = formData.get('image');
   const post = formData.get('post');
   // const created = formData.get('created');
   // const modified = formData.get('modified');
   // const is_draft = formData.get('is_draft');
-  const slug = formData.get('slug');
+  const slug = faker.helpers.slugify(title.toLowerCase())
   const views = Number(formData.get('views'));
+  let image;
 
+  const imageFile = formData.get("file");
+
+  if (imageFile && imageFile.size > 0) {
+    image = await imgUpload(imageFile);
+  }
 
   // Array con IDs de todas las categorias
   const categoriesID = await getCategoryIds() // Formato: [ {id: 1}, {id: 2}, ...]
@@ -251,7 +291,7 @@ export async function editPost(formData) {
   const disconnect = categoriesID.filter(({ id }) => formData.get(id.toString()) === null)
 
   // Información para depuración
-  console.log('CATEGORIES ', { connect, disconnect });
+  console.log('POST CATEGORIES ', { connect, disconnect });
 
   // -> Si disponemos de NodeJS 21+
   // Objecto con 2 arrays: connect con IDs de categorias marcadas por el usuario y disconnect con IDs no marcados
