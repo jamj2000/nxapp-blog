@@ -30,6 +30,7 @@ export default async function CategoryHome({ searchParams }) {
 
     return (
         <div>
+            <h1 className="text-3xl font-bold mb-4">Categorías</h1>
             <div className='flex flex-col gap-4 justify-center'>
                 {session?.user?.role === 'ADMIN' &&
                     <Link
@@ -48,18 +49,18 @@ export default async function CategoryHome({ searchParams }) {
                 {entries.map((category) => (
                     <Category key={category.id} category={category}>
                         {session?.user?.role === 'ADMIN' &&
-                            <div className='flex gap-1 justify-center'>
+                            <div className='flex gap-1 justify-end'>
                                 <Link
                                     className='bg-yellow-400 p-4 rounded-full self-end hover:shadow-md'
                                     title='Editar categoría'
                                     href={{ pathname: '/categories/edit', query: { id: category.id } }}>
-                                    <FaPen size='1rem' color='white'  />
+                                    <FaPen size='1rem' color='white' />
                                 </Link>
                                 < Link
                                     className='bg-red-400 p-4 rounded-full self-end hover:shadow-md'
                                     title='Eliminar categoría'
                                     href={{ pathname: '/categories/delete', query: { id: category.id } }}>
-                                    <FaTrash size='1rem' color='white'  />
+                                    <FaTrash size='1rem' color='white' />
                                 </Link>
                             </div>
                         }

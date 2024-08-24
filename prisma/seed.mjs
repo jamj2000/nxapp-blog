@@ -28,7 +28,7 @@ const generateRandomPost = () => {
     title: _title,
     image: faker.image.url(),
     post: `<h1>${faker.lorem.sentence()}</h1><p>${faker.lorem.paragraph()}</p>`,
-    slug: faker.helpers.slugify(_title),
+    slug: faker.helpers.slugify(_title.toLowerCase().slice(0, -1)),
     views: faker.number.int(2000),
     categories: [generateRandomCategory(), generateRandomCategory()]
   };

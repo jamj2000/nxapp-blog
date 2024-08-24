@@ -35,6 +35,7 @@ export default async function PostHome({ searchParams }) {
 
     return (
         <div>
+            <h1 className="text-3xl font-bold mb-4">Posts</h1>
             <div className='flex flex-col gap-4 justify-center'>
                 {session?.user?.role === 'ADMIN' &&
                     <Link
@@ -58,13 +59,13 @@ export default async function PostHome({ searchParams }) {
                                     className='bg-yellow-400 p-4 rounded-full self-end hover:shadow-md'
                                     title='Editar post'
                                     href={{ pathname: '/posts/edit', query: { id: post.id } }}>
-                                    <FaPen size='1rem' color='white'  />
+                                    <FaPen size='1rem' color='white' />
                                 </Link>
                                 < Link
                                     className='bg-red-400 p-4 rounded-full self-end hover:shadow-md'
                                     title='Eliminar post'
                                     href={{ pathname: '/posts/delete', query: { id: post.id } }}>
-                                    <FaTrash size='1rem' color='white'  />
+                                    <FaTrash size='1rem' color='white' />
                                 </Link>
                             </div>
                         }

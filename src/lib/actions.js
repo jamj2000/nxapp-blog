@@ -85,7 +85,7 @@ async function getCategoryIds() {
     select: { id: true }
   })
   // return CategoryIds.map(category => category.id)
-  return CategoryIds.map(category => { return {id: category.id} } )
+  return CategoryIds.map(category => { return { id: category.id } })
 }
 
 
@@ -95,6 +95,9 @@ export async function getPostsWithCategory(categoryName) {
   try {
     const posts = await prisma.posts.findMany({
       include: { categories: true },
+      orderBy: [
+        { author: 'asc' }, { slug: 'asc' }
+      ],
     })
 
     let filteredPosts = posts
@@ -120,9 +123,11 @@ export async function getAllPosts() {
     // Consulta para obtener todos los posts
     const posts = await prisma.posts.findMany({
       include: { categories: true },
+      orderBy: [
+        { author: 'asc' }, { title: 'asc' }
+      ],
     });
 
-    console.log('All Posts:', posts);
     return posts;
   } catch (error) {
     console.error('Error:', error);
@@ -135,8 +140,7 @@ export async function getAllPosts() {
 export async function getPosts() {
   try {
     const posts = await prisma.posts.findMany()
-    console.log("ACTIONS")
-    console.log(posts)
+
     return posts;
   } catch (error) {
     // console.log(error);  
@@ -152,7 +156,23 @@ export async function getPost(postId) {
       where: { id },
       include: { categories: true }
     })
-    console.log(post)
+
+    return post;
+  } catch (error) {
+    // console.log(error);  
+    return null;
+  }
+}
+
+
+
+export async function getPostBySlug(slug) {
+  try {
+    const post = await prisma.posts.findUnique({
+      where: { slug },
+      include: { categories: true }
+    })
+
     return post;
   } catch (error) {
     // console.log(error);  
@@ -172,31 +192,24 @@ export async function newPost(formData) {
     const slug = formData.get('slug');
     const views = Number(formData.get('views'));
 
-    // const Ids = await getCategoryIds()
-    // console.log("Ids", Ids)
-    // const check = Ids.map(id => formData.get(id.toString()))
-    //   .filter(id => id !== null)
-    //   .map(id => Number(id))
 
-    // const connect = check.map(id => { return { id: Number(id) } })
+    // Array con IDs de todas las categorias
+    const categoriesID = await getCategoryIds() // Formato: [ {id: 1}, {id: 2}, ...]
 
-  // Array con IDs de todas las categorias
-  const categoriesID = await getCategoryIds() // Formato: [ {id: 1}, {id: 2}, ...]
+    // -> Si no disponemos de NodeJS 21+ 
+    // Array con IDs de categorias marcadas por el usuario
+    const connect = categoriesID.filter(({ id }) => formData.get(id.toString()) !== null)
 
-  // -> Si no disponemos de NodeJS 21+ 
-  // Array con IDs de categorias marcadas por el usuario
-  const connect = categoriesID.filter(({ id }) => formData.get(id.toString()) !== null)
+    // Array con IDs de categorias NO marcadas por el usuario
+    const disconnect = categoriesID.filter(({ id }) => formData.get(id.toString()) === null)
 
-  // Array con IDs de categorias NO marcadas por el usuario
-  const disconnect = categoriesID.filter(({ id }) => formData.get(id.toString()) === null)
+    // Información para depuración
+    console.log('CATEGORIES ', { connect, disconnect });
 
-  // Información para depuración
-  console.log('CATEGORIES ', { connect, disconnect });
-
-  // -> Si disponemos de NodeJS 21+
-  // Objecto con 2 arrays: connect con IDs de categorias marcadas por el usuario y disconnect con IDs no marcados
-  // const categories = Object.groupBy(categoriesID, ({ id }) => formData.get(id.toString()) !== null ? 'connect' : 'disconnect')
-  // console.log('CATEGORIES ', categories);
+    // -> Si disponemos de NodeJS 21+
+    // Objecto con 2 arrays: connect con IDs de categorias marcadas por el usuario y disconnect con IDs no marcados
+    // const categories = Object.groupBy(categoriesID, ({ id }) => formData.get(id.toString()) !== null ? 'connect' : 'disconnect')
+    // console.log('CATEGORIES ', categories);
 
     const posts = await prisma.posts.create({
       data: {
@@ -206,8 +219,6 @@ export async function newPost(formData) {
       include: { categories: true }
     })
 
-    console.log(posts);
-    console.log("hola")
     revalidatePath('/posts')
   } catch (error) {
     console.log(error);
@@ -228,17 +239,6 @@ export async function editPost(formData) {
   const slug = formData.get('slug');
   const views = Number(formData.get('views'));
 
-  const Ids = await getCategoryIds()
-  // console.log("Ids", Ids)
-  // const check = Ids.map(id => formData.get(id.toString()))
-  //   .filter(id => id !== null)
-  //   .map(id => Number(id))
-
-
-  // const connect = check.map(id => { return { id: Number(id) } })
-  // const diferencia = Ids.filter(id => !check.includes(id));
-  // const disconnect = diferencia.map(id => { return { id: Number(id) } });
-  // console.log("conect", connect)
 
   // Array con IDs de todas las categorias
   const categoriesID = await getCategoryIds() // Formato: [ {id: 1}, {id: 2}, ...]
@@ -269,7 +269,6 @@ export async function editPost(formData) {
       },
       include: { categories: true }
     })
-    console.log(posts);
     revalidatePath('/posts')
   } catch (error) {
     console.log(error);
@@ -288,7 +287,6 @@ export async function deletePost(formData) {
         id,
       },
     })
-    console.log(posts);
     revalidatePath('/posts')
   } catch (error) {
     console.log(error);
@@ -298,12 +296,24 @@ export async function deletePost(formData) {
 }
 
 
+export async function getCategoryBySlug(slug) {
+  try {
+    const category = await prisma.category.findUnique({
+      where: { slug },
+      include: { posts: true }
+    })
+    return category;
+  } catch (error) {
+    // console.log(error);  
+    return null;
+  }
+}
+
 
 export async function getCategories() {
   try {
     const categories = await prisma.category.findMany()
-    console.log("ACTIONS")
-    console.log(categories)
+
     return categories;
   } catch (error) {
     // console.log(error);  
@@ -316,13 +326,10 @@ export async function newCategory(formData) {
     const name = formData.get('name');
     const slug = formData.get('slug');
 
-
     const categories = await prisma.category.create({
       data: { name, slug },
     })
 
-    console.log(categories);
-    console.log("hola")
     revalidatePath('/categories')
   } catch (error) {
     console.log(error);
@@ -341,7 +348,6 @@ export async function editCategory(formData) {
       where: { id },
       data: { name, slug },
     })
-    console.log(categories);
     revalidatePath('/categories')
   } catch (error) {
     console.log(error);
@@ -358,7 +364,6 @@ export async function deleteCategory(formData) {
         id: id,
       },
     })
-    console.log(categories);
     revalidatePath('/categories')
   } catch (error) {
     console.log(error);
