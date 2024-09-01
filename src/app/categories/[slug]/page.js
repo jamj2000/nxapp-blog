@@ -4,8 +4,12 @@ import { FaPen, FaTrash } from "react-icons/fa6"
 import Link from "next/link"
 
 async function page({ params }) {
-    const session = await auth()
-    const category = await getCategoryBySlug(params.slug)
+    const [ session, category ] = await Promise.all([
+        auth(),
+        getCategoryBySlug(params.slug)
+    ])
+    // const session = await auth()
+    // const category = await getCategoryBySlug(params.slug)
     
     return (
         <div>

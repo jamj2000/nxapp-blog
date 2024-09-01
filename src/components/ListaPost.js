@@ -7,7 +7,7 @@ import { getPostsWithCategory, getAllPosts } from '@/lib/actions'
 import { auth } from "@/auth"
 
 
-async function ListaPost({searchParams}) {
+async function ListaPost({ searchParams }) {
     const session = await auth()
 
     const page = Number(searchParams['page'] ?? PAGE)
@@ -42,12 +42,14 @@ async function ListaPost({searchParams}) {
                 <Post key={post.id} post={post}>
                     {session?.user?.role === 'ADMIN' &&
                         <div className='flex gap-1 justify-center'>
-                            <Link
-                                className='bg-blue-400 p-4 rounded-full self-end hover:shadow-md'
-                                title='Publicar post'
-                                href={{ pathname: '/posts/edit', query: { id: post.id } }}>
-                                <FaArrowUpRightFromSquare size='1rem' color='white' />
-                            </Link>
+                            {post.is_draft &&
+                                <Link
+                                    className='bg-blue-400 p-4 rounded-full self-end hover:shadow-md'
+                                    title='Publicar post'
+                                    href={{ pathname: '/posts/edit', query: { id: post.id } }}>
+                                    <FaArrowUpRightFromSquare size='1rem' color='white' />
+                                </Link>
+                            }
                             <Link
                                 className='bg-yellow-400 p-4 rounded-full self-end hover:shadow-md'
                                 title='Editar post'

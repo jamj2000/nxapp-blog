@@ -35,7 +35,7 @@ async function Form({ children, action, title, id, disabled }) {
             <div className='w-full md:w-2/3'>
 
               <div className="flex flex-col md:flex-row items-center md:space-x-4">
-                <label htmlFor='title' className="w-full md:w-1/4">Título</label>
+                <label htmlFor='title' className="font-bold w-full md:w-1/4">Título</label>
                 <input type='text' id='title' name='title'
                   placeholder='Título'
                   defaultValue={post?.title}
@@ -43,7 +43,7 @@ async function Form({ children, action, title, id, disabled }) {
                 />
               </div>
               <div className="flex flex-col md:flex-row items-center md:space-x-4">
-                <label htmlFor='author' className="w-full md:w-1/4">Autor/a</label>
+                <label htmlFor='author' className="font-bold w-full md:w-1/4">Autor/a</label>
                 <input type='text' id='author' name='author'
                   placeholder='Autor/a'
                   defaultValue={post?.author}
@@ -52,11 +52,15 @@ async function Form({ children, action, title, id, disabled }) {
                 />
               </div>
 
-              <div className="flex flex-col md:flex-row items-center md:space-x-4">
-                <label htmlFor='views' className="w-full md:w-1/4">Vistas</label>
-                <span>{post?.views}</span>
+              <div className="mt-4 flex items-center md:space-x-4">
+                <p>
+                  <span className="font-bold">Vistas: </span>
+                  <span>{post?.views}</span>
+                </p>
               </div>
-
+              <Suspense fallback={'Loading ...'}>
+                <Categories postId={post?.id} disabled={disabled} />
+              </Suspense>
             </div>
           </div>
 
@@ -77,9 +81,7 @@ async function Form({ children, action, title, id, disabled }) {
             />
           </div>
 
-          <Suspense fallback={'Loading ...'}>
-            <Categories postId={post?.id} disabled={disabled} />
-          </Suspense>
+
         </fieldset>
       </form>
     </div>
