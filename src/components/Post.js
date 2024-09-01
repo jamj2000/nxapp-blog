@@ -10,7 +10,8 @@ function post({ children, post }) {
                     <div>
                         <b>{post.title}</b>
                         <p className="text-gray-500 text-xs italic">Autor/a: {post.author}.</p>
-                        <p className="text-gray-500 text-xs italic">Actualizado el {new Date(post.modified).toLocaleString()}</p>
+                        <p className="text-gray-500 text-xs italic">Creado el {new Date(post.created).toLocaleString()}</p>
+                        <p className="text-gray-500 text-xs italic">Vistas: {post.views}</p>
                     </div>
                 </Link>
             </div>

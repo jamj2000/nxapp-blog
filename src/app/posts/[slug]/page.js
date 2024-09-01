@@ -1,12 +1,15 @@
 import { auth } from "@/auth"
-import { getPostBySlug } from "@/lib/actions"
+import { getPostBySlug, incrementarVista } from "@/lib/actions"
 import { FaArrowUpRightFromSquare, FaPen, FaTrash } from "react-icons/fa6"
 import Link from "next/link"
+
+
 
 async function page({ params }) {
     const session = await auth()
     const post = await getPostBySlug(params.slug)
 
+    await incrementarVista(post.id)
 
     return (
         <div>
@@ -35,7 +38,8 @@ async function page({ params }) {
             <h1><strong>{post.title}</strong></h1>
             <p className="text-xs text-gray-500">Autor/a: {post.author}</p>
             <p className="text-xs text-gray-500">Creado: {post.created.toLocaleString()}</p>
-            <p className="text-xs text-gray-500">Última modificación: {post.modified.toLocaleString()}</p>
+            <p className="text-gray-500 text-xs italic">Vistas: {post.views}</p>
+            {/* <p className="text-xs text-gray-500">Última modificación: {post.modified.toLocaleString()}</p> */}
 
             <div className="mt-10 flex flex-col md:flex-row gap-8">
                 <img src={post.image || '/blog-logo.png'} alt="" className="w-full md:w-1/3 object-cover" />

@@ -2,13 +2,22 @@ import { Suspense } from 'react'
 import Categories from '../Categories';
 import TipTap from '@/components/TipTap';
 import Imagen from '@/components/imagen'
-import Button from '../button-form';
+import Button from '@/components/button';
+import { getPost } from '@/lib/actions';
 
-function Form({ children, action, title, post, disabled }) {
+async function Form({ children, action, title, id, disabled }) {
+  let post
+
+  if (id) {
+    post = await getPost(id);
+  }
+
 
   return (
     <div className="p-4">
       <form action={action} className="w-full max-w-full px-4">
+        <Button title={title} className="font-bold w-full bg-blue-500 text-white px-4 py-2 rounded-md mt-4 hover:bg-blue-700 hover:text-gray-100" />
+
         <input type='hidden' name='id' value={post?.id} />
         <fieldset disabled={disabled} className="space-y-4">
 
@@ -24,10 +33,19 @@ function Form({ children, action, title, post, disabled }) {
           </div> */}
 
             <div className='w-full md:w-2/3'>
+
               <div className="flex flex-col md:flex-row items-center md:space-x-4">
-                <label htmlFor='author' className="w-full md:w-1/4">Author</label>
+                <label htmlFor='title' className="w-full md:w-1/4">Título</label>
+                <input type='text' id='title' name='title'
+                  placeholder='Título'
+                  defaultValue={post?.title}
+                  className="w-full md:w-3/4 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-400 bg-gray-100"
+                />
+              </div>
+              <div className="flex flex-col md:flex-row items-center md:space-x-4">
+                <label htmlFor='author' className="w-full md:w-1/4">Autor/a</label>
                 <input type='text' id='author' name='author'
-                  placeholder='Author'
+                  placeholder='Autor/a'
                   defaultValue={post?.author}
                   className="w-full md:w-3/4 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-400 bg-gray-100"
                   autoFocus
@@ -35,13 +53,10 @@ function Form({ children, action, title, post, disabled }) {
               </div>
 
               <div className="flex flex-col md:flex-row items-center md:space-x-4">
-                <label htmlFor='title' className="w-full md:w-1/4">Title</label>
-                <input type='text' id='title' name='title'
-                  placeholder='Title'
-                  defaultValue={post?.title}
-                  className="w-full md:w-3/4 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-400 bg-gray-100"
-                />
+                <label htmlFor='views' className="w-full md:w-1/4">Vistas</label>
+                <span>{post?.views}</span>
               </div>
+
             </div>
           </div>
 
@@ -61,25 +76,11 @@ function Form({ children, action, title, post, disabled }) {
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-400 bg-gray-100"
             />
           </div>
-          <div className="flex flex-col">
-            <label htmlFor='views'>Views</label>
-            <input
-              type='number'
-              id='views'
-              name='views'
-              min={0}
-              placeholder='Views'
-              defaultValue={post?.views}
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-400 bg-gray-100"
-            />
-          </div>
+
           <Suspense fallback={'Loading ...'}>
             <Categories postId={post?.id} disabled={disabled} />
           </Suspense>
         </fieldset>
-        <Button title={title} className="w-full bg-blue-500 text-white px-4 py-2 rounded-md mt-4 hover:bg-blue-700 hover:text-gray-100" />
-
-        {/* <button type='submit' className="w-full bg-blue-500 text-white px-4 py-2 rounded-md mt-4 hover:bg-blue-700 hover:text-gray-100">{title}</button> */}
       </form>
     </div>
   )

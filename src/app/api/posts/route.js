@@ -1,6 +1,7 @@
 import { PAGE, PER_PAGE } from '@/lib/pagination';
 import { getPostsWithCategoryApi, getAllPostsApi, getTotalPostsCount } from '@/lib/actionsApi';
 
+
 export async function GET(request) {
   const url = new URL(request.url);
   const category = url.searchParams.get("category");

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { auth } from "@/auth";
 import { logout } from '@/lib/actions';
-import Button from './button-form';
+import Button from '@/components/button';
 
 async function Header() {
     const session = await auth();
@@ -14,16 +14,14 @@ async function Header() {
                         <img src='/blog-logo.png' className="h-16 w-auto" alt="Logo" />
                     </Link>
                     <div className="bg-white h-16 w-1"></div>
-                    {session && (
-                        <>
-                            <Link href="/posts" className="text-lg font-bold text-white hover:text-gray-100">
-                                Posts
-                            </Link>
-                            <Link href="/categories" className="text-lg font-bold text-white hover:text-gray-100">
-                                Categorías
-                            </Link>
-                        </>
-                    )}
+
+                    <Link href="/posts" className="text-lg font-bold text-white hover:text-gray-100">
+                        Posts
+                    </Link>
+                    <Link href="/categories" className="text-lg font-bold text-white hover:text-gray-100">
+                        Categorías
+                    </Link>
+
                 </div>
                 <div className="flex items-center space-x-4">
                     {session ? (

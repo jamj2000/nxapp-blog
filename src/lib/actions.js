@@ -108,9 +108,26 @@ async function imgUpload(file) {
 }
 
 
+export async function getCategory(categoryId) {
+  const id = Number(categoryId)
+  try {
+    const category = await prisma.category.findUnique({
+      where: { id },
+      include: {
+        posts: true
+      }
+    });
+
+    return category;
+  } catch (error) {
+    // console.log(error);  
+    return null;
+  }
+}
 
 
-async function getCategoryIds() {
+
+export async function getCategoryIds() {
   const CategoryIds = await prisma.category.findMany({
     select: { id: true }
   })
@@ -125,9 +142,7 @@ export async function getPostsWithCategory(categoryName) {
   try {
     const posts = await prisma.post.findMany({
       include: { categories: true },
-      orderBy: [
-        { author: 'asc' }, { slug: 'asc' }
-      ],
+      orderBy: [ { name: 'asc' } ],
     })
 
     let filteredPosts = posts
@@ -153,8 +168,8 @@ export async function getAllPosts() {
     // Consulta para obtener todos los posts
     const posts = await prisma.post.findMany({
       include: { categories: true },
-      orderBy: [
-        { author: 'asc' }, { title: 'asc' }
+      orderBy: [ // { author: 'asc' }, { title: 'asc' },
+        { created: 'desc' }
       ],
     });
 
@@ -226,6 +241,9 @@ export async function newPost(formData) {
 
     if (imageFile && imageFile.size > 0) {
       image = await imgUpload(imageFile);
+    }
+    else {
+      image = '/blog-logo.png'
     }
 
     // Array con IDs de todas las categorias
@@ -352,7 +370,9 @@ export async function getCategoryBySlug(slug) {
 
 export async function getCategories() {
   try {
-    const categories = await prisma.category.findMany()
+    const categories = await prisma.category.findMany({
+      orderBy: [ { name: 'asc' } ]
+    })
 
     return categories;
   } catch (error) {
@@ -424,4 +444,14 @@ export async function createHoppy(previousState, formData) {
     console.log(error);
   }
 
+}
+
+
+export async function incrementarVista(id) {
+
+  await prisma.post.update({
+    where: { id },
+    data: {views: {increment: 1}}
+  });
+  revalidatePath('/posts')
 }

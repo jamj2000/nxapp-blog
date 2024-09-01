@@ -1,5 +1,5 @@
 'use client'
-import Button from '@/components/button-form';
+import Button from '@/components/button';
 import { useState } from 'react';
 import { login } from '@/lib/actions'
 

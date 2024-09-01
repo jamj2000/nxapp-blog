@@ -5,7 +5,7 @@ import Gitlab from '@auth/core/providers/gitlab'
 import Credentials from "@auth/core/providers/credentials"
 import { getUserByEmail } from "@/lib/data"
 
-export default {
+const AuthConfig ={
     providers: [
         Google,
         GitHub,
@@ -19,3 +19,5 @@ export default {
         }),
     ]
 }
+
+export default AuthConfig;

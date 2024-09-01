@@ -1,4 +1,4 @@
-import LoginForm from '@/components/forms/login-form'
+import LoginForm from '@/components/forms/login'
 
 
 // https://next-auth.js.org/configuration/pages#sign-in-page

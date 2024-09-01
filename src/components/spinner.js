@@ -13,10 +13,10 @@ function Spinner() {
 
     return (
         <RingLoader
-            color={'blue'}
+            color={'currentcolor'}
+            size={32}
             loading={loading}
             cssOverride={styles}
-            size={32}
             aria-label="Loading Spinner"
             data-testid="loader"
         />

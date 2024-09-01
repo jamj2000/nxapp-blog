@@ -1,5 +1,5 @@
 'use client'
-import Button from '@/components/button-form';
+import Button from '@/components/button';
 import { useState } from 'react';
 import { register } from '@/lib/actions'
 import { signIn } from 'next-auth/react'; // signIn desde lado CLIENTE

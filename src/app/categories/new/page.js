@@ -5,7 +5,7 @@ function page() {
   return (
     <div>
         <h3>Nueva categoria</h3>
-        <Form action={newCategory} title='Crear categoria' category={null}  />
+        <Form action={newCategory} title='Crear categoria'  />
     </div>
   )
 }

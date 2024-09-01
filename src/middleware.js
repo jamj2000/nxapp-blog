@@ -25,7 +25,11 @@ export default auth((req) => {
 
 export const config = {
     matcher: [
-        "/categories(.*)",
-        "/posts(.*)",
+        "/categories/new",
+        "/categories/edit",
+        "/categories/delete",
+        "/posts/new",
+        "/posts/edit",
+        "/posts/delete"
     ],
 };
