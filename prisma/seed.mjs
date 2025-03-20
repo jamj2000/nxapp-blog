@@ -1,0 +1,103 @@
+import { PrismaClient } from '@prisma/client';
+import { faker } from '@faker-js/faker';
+
+
+const prisma = new PrismaClient();
+
+const N_POSTS = 51
+
+const AUTHORS = [
+  { name: "Pepe Viyuela", email: "pepe@pepe.com", image: 'https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/128/27.jpg' },
+  { name: "Ana Alferez", email: "ana@ana.com", image: faker.image.personPortrait({ sex: 'female', size: '128' }) },
+  { name: "Jose López", email: "jose@jose.com", image: faker.image.personPortrait({ sex: 'male', size: '128' }) }
+];
+
+const CATEGORIES = [
+  { name: "Desarrollo Web", slug: "desarrollo-web" },
+  { name: "Seguridad Informática", slug: "seguridad-informatica" },
+  { name: "Inteligencia Artificial", slug: "inteligencia-artificial" },
+  { name: "Bases de Datos y Almacenamiento de Datos", slug: "bases-de-datos-almacenamiento-datos" },
+  { name: "Desarrollo de Software", slug: "desarrollo-software" }
+];
+
+const generateRandomAuthor = () => {
+  const randomAuthor = faker.helpers.arrayElement(AUTHORS)
+  return { name: randomAuthor.name, email: randomAuthor.email, image: randomAuthor.image };
+};
+
+
+const generateRandomCategory = () => {
+  const randomCategory = faker.helpers.arrayElement(CATEGORIES)
+  return { name: randomCategory.name, slug: randomCategory.slug };
+};
+
+
+const generateRandomPost = () => {
+
+  const _title = faker.lorem.sentence()
+
+  return {
+    author: generateRandomAuthor(),
+    title: _title,
+    image: faker.image.urlPicsumPhotos({ width: 500, height: 500, blur: 0 }),
+    post: `<h1>${faker.lorem.sentence()}</h1><p>${faker.lorem.paragraph()}</p>`,
+    slug: faker.helpers.slugify(_title.toLowerCase().slice(0, -1)),
+    views: faker.number.int(2000),
+    categories: [generateRandomCategory(), generateRandomCategory()]
+  };
+};
+
+const resetDatabase = async () => {
+  // Eliminar posts y categories
+  await prisma.category.deleteMany();
+  await prisma.post.deleteMany();
+
+  // Reiniciar el contador de ID en la tabla posts y categories
+  await prisma.$executeRaw`ALTER SEQUENCE "Category_id_seq" RESTART WITH 1;`;
+  await prisma.$executeRaw`ALTER SEQUENCE "Post_id_seq" RESTART WITH 1;`;
+};
+
+const load = async () => {
+  try {
+    // reset database
+    await resetDatabase();
+
+    // Crear los posts
+    for (let i = 0; i < N_POSTS; i++) {
+      const post = generateRandomPost();
+      const createdPost = await prisma.post.create({
+        data: {
+          author: {
+            connectOrCreate: {
+              where: { email: post.author.email },
+              create: { email: post.author.email, name: post.author.name, image: post.author.image },
+            }
+          },
+          title: post.title,
+          image: post.image,
+          post: post.post,
+          slug: post.slug,
+          views: post.views,
+          categories: {
+            connectOrCreate: post.categories.map(category => ({
+              where: { slug: category.slug },
+              create: { name: category.name, slug: category.slug }
+            }))
+          }
+        },
+        include: {
+          categories: true, // Incluir las categorías en la respuesta
+          author: true
+        }
+      });
+
+      console.log(`Post creado con el ID ${createdPost.id} y autor ${createdPost.author.name} y categorías conectadas:`, createdPost.categories);
+    }
+  } catch (error) {
+    console.error("Error al insertar datos:", error);
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
+load();

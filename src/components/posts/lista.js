@@ -1,0 +1,91 @@
+import { PAGE, PER_PAGE } from '@/lib/pagination'
+import { TrashIcon, SquareArrowOutUpRightIcon, EyeIcon, PencilIcon } from "lucide-react";
+import { getPostsWithCategory, getAllPosts } from '@/lib/data'
+import { auth } from "@/auth"
+import { publishPost } from '@/lib/actions';
+import Modal from '@/components/modal';
+import PostVer from '@/components/posts/ver'
+import PostModificar from '@/components/posts/modificar';
+import PostEliminar from '@/components/posts/eliminar';
+import PaginationControls from '@/components/pagination-control'
+import Link from 'next/link';
+
+
+async function Posts({ searchParams }) {
+    const session = await auth()
+
+    const { page = PAGE, per_page = PER_PAGE, category = '' } = await searchParams
+
+
+    let posts = []
+    if (category) {
+        posts = await getPostsWithCategory(category)
+    } else {
+        posts = await getAllPosts(page)
+    }
+    // console.log(posts);
+    // mocked, skipped and limited in the real app
+    const start = (page - 1) * per_page // 0, 5, 10 ...
+    const end = start + per_page    // 5, 10, 15 ...
+
+    let entries = []
+
+    if (start >= 0 && start < posts.length)   // check limits
+        entries = posts.slice(start, end)     // get posts slice
+
+    return (
+        <>
+            <PaginationControls
+                currentPage={page}
+                hasNextPage={end < posts.length}
+                hasPrevPage={start > 0}
+                total={posts.length}
+            />
+            <div>
+                {entries.map((post) => (
+                    <div key={post.id} className="p-1 flex justify-between items-center odd:bg-slate-100">
+
+                        <div className='flex gap-1 items-center'>
+                            {session?.user?.role === 'ADMIN' &&
+                                <form action={publishPost.bind(null, post.id)}>
+                                    <button
+                                        className={`${post.is_draft ? 'bg-slate-300' : 'bg-slate-600'} p-2 rounded-full self-end hover:bg-slate-400`}
+                                        title={`${post.is_draft ? 'Publicar post' : 'Despublicar'}`}>
+                                        <SquareArrowOutUpRightIcon className='text-white size-4' />
+                                    </button>
+                                </form>
+                            }
+                            <Link href={`/posts/${post.slug}`} className="font-bold cursor-pointer">{post.title}</Link>
+                        </div>
+
+                        {session?.user?.role === 'ADMIN' &&
+                            <div className='flex justify-center items-center gap-1'>
+
+                                <Modal openElement={
+                                    <div className='size-8 grid place-content-center rounded-full border border-blue-500 text-blue-700 bg-blue-200 hover:bg-blue-500 hover:text-white hover:cursor-pointer'>
+                                        <EyeIcon className='size-4' />
+                                    </div>}>
+                                    <PostVer post={post} />
+                                </Modal>
+                                <Modal openElement={
+                                    <div className='size-8 grid place-content-center rounded-full border border-amber-500 text-amber-700 bg-amber-200 hover:bg-amber-500 hover:text-white hover:cursor-pointer'>
+                                        <PencilIcon className='size-4' />
+                                    </div>}>
+                                    <PostModificar post={post} />
+                                </Modal>
+                                <Modal openElement={
+                                    <div className='size-8 grid place-content-center rounded-full border border-red-500 text-red-700 bg-red-200 hover:bg-red-500 hover:text-white hover:cursor-pointer'>
+                                        <TrashIcon className='size-4' />
+                                    </div>}>
+                                    <PostEliminar post={post} />
+                                </Modal>
+                            </div>
+                        }
+                    </div>
+                ))}
+            </div>
+        </>
+    )
+}
+
+export default Posts
