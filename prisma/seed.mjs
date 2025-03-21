@@ -7,9 +7,9 @@ const prisma = new PrismaClient();
 const N_POSTS = 51
 
 const AUTHORS = [
-  { name: "Pepe Viyuela", email: "pepe@pepe.com", image: 'https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/128/27.jpg' },
-  { name: "Ana Alferez", email: "ana@ana.com", image: faker.image.personPortrait({ sex: 'female', size: '128' }) },
-  { name: "Jose López", email: "jose@jose.com", image: faker.image.personPortrait({ sex: 'male', size: '128' }) }
+  { name: "Pepe Viyuela", email: "pepe@pepe.com", image: 'https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/128/27.jpg', role: 'USER' },
+  { name: "Ana Alferez", email: "ana@ana.com", image: faker.image.personPortrait({ sex: 'female', size: '128' }), role: 'USER' },
+  { name: "Jose López", email: "jose@jose.com", image: faker.image.personPortrait({ sex: 'male', size: '128' }), role: 'ADMIN' }
 ];
 
 const CATEGORIES = [
@@ -22,7 +22,7 @@ const CATEGORIES = [
 
 const generateRandomAuthor = () => {
   const randomAuthor = faker.helpers.arrayElement(AUTHORS)
-  return { name: randomAuthor.name, email: randomAuthor.email, image: randomAuthor.image };
+  return { name: randomAuthor.name, email: randomAuthor.email, image: randomAuthor.image, role: randomAuthor.role };
 };
 
 

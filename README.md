@@ -11,7 +11,7 @@ Se han instalado las siguientes dependencias:
 npm  install  prisma  @faker-js/faker  -D  
 npm  install  @prisma/client  next-auth@beta  @auth/prisma-adapter 
 npm  install  lucide-react  bcryptjs  cloudinary  react-spinners  sonner  slugify
-npm  install  @tiptap/react  @tiptap/react  @tiptap/html  @tiptap/starter-kit
+npm  install  @tiptap/react  @tiptap/pm  @tiptap/html  @tiptap/starter-kit
 npm  install  @tiptap/extension-color
 npm  install  @tiptap/extension-list-item 
 npm  install  @tiptap/extension-text-style
@@ -33,7 +33,7 @@ npm  run  dev
 ## Diagrama E-R simplificado
 
 
-![Diagrama ER simplificado](public/images/diagrama-er-app-climatizacion.png)
+![Diagrama ER simplificado](public/images/diagrama-er-blog.png)
 
 
 # Agradecimientos
