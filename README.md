@@ -18,6 +18,7 @@ La aplicación tiene las siguientes funcionalidades:
 - Los usuarios con rol USER no pueden publicar ni despublicar los post que han creado ni ningún otro.
 - Una vez publicado un post, no podrá editarse ni eliminarse. 
 - Solo el usuario con rol ADMIN podrá despublicar un post y así permitir la modificación o eliminación de dicho post.
+- Las categorías sólo pueden crearse, modificarse y eliminarse por el usuario con rol ADMIN.
   
 
 
