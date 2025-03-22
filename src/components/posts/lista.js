@@ -1,6 +1,6 @@
 import { PAGE, PER_PAGE } from '@/lib/pagination'
-import { TrashIcon, SquareArrowOutUpRightIcon, EyeIcon, PencilIcon } from "lucide-react";
-import { getPostsWithCategory, getAllPosts, getAllPostsByAuthor } from '@/lib/data'
+import { TrashIcon, SquareArrowOutUpRightIcon, EyeIcon, PencilIcon, PlusIcon } from "lucide-react";
+import { getAllPosts, getAllPostsByAuthor, getCategories } from '@/lib/data'
 import { auth } from "@/auth"
 import { publishPost } from '@/lib/actions';
 import Modal from '@/components/modal';
@@ -10,6 +10,7 @@ import PostEliminar from '@/components/posts/eliminar';
 import PaginationControls from '@/components/pagination-control'
 import Link from 'next/link';
 import { redirect } from 'next/dist/server/api-utils';
+import PostInsertar from './insertar';
 
 
 async function Posts({ searchParams }) {
@@ -19,6 +20,7 @@ async function Posts({ searchParams }) {
 
     const { page = PAGE, per_page = PER_PAGE, category = '' } = await searchParams
 
+    const categories = await getCategories()
 
     let posts = []
     if (session.user?.role === 'ADMIN') {
@@ -47,6 +49,13 @@ async function Posts({ searchParams }) {
 
     return (
         <>
+            <Modal openElement={
+                <div className='justify-self-end size-8 grid place-content-center rounded-full border border-green-500 text-green-700 bg-green-200 hover:bg-green-500 hover:text-white hover:cursor-pointer'>
+                    <PlusIcon className='size-4' />
+                </div>}>
+                <PostInsertar authorId={session?.user.id} categories={categories} />
+            </Modal>
+
             <PaginationControls
                 currentPage={page}
                 hasNextPage={end < posts.length}
@@ -88,7 +97,7 @@ async function Posts({ searchParams }) {
                                     <div className='size-8 grid place-content-center rounded-full border border-amber-500 text-amber-700 bg-amber-200 hover:bg-amber-500 hover:text-white hover:cursor-pointer'>
                                         <PencilIcon className='size-4' />
                                     </div>}>
-                                    <PostModificar post={post} />
+                                    <PostModificar post={post} categories={categories} />
                                 </Modal>
                                 :
                                 <div className='size-8 grid place-content-center rounded-full border border-slate-500 text-slate-700 bg-slate-200'>

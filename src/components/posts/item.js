@@ -17,7 +17,7 @@ async function Post({ slug, children, className }) {
         <div className={className}>
             {/* Título */}
             <div className="flex justify-between">
-                <h1 className="text-2xl text-bold">{post.title}</h1>
+                <h1 className="text-4xl font-black">{post.title}</h1>
                 {session?.user?.role === 'ADMIN' &&
                     <div className='flex gap-1 justify-end items-start'>
 
@@ -45,17 +45,27 @@ async function Post({ slug, children, className }) {
                 }
             </div>
             {/* Contenido */}
-            <div>
-                <p className="text-xs text-gray-500">Autor/a: {post.author.name}</p>
-                <p className="text-xs text-gray-500">Creado: {post.created.toLocaleString()}</p>
-                <p className="text-xs text-gray-500">Última modificación: {post.modified.toLocaleString()}</p>
-                <p className="text-gray-500 text-xs italic">Vistas: {post.views}</p>
-
-
+            <div className="@container">
                 <div className="mt-10 flex flex-col md:flex-row gap-8">
-                    <img src={post.image || '/blog-logo.png'} alt="" className="w-full md:w-1/3 object-cover" />
-                    <div dangerouslySetInnerHTML={{ __html: post.post }} />
+                    <img src={post.image || '/blog-logo.png'} alt="" className="w-full md:w-1/6 object-cover" />
+                    <div>
+                        <p className="text-xs text-gray-500">Autor/a: {post.author.name}</p>
+                        <p className="text-xs text-gray-500">Creado: {post.created.toLocaleString()}</p>
+                        <p className="text-xs text-gray-500">Última modificación: {post.modified.toLocaleString()}</p>
+                        <p className="text-xs text-gray-500 italic">Vistas: {post.views}</p>
+                        <p className="text-xs font-bold text-gray-500">Categorías:</p>
+                        <p className="text-xs flex flex-wrap gap-3 ">
+                            {post.categories?.map(category =>
+                                <span key={category.id} className="text-gray-500">
+                                    {category.name}
+                                </span>
+                            )}
+                        </p>
+
+                    </div>
                 </div>
+
+                <div dangerouslySetInnerHTML={{ __html: post.post }} className="my-10 tiptap" />
             </div>
         </div>
     );

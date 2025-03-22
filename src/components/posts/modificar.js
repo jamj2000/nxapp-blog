@@ -10,7 +10,7 @@ import InputImage from '@/components/input-image';
 
 
 
-export default function PostModificar({ post }) {
+export default function PostModificar({ post, categories }) {
     const formId = useId()
     const [state, action, pending] = useActionState(editPost, {})
 
@@ -23,6 +23,7 @@ export default function PostModificar({ post }) {
 
     }, [formId, state])
 
+    const IDs = post.categories.map(c => c.id)
 
     return (
         <form id={formId} action={action} className="w-full flex flex-col px-4">
@@ -62,9 +63,24 @@ export default function PostModificar({ post }) {
                             className='text-right w-full md:w-3/4 px-3 py-2 rounded-lg focus:outline-none focus:border-blue-400 bg-gray-100'
                         />
                     </div>
-                    {/* <Suspense fallback={'Loading ...'}>
-                            <Categories postId={post?.id} disabled={disabled} />
-                        </Suspense> */}
+                    <p className="font-bold">Categorías:</p>
+                    <div className="text-xs flex flex-wrap gap-3">
+                        {categories?.map(category =>
+                            <div key={category.id}>
+                                <input
+                                    id={category.id}
+                                    type="checkbox"
+                                    name={category.id}
+                                    value={category.id}
+                                    defaultChecked={IDs.includes(category.id)}
+                                    className='peer hidden' />
+                                <label htmlFor={category.id} className="px-2 py-1 text-gray-500 rounded-full peer-checked:bg-gray-500 peer-checked:text-gray-100 ">
+                                    {category.name}
+                                </label>
+
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
 

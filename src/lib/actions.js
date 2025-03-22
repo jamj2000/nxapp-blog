@@ -228,7 +228,7 @@ export async function newPost(prevState, formData) {
     const categories = { connect }
 
     // Información para depuración
-    console.log('POST CATEGORIES ', categories);
+    // console.log('POST CATEGORIES ', categories);
 
 
     await prisma.post.create({
@@ -264,13 +264,13 @@ export async function editPost(prevState, formData) {
   }
 
   // Array con IDs de todas las categories. Formato: [ {id: 1}, {id: 2}, ...]
-  // const categoriesIDs = await prisma.category.findMany({
-  //   select: { id: true }
-  // })
+  const categoriesIDs = await prisma.category.findMany({
+    select: { id: true }
+  })
 
-  // const connect = categoriesIDs.filter(category => formData.get(category.id) !== null)
-  // const disconnect = categoriesIDs.filter(category => formData.get(category.id) === null)
-  // const categories = { connect, disconnect }
+  const connect = categoriesIDs.filter(category => formData.get(category.id) !== null)
+  const disconnect = categoriesIDs.filter(category => formData.get(category.id) === null)
+  const categories = { connect, disconnect }
 
   // Información para depuración
   // console.log('POST CATEGORIES ', categories);
@@ -278,7 +278,7 @@ export async function editPost(prevState, formData) {
   try {
     await prisma.post.update({
       where: { id },
-      data: { title, image, post, slug, views, /*categories*/ },
+      data: { title, image, post, slug, views, categories },
     })
     revalidatePath('/posts')
     return { success: 'Post actualizado' }
