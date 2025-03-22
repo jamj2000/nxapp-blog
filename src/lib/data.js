@@ -151,6 +151,24 @@ export async function getPostsByAuthorWithCategory(authorId, categoryName) {
   }
 }
 
+export async function getPosts() {
+  try {
+    // Consulta para obtener todos los posts
+    const posts = await prisma.post.findMany({
+      orderBy: [ // { author: 'asc' }, { title: 'asc' },
+        { title: 'asc' }
+      ],
+      // skip: (page - 1) * PER_PAGE,
+      // take: PER_PAGE
+    })
+
+    return posts;
+  } catch (error) {
+    console.error('Error:', error);
+    return null;
+  }
+}
+
 
 export async function getAllPosts(page) {
   try {

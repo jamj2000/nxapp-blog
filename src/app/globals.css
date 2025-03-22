@@ -27,7 +27,7 @@ body {
 
 
 .checkbox-label:has(input:checked) {
-  @apply border-gray-800 bg-gray-400 text-gray-800;
+  @apply bg-blue-200 text-blue-800;
 }
 
 

@@ -1,6 +1,6 @@
 import { PAGE, PER_PAGE } from '@/lib/pagination'
 import { TrashIcon, EyeIcon, PencilIcon } from "lucide-react";
-import { getCategories } from '@/lib/data'
+import { getCategories, getPosts } from '@/lib/data'
 import { auth } from "@/auth"
 import Modal from '@/components/modal';
 import CategoryVer from '@/components/categories/ver'
@@ -15,6 +15,7 @@ async function Categories({ searchParams }) {
     const { page = PAGE, per_page = PER_PAGE } = await searchParams
 
     const categories = await getCategories()
+    const posts = await getPosts()
 
     // console.log(categories);
     // mocked, skipped and limited in the real app
@@ -55,7 +56,7 @@ async function Categories({ searchParams }) {
                                     <div className='size-8 grid place-content-center rounded-full border border-amber-500 text-amber-700 bg-amber-200 hover:bg-amber-500 hover:text-white hover:cursor-pointer'>
                                         <PencilIcon className='size-4' />
                                     </div>}>
-                                    <CategoryModificar category={category} />
+                                    <CategoryModificar category={category} posts={posts} />
                                 </Modal>
                                 <Modal openElement={
                                     <div className='size-8 grid place-content-center rounded-full border border-red-500 text-red-700 bg-red-200 hover:bg-red-500 hover:text-white hover:cursor-pointer'>

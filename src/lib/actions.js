@@ -358,10 +358,20 @@ export async function editCategory(prevState, formData) {
   const name = formData.get('name');
   const slug = slugify(name.toLowerCase())
 
+  // Array con IDs de todos las posts. Formato: [ {id: 1}, {id: 2}, ...]
+  const postsIDs = await prisma.post.findMany({
+    select: { id: true }
+  })
+
+  const connect = postsIDs.filter(post => formData.get(post.id) !== null)
+  const disconnect = postsIDs.filter(post => formData.get(post.id) === null)
+  const posts = { connect, disconnect }
+
+
   try {
-    const categories = await prisma.category.update({
+    await prisma.category.update({
       where: { id },
-      data: { name, slug },
+      data: { name, slug, posts },
     })
     revalidatePath('/categories')
   } catch (error) {

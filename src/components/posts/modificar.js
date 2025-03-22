@@ -68,7 +68,11 @@ export default function PostModificar({ post, categories }) {
                     <div className="text-xs flex flex-wrap gap-3">
                         {categories?.map(category =>
                             <div key={category.id}>
-                                <Check id={category.id} name={category.name} defaultChecked={IDs.includes(category.id)} />
+                                <Check
+                                    id={category.id}
+                                    label={category.name}
+                                    defaultChecked={IDs.includes(category.id)}
+                                    className={"has-checked:bg-blue-200 has-checked:text-blue-800 px-2 py-1 text-gray-500 rounded-full"} />
                             </div>
                         )}
                     </div>

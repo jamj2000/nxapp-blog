@@ -44,7 +44,7 @@ export default function CategoryInsertar() {
 
                     <div className="flex flex-col md:flex-row items-center md:space-x-4">
                         <label htmlFor='name' className="font-bold w-full md:w-1/4">Título</label>
-                        <input type='text' id='name' name='name'
+                        <input type='text' id='name' name='name' required
                             placeholder='Nombre'
                             className="w-full md:w-3/4 px-3 py-2 rounded-lg focus:outline-none focus:border-blue-400 bg-gray-100"
                         />

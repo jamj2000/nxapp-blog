@@ -46,7 +46,7 @@ export default function PostInsertar({ authorId, categories }) {
 
                     <div className="flex flex-col md:flex-row items-center md:space-x-4">
                         <label htmlFor='title' className="font-bold w-full md:w-1/4">Título</label>
-                        <input type='text' id='title' name='title'
+                        <input type='text' id='title' name='title' required
                             placeholder='Título'
                             className="w-full md:w-3/4 px-3 py-2 rounded-lg focus:outline-none focus:border-blue-400 bg-gray-100"
                         />
@@ -68,7 +68,11 @@ export default function PostInsertar({ authorId, categories }) {
                     <div className="text-xs flex flex-wrap gap-3">
                         {categories?.map(category =>
                             <div key={category.id}>
-                                <Check id={category.id} name={category.name} />
+                                <Check
+                                    id={category.id}
+                                    label={category.name}
+                                    // la clase checkbox-label la hemos definido en el archivo globals.css 
+                                    className={"checkbox-label px-2 py-1 text-gray-500 rounded-full"} />
                             </div>
                         )}
                     </div>

@@ -5,12 +5,13 @@ import { PlusIcon, RefreshCwIcon } from 'lucide-react';
 import { toast } from 'sonner';
 import Tiptap from '@/components/tiptap';
 import InputImage from '@/components/input-image';
+import Check from '../check';
 
 
 
 
 
-export default function CategoryModificar({ category }) {
+export default function CategoryModificar({ category, posts }) {
     const formId = useId()
     const [state, action, pending] = useActionState(editCategory, {})
 
@@ -23,6 +24,7 @@ export default function CategoryModificar({ category }) {
 
     }, [formId, state])
 
+    const IDs = category.posts.map(p => p.id)
 
     return (
         <form id={formId} action={action} className="w-full flex flex-col px-4">
@@ -38,7 +40,7 @@ export default function CategoryModificar({ category }) {
             </button>
 
             <div className='flex flex-col md:flex-row md:gap-10'>
-                <InputImage imgUrl={category.image || '/pwa/icon-256x256.png'} className="w-full md:w-1/3 object-cover" />
+                {/* <InputImage imgUrl={category.image || '/pwa/icon-256x256.png'} className="w-full md:w-1/3 object-cover" /> */}
 
                 <div className='w-full md:w-2/3 flex flex-col gap-2'>
 
@@ -49,27 +51,27 @@ export default function CategoryModificar({ category }) {
                             className="w-full md:w-3/4 px-3 py-2 rounded-lg focus:outline-none focus:border-blue-400 bg-gray-100"
                         />
                     </div>
+                    <p className="font-bold my-4">Posts en esta categoría</p>
+                    <p className="flex flex-col gap-1">
+                        {posts
+                            ?.sort((a, b) => a.slug.localeCompare(b.slug))
+                            .map(post =>
+                                <Check
+                                    key={post.id}
+                                    id={post.id}
+                                    label={post.title}
+                                    defaultChecked={IDs.includes(post.id)}
+                                    className={'text-gray-400 has-checked:text-gray-900'}
+                                />
+                            )}
+                    </p>
 
 
-                    {/* <div className="flex flex-col md:flex-row items-center md:space-x-4">
-                        <label htmlFor="views" className="font-bold w-full md:w-1/4"> Vistas </label>
-                        <input
-                            id="views"
-                            name="views"
-                            type="number"
-                            defaultValue={category.views}
-                            min={0}
-                            className='text-right w-full md:w-3/4 px-3 py-2 rounded-lg focus:outline-none focus:border-blue-400 bg-gray-100'
-                        />
-                    </div> */}
-                    {/* <Suspense fallback={'Loading ...'}>
-                            <Categories categoryId={category?.id} disabled={disabled} />
-                        </Suspense> */}
                 </div>
             </div>
 
 
-            {/* {children} */}
+
 
 
         </form>

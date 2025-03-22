@@ -24,7 +24,7 @@ async function Post({ slug, className }) {
 
                         <form action={publishPost.bind(null, post.id)}>
                             <button
-                                className={`${post.is_draft ? 'bg-slate-300' : 'bg-slate-600'} p-2 rounded-full self-end hover:bg-slate-400`}
+                                className={`${post.is_draft ? 'bg-slate-300' : 'bg-slate-600'} p-2 rounded-full self-end hover:bg-slate-400 `}
                                 title={`${post.is_draft ? 'Publicar post' : 'Despublicar'}`}>
                                 <SquareArrowOutUpRightIcon className='text-white size-4' />
                             </button>
