@@ -5,6 +5,7 @@ import { PlusIcon, RefreshCwIcon } from 'lucide-react';
 import { toast } from 'sonner';
 import Tiptap from '@/components/tiptap';
 import InputImage from '@/components/input-image';
+import Check from '@/components/check';
 
 
 
@@ -67,17 +68,7 @@ export default function PostModificar({ post, categories }) {
                     <div className="text-xs flex flex-wrap gap-3">
                         {categories?.map(category =>
                             <div key={category.id}>
-                                <input
-                                    id={category.id}
-                                    type="checkbox"
-                                    name={category.id}
-                                    value={category.id}
-                                    defaultChecked={IDs.includes(category.id)}
-                                    className='peer hidden' />
-                                <label htmlFor={category.id} className="px-2 py-1 text-gray-500 rounded-full peer-checked:bg-gray-500 peer-checked:text-gray-100 ">
-                                    {category.name}
-                                </label>
-
+                                <Check id={category.id} name={category.name} defaultChecked={IDs.includes(category.id)} />
                             </div>
                         )}
                     </div>
@@ -86,11 +77,8 @@ export default function PostModificar({ post, categories }) {
 
             <div className="mt-10 flex flex-col">
                 <p className="font-bold mb-4">Contenido</p>
-                {/* <textarea name='post' className='bg-slate-100 border border-slate-200' /> */}
                 <Tiptap contenido={post.post} name='post' />
             </div>
-
-            {/* {children} */}
 
 
         </form>

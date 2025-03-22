@@ -3,14 +3,15 @@ import { TrashIcon, SquareArrowOutUpRightIcon, EyeIcon, PencilIcon, PlusIcon } f
 import { getAllPosts, getAllPostsByAuthor, getCategories } from '@/lib/data'
 import { auth } from "@/auth"
 import { publishPost } from '@/lib/actions';
+import Link from 'next/link';
 import Modal from '@/components/modal';
 import PostVer from '@/components/posts/ver'
+import PostInsertar from '@/components/posts/insertar';
 import PostModificar from '@/components/posts/modificar';
 import PostEliminar from '@/components/posts/eliminar';
 import PaginationControls from '@/components/pagination-control'
-import Link from 'next/link';
-import { redirect } from 'next/dist/server/api-utils';
-import PostInsertar from './insertar';
+import { redirect } from 'next/navigation';  // IMPORTANTE: importar desde next/navigation
+
 
 
 async function Posts({ searchParams }) {

@@ -36,7 +36,15 @@ async function Category({ slug, className }) {
             </div>
             {/* Contenido */}
             <div>
-                <p className="text-xs text-gray-500">Slug: {category.slug}</p>
+                <p className="text-xs text-gray-500 mb-10">Slug: {category.slug}</p>
+                <p className="font-bold mb-4">Post en esta categoría</p>
+                <p className="flex flex-col gap-1">
+                    {category.posts?.map(post =>
+                        <span key={post.id} className="">
+                            {post.title}
+                        </span>
+                    )}
+                </p>
             </div>
         </div>
     );

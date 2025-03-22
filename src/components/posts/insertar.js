@@ -1,10 +1,11 @@
 'use client'
 import { newPost } from '@/lib/actions'
-import { Suspense, useActionState, useEffect, useId } from 'react'
+import { useActionState, useEffect, useId } from 'react'
 import { PlusIcon, RefreshCwIcon } from 'lucide-react';
 import { toast } from 'sonner';
 import Tiptap from '@/components/tiptap';
 import InputImage from '@/components/input-image';
+import Check from '@/components/check';
 
 
 
@@ -67,15 +68,7 @@ export default function PostInsertar({ authorId, categories }) {
                     <div className="text-xs flex flex-wrap gap-3">
                         {categories?.map(category =>
                             <div key={category.id}>
-                                <input
-                                    id={category.id}
-                                    type="checkbox"
-                                    name={category.id}
-                                    className='peer hidden' />
-                                <label htmlFor={category.id} className="px-2 py-1 text-gray-500 rounded-full peer-checked:bg-gray-500 peer-checked:text-gray-100 ">
-                                    {category.name}
-                                </label>
-
+                                <Check id={category.id} name={category.name} />
                             </div>
                         )}
                     </div>

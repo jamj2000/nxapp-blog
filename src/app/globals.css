@@ -26,6 +26,11 @@ body {
 }
 
 
+.checkbox-label:has(input:checked) {
+  @apply border-gray-800 bg-gray-400 text-gray-800;
+}
+
+
 /* Tiptap editor content */
 
 .tiptap.ProseMirror {

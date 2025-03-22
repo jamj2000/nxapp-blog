@@ -2,14 +2,15 @@ import { PencilIcon, SquareArrowOutUpRightIcon, TrashIcon } from "lucide-react";
 import Modal from "@/components/modal";
 import PostModificar from "@/components/posts/modificar";
 import PostEliminar from "@/components/posts/eliminar";
-import { getPostBySlug } from "@/lib/data";
+import { getCategories, getPostBySlug } from "@/lib/data";
 import { auth } from "@/auth";
 import { incrementarVista, publishPost } from "@/lib/actions";
 
 
-async function Post({ slug, children, className }) {
+async function Post({ slug, className }) {
     const session = await auth()
     const post = await getPostBySlug(slug)
+    const categories = await getCategories()
 
     incrementarVista(post.id)
 
@@ -33,7 +34,7 @@ async function Post({ slug, children, className }) {
                             openElement={<div className='size-8 grid place-content-center rounded-full border border-amber-500 text-amber-700 bg-amber-200 hover:bg-amber-500 hover:text-white hover:cursor-pointer'>
                                 <PencilIcon className='size-4' />
                             </div>}>
-                            <PostModificar post={post} />
+                            <PostModificar post={post} categories={categories} />
                         </Modal>
                         <Modal
                             openElement={<div className='size-8 grid place-content-center rounded-full border border-red-500 text-red-700 bg-red-200 hover:bg-red-500 hover:text-white hover:cursor-pointer'>
@@ -49,12 +50,20 @@ async function Post({ slug, children, className }) {
                 <div className="mt-10 flex flex-col md:flex-row gap-8">
                     <img src={post.image || '/blog-logo.png'} alt="" className="w-full md:w-1/6 object-cover" />
                     <div>
-                        <p className="text-xs text-gray-500">Autor/a: {post.author.name}</p>
-                        <p className="text-xs text-gray-500">Creado: {post.created.toLocaleString()}</p>
-                        <p className="text-xs text-gray-500">Última modificación: {post.modified.toLocaleString()}</p>
-                        <p className="text-xs text-gray-500 italic">Vistas: {post.views}</p>
-                        <p className="text-xs font-bold text-gray-500">Categorías:</p>
-                        <p className="text-xs flex flex-wrap gap-3 ">
+                        <p className="text-xs text-gray-500">
+                            <span className="font-bold">Autor/a:</span> {post.author.name}
+                        </p>
+                        <p className="text-xs text-gray-500">
+                            <span className="font-bold">Creado:</span> {post.created.toLocaleString()}
+                        </p>
+                        <p className="text-xs text-gray-500">
+                            <span className="font-bold">Última modificación:</span> {post.modified.toLocaleString()}
+                        </p>
+                        <p className="text-xs text-gray-500">
+                            <span className="font-bold">Vistas:</span> {post.views}
+                        </p>
+                        <p className="text-xs text-gray-500 font-bold">Categorías:</p>
+                        <p className="text-xs flex flex-wrap gap-x-3 text-gray-500">
                             {post.categories?.map(category =>
                                 <span key={category.id} className="text-gray-500">
                                     {category.name}
