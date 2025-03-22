@@ -1,4 +1,5 @@
 import prisma from '@/lib/prisma'
+import { PER_PAGE } from './pagination';
 
 
 // ----------------------------  USER ---------------------------
@@ -96,11 +97,7 @@ export async function getPublishedPosts() {
 
 export async function getPostsWithCategory(categoryName) {
   try {
-    // const posts = await prisma.post.findMany({
-    //   include: { categories: true },
-    //   orderBy: [{ name: 'asc' }],
-    // })
-    console.log(categoryName);
+    // console.log(categoryName);
 
     const posts = await prisma.post.findMany({
       where: {
@@ -126,9 +123,36 @@ export async function getPostsWithCategory(categoryName) {
 }
 
 
+export async function getPostsByAuthorWithCategory(authorId, categoryName) {
+  try {
+    // console.log(categoryName);
+
+    const posts = await prisma.post.findMany({
+      where: {
+        authorId,
+        categories: {
+          some: {
+            slug: {
+              contains: categoryName,
+              mode: 'insensitive',
+            },
+          },
+        }
+      },
+      orderBy: { title: 'asc' },
+      include: { author: true, categories: true }
+    })
+
+    console.log(`FILTERED POSTS`, posts);
+    return posts;
+  } catch (error) {
+    // console.log(error);  
+    return null;
+  }
+}
 
 
-export async function getAllPosts() {
+export async function getAllPosts(page) {
   try {
     // Consulta para obtener todos los posts
     const posts = await prisma.post.findMany({
@@ -136,7 +160,9 @@ export async function getAllPosts() {
       orderBy: [ // { author: 'asc' }, { title: 'asc' },
         { created: 'desc' }
       ],
-    });
+      // skip: (page - 1) * PER_PAGE,
+      // take: PER_PAGE
+    })
 
     return posts;
   } catch (error) {
@@ -147,16 +173,40 @@ export async function getAllPosts() {
 
 
 
-export async function getPosts() {
+export async function getAllPostsByAuthor(authorId, page) {
   try {
-    const posts = await prisma.post.findMany({ include: { author: true } })
+    // Consulta para obtener todos los posts
+    const posts = await prisma.post.findMany({
+      where: { authorId },
+      include: { author: true, categories: true },
+      orderBy: [ // { author: 'asc' }, { title: 'asc' },
+        { created: 'desc' }
+      ],
+      // skip: (page - 1) * PER_PAGE,
+      // take: PER_PAGE
+    })
 
     return posts;
   } catch (error) {
-    // console.log(error);  
+    console.error('Error:', error);
     return null;
   }
 }
+
+
+
+// export async function getPosts(authorId) {
+//   try {
+//     const posts = authorId
+//       ? await prisma.post.findMany({ where: { authorId }, include: { author: true } })
+//       : await prisma.post.findMany({ include: { author: true } })
+
+//     return posts;
+//   } catch (error) {
+//     // console.log(error);  
+//     return null;
+//   }
+// }
 
 
 

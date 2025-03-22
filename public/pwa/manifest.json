@@ -32,7 +32,12 @@
   "screenshots": [
     {
       "src": "/pwa/desktop.webp",
-      "sizes": "1916x918",
+      "sizes": "1096x1039",
+      "type": "image/webp"
+    },
+    {
+      "src": "mobile.webp",
+      "sizes": "665x976",
       "type": "image/webp"
     }
   ]
