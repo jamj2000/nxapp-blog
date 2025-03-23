@@ -4,6 +4,15 @@ import { PER_PAGE } from './pagination';
 
 // ----------------------------  USER ---------------------------
 
+export async function getUsers() {
+  const users = await prisma.user.findMany({
+    include: { posts: true }
+  });
+  return users
+}
+
+
+
 export async function getUserById(id) {
   const user = await prisma.user.findUnique({
     where: { id }

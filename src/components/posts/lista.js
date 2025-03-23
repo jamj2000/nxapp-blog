@@ -79,7 +79,9 @@ async function Posts({ searchParams }) {
                                 </form>
                             }
 
-                            <Link href={`/posts/${post.slug}`} className="font-bold cursor-pointer">{post.title}</Link>
+                            <Link href={`/posts/${post.slug}`} className="font-bold cursor-pointer">
+                                {post.title}
+                            </Link>
                         </div>
 
 

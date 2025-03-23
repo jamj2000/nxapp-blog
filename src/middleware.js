@@ -27,15 +27,15 @@ export const config = {
         /*
          * Match all request paths except for the ones starting with:
          * - api (API routes)
-         * - images (into /public)
-         * - pwa (into /public) 
          * - auth
          * - about
+         * - images (into /public)
+         * - pwa (into /public) 
          * - _next/static (static files)
          * - _next/image (image optimization files)
          * - favicon.ico, sitemap.xml, robots.txt (metadata files)
-         * - $ (home page)
+         * - $ (root page)
          */
-        '/((?!api|home|images|pwa|auth|about|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|$).*)',
+        '/((?!api|auth|home|about|images|pwa|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|$).*)',
     ],
 }

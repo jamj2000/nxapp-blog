@@ -304,7 +304,6 @@ export async function deletePost(prevState, formData) {
     return { error }
   }
 
-  // redirect('/posts');
 }
 
 
@@ -328,7 +327,7 @@ export async function incrementarVista(id) {
     where: { id },
     data: { views: { increment: 1 } }
   });
-  // revalidatePath('/posts')
+
 }
 
 
@@ -341,15 +340,16 @@ export async function newCategory(prevState, formData) {
     const name = formData.get('name');
     const slug = slugify(name.toLowerCase())
 
-    const categories = await prisma.category.create({
+    await prisma.category.create({
       data: { name, slug },
     })
 
     revalidatePath('/categories')
+    return { success: 'Categoría creada' }
   } catch (error) {
-    console.log(error);
+    return { error }
   }
-  redirect('/categories');
+
 }
 
 
@@ -374,27 +374,85 @@ export async function editCategory(prevState, formData) {
       data: { name, slug, posts },
     })
     revalidatePath('/categories')
+    return { success: 'Categoría modificada' }
   } catch (error) {
-    console.log(error);
+    return { error }
   }
-  redirect('/categories');
+
 }
 
 export async function deleteCategory(prevState, formData) {
   try {
     const id = Number(formData.get('id'))
 
-    const categories = await prisma.category.delete({
+    await prisma.category.delete({
       where: {
         id: id,
       },
     })
     revalidatePath('/categories')
+    return { success: 'Categoría eliminada' }
   } catch (error) {
-    console.log(error);
+    return { error }
   }
 
-  redirect('/categories');
+}
+
+
+
+// ------------------------  USERS --------------------------------
+
+
+export async function newUser(prevState, formData) {
+  try {
+    const name = formData.get('name');
+    const email = formData.get('email');
+
+    await prisma.user.create({
+      data: { name, email },
+    })
+
+    revalidatePath('/dashboard')
+    return { success: 'Usuario creado' }
+  } catch (error) {
+    return { error }
+  }
+
+}
+
+
+export async function editUser(prevState, formData) {
+  const id = formData.get('id')
+  const name = formData.get('name');
+  const email = formData.get('email');
+
+
+  try {
+    await prisma.user.update({
+      where: { id },
+      data: { name, email },
+    })
+    revalidatePath('/dashboard')
+    return { success: 'Usuario modificado' }
+  } catch (error) {
+    return { error }
+  }
+
+}
+
+export async function deleteUser(prevState, formData) {
+  try {
+    const id = formData.get('id')
+
+    await prisma.user.delete({
+      where: { id },
+    })
+    revalidatePath('/dashboard')
+    return { success: 'Usuario eliminado' }
+  } catch (error) {
+    return { error }
+  }
+
 }
 
 
