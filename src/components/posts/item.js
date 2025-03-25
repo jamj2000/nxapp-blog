@@ -5,6 +5,7 @@ import PostEliminar from "@/components/posts/eliminar";
 import { getCategories, getPostBySlug } from "@/lib/data";
 import { auth } from "@/auth";
 import { incrementarVista, publishPost } from "@/lib/actions";
+import PublishButton from "../publish-button";
 
 
 async function Post({ slug, className }) {
@@ -22,12 +23,8 @@ async function Post({ slug, className }) {
                 {session?.user?.role === 'ADMIN' &&
                     <div className='flex gap-1 justify-end items-start'>
 
-                        <form action={publishPost.bind(null, post.id)}>
-                            <button
-                                className={`${post.is_draft ? 'bg-slate-300' : 'bg-slate-600'} p-2 rounded-full self-end hover:bg-slate-400`}
-                                title={`${post.is_draft ? 'Publicar post' : 'Despublicar'}`}>
-                                <SquareArrowOutUpRightIcon className='text-white size-4' />
-                            </button>
+                        <form action={publishPost.bind(null, post)}>
+                            <PublishButton post={post} />
                         </form>
 
                         <Modal

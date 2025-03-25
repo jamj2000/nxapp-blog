@@ -1,22 +1,24 @@
 'use client'
 
 import { useState } from "react";
-import RingLoader from "react-spinners/RingLoader";
+import { MoonLoader } from "react-spinners";
 
-const styles = {
-    display: "block",
-    margin: "0 auto",
-};
 
-function Spinner() {
+// const styles = {
+//     display: "block",
+//     margin: "0 auto",
+// };
+
+function Spinner({ size, color }) {
     let [loading, setLoading] = useState(true);
 
     return (
-        <RingLoader
-            color={'currentcolor'}
-            size={32}
+        // <RingLoader
+        <MoonLoader
+            color={color || 'currentcolor'}
+            size={size || 32}
             loading={loading}
-            cssOverride={styles}
+            // cssOverride={styles}
             aria-label="Loading Spinner"
             data-testid="loader"
         />

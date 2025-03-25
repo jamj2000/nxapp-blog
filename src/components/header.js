@@ -11,7 +11,7 @@ export default async function Header() {
 
 
   return (
-    <nav className='w-full px-4 py-2 flex justify-between items-center bg-white fixed top-0 '>
+    <nav className='w-full px-4 py-2 flex justify-between items-center bg-white/75 backdrop-blur-xs fixed top-0 '>
 
       <div className="flex items-center gap-1">
         {/* Control Menú */}

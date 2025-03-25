@@ -13,9 +13,8 @@ async function PaginaPosts({ searchParams }) {
     return (
         <div>
             <h1 className="text-3xl font-bold mb-4">Posts</h1>
+
             <div className='flex flex-col gap-4 justify-center'>
-
-
                 <Suspense fallback={<Spinner />}>
                     <Posts searchParams={searchParams} />
                 </Suspense>

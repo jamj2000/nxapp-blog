@@ -1,5 +1,5 @@
 import { PAGE, PER_PAGE } from '@/lib/pagination'
-import { TrashIcon, EyeIcon, PencilIcon } from "lucide-react";
+import { TrashIcon, EyeIcon, PencilIcon, PlusIcon } from "lucide-react";
 import { getCategories, getPosts } from '@/lib/data'
 import { auth } from "@/auth"
 import Modal from '@/components/modal';
@@ -8,6 +8,7 @@ import CategoryModificar from '@/components/categories/modificar';
 import CategoryEliminar from '@/components/categories/eliminar';
 import PaginationControls from '@/components/pagination-control'
 import Link from 'next/link';
+import CategoryInsertar from './insertar';
 
 async function Categories({ searchParams }) {
     const session = await auth()
@@ -29,6 +30,15 @@ async function Categories({ searchParams }) {
 
     return (
         <>
+            {session?.user?.role === 'ADMIN' &&
+                <Modal openElement={
+                    <div className='justify-self-end size-8 grid place-content-center rounded-full border border-green-500 text-green-700 bg-green-200 hover:bg-green-500 hover:text-white hover:cursor-pointer'>
+                        <PlusIcon className='size-4' />
+                    </div>}>
+                    <CategoryInsertar />
+                </Modal>
+            }
+
             <PaginationControls
                 currentPage={page}
                 hasNextPage={end < categories.length}

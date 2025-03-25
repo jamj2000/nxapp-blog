@@ -249,7 +249,6 @@ export async function newPost(prevState, formData) {
 
 export async function editPost(prevState, formData) {
   const id = Number(formData.get('id'))
-  // const author = formData.get('author');
   const title = formData.get('title');
   const post = formData.get('post');
   const slug = slugify(title.toLowerCase())
@@ -307,14 +306,15 @@ export async function deletePost(prevState, formData) {
 }
 
 
-export async function publishPost(id) {
-  const post = await prisma.post.findUnique({ where: { id } });
-
+export async function publishPost(post) {
+  // const post = await prisma.post.findUnique({ where: { id } });
+  console.log(`id`, post.id);
   if (post) {
     await prisma.post.update({
       where: { id: post.id },
       data: { is_draft: !post.is_draft },
     })
+
     revalidatePath("/posts");
   }
 }
@@ -336,10 +336,11 @@ export async function incrementarVista(id) {
 
 
 export async function newCategory(prevState, formData) {
-  try {
-    const name = formData.get('name');
-    const slug = slugify(name.toLowerCase())
 
+  const name = formData.get('name');
+  const slug = slugify(name.toLowerCase())
+
+  try {
     await prisma.category.create({
       data: { name, slug },
     })
@@ -382,9 +383,9 @@ export async function editCategory(prevState, formData) {
 }
 
 export async function deleteCategory(prevState, formData) {
-  try {
-    const id = Number(formData.get('id'))
+  const id = Number(formData.get('id'))
 
+  try {
     await prisma.category.delete({
       where: {
         id: id,
@@ -404,10 +405,11 @@ export async function deleteCategory(prevState, formData) {
 
 
 export async function newUser(prevState, formData) {
-  try {
-    const name = formData.get('name');
-    const email = formData.get('email');
 
+  const name = formData.get('name');
+  const email = formData.get('email');
+
+  try {
     await prisma.user.create({
       data: { name, email },
     })

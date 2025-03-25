@@ -11,6 +11,7 @@ import PostModificar from '@/components/posts/modificar';
 import PostEliminar from '@/components/posts/eliminar';
 import PaginationControls from '@/components/pagination-control'
 import { redirect } from 'next/navigation';  // IMPORTANTE: importar desde next/navigation
+import PublishButton from '../publish-button';
 
 
 
@@ -70,12 +71,8 @@ async function Posts({ searchParams }) {
                         <div className='flex gap-1 items-center'>
 
                             {session.user?.role === 'ADMIN' &&
-                                <form action={publishPost.bind(null, post.id)}>
-                                    <button
-                                        className={`${post.is_draft ? 'bg-slate-300' : 'bg-slate-600'} p-2 rounded-full self-end hover:bg-slate-400`}
-                                        title={`${post.is_draft ? 'Publicar post' : 'Despublicar'}`}>
-                                        <SquareArrowOutUpRightIcon className='text-white size-4' />
-                                    </button>
+                                <form action={publishPost.bind(null, post)}>
+                                    <PublishButton post={post} />
                                 </form>
                             }
 
