@@ -134,7 +134,7 @@ export async function getPostsWithCategoryApi(categoryName, page) {
       take: PER_PAGE
     });
 
-    console.log('Posts:', posts);
+    // console.log('Posts:', posts);
     return posts;
   } catch (error) {
     console.error('Error:', error);
@@ -151,7 +151,7 @@ export async function getAllPostsApi(page) {
       take: PER_PAGE
     });
 
-    console.log('All Posts:', posts);
+    // console.log('All Posts:', posts);
     return posts;
   } catch (error) {
     console.error('Error:', error);
@@ -162,7 +162,7 @@ export async function getAllPostsApi(page) {
 export async function getTotalPostsCount() {
   try {
     const totalPosts = await prisma.post.count();
-    console.log('Total Posts:', totalPosts);
+    // console.log('Total Posts:', totalPosts);
     return totalPosts
   } catch (error) {
     console.error('Error:', error);
@@ -255,7 +255,6 @@ export async function editPost(prevState, formData) {
   const views = Number(formData.get('views'));
   let image;
 
-  console.log(`POST`, post);
   const imageFile = formData.get("file");
 
   if (imageFile && imageFile.size > 0) {

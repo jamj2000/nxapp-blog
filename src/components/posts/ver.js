@@ -6,7 +6,7 @@ function PostVer({ post }) {
             <h1 className="text-4xl font-black">{post.title}</h1>
             <div className="@container">
                 <div className="mt-10 flex flex-col md:flex-row gap-8">
-                    <img src={post.image || '/blog-logo.png'} alt="" className="w-full md:w-1/6 object-cover" />
+                    <img src={post.image || '/pwa/icon-256x256.png.png'} alt="" className="w-full md:w-1/6 object-cover" />
                     <div>
                         <p className="text-xs text-gray-500">
                             <span className="font-bold">Autor/a:</span> {post.author.name}

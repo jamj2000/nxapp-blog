@@ -23,7 +23,6 @@ export const options = {
     },
     callbacks: {
         async session({ session, token }) {
-            // console.log(session, user);
             session.user.id = token?.sub;     // Para incluir ID de usuario
             session.user.role = token?.role
             return session

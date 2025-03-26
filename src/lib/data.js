@@ -42,7 +42,7 @@ export async function getCategories() {
 
     return categories;
   } catch (error) {
-    // console.log(error);  
+    console.log(error);
     return null;
   }
 }
@@ -60,7 +60,7 @@ export async function getCategory(categoryId) {
 
     return category;
   } catch (error) {
-    // console.log(error);  
+    console.log(error);
     return null;
   }
 }
@@ -71,11 +71,17 @@ export async function getCategoryBySlug(slug) {
   try {
     const category = await prisma.category.findUnique({
       where: { slug },
-      include: { posts: true }
+      include: {
+        posts: {
+          include: {
+            author: true
+          }
+        }
+      }
     })
     return category;
   } catch (error) {
-    // console.log(error);  
+    console.log(error);
     return null;
   }
 }
@@ -123,10 +129,10 @@ export async function getPostsWithCategory(categoryName) {
       include: { author: true, categories: true }
     })
 
-    console.log(`FILTERED POSTS`, posts);
+    // console.log(`FILTERED POSTS`, posts);
     return posts;
   } catch (error) {
-    // console.log(error);  
+    console.log(error);
     return null;
   }
 }
@@ -152,10 +158,10 @@ export async function getPostsByAuthorWithCategory(authorId, categoryName) {
       include: { author: true, categories: true }
     })
 
-    console.log(`FILTERED POSTS`, posts);
+    // console.log(`FILTERED POSTS`, posts);
     return posts;
   } catch (error) {
-    // console.log(error);  
+    console.log(error);
     return null;
   }
 }
@@ -230,7 +236,7 @@ export async function getAllPostsByAuthor(authorId, page) {
 
 //     return posts;
 //   } catch (error) {
-//     // console.log(error);  
+//     console.log(error);  
 //     return null;
 //   }
 // }
@@ -273,7 +279,7 @@ export async function getPost(postId) {
 
     return post;
   } catch (error) {
-    // console.log(error);  
+    console.log(error);
     return null;
   }
 }
@@ -288,7 +294,7 @@ export async function getPostBySlug(slug) {
 
     return post;
   } catch (error) {
-    // console.log(error);  
+    console.log(error);
     return null;
   }
 }

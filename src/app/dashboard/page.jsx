@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import Spinner from "@/components/spinner";
+import Spinner1 from "@/components/spinner1";
 import Users from "@/components/users/lista";
 import { logout } from "@/lib/actions";
 import { LockIcon } from "lucide-react";
@@ -25,7 +25,6 @@ async function Dashboard() {
             </div>
 
 
-
             {/* <div className="flex flex-col items-center gap-4 md:flex-row md:justify-start"> */}
             <div className="grid md:grid-cols-[150px_auto]">
                 {image
@@ -42,7 +41,7 @@ async function Dashboard() {
             {session.user.role === 'ADMIN' &&
                 <>
                     <h1 className="text-xl font-bold mt-15">Lista de usuarios</h1>
-                    <Suspense fallback={<Spinner />}>
+                    <Suspense fallback={<Spinner1 />}>
                         <Users />
                     </Suspense>
                 </>

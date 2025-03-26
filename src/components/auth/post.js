@@ -22,7 +22,7 @@ async function Form({ children, action, title, id, disabled }) {
         <fieldset disabled={disabled} className="space-y-4">
 
           <div className='flex flex-col md:flex-row md:gap-10'>
-            <Imagen imgUrl={post?.image || '/blog-logo.png'} className="w-full md:w-1/3 object-cover" />
+            <Imagen imgUrl={post?.image || '/pwa/icon-256x256.png.png'} className="w-full md:w-1/3 object-cover" />
             {/* <div className="flex flex-col md:flex-row items-center md:space-x-4">
             <label htmlFor='image' className="w-full md:w-1/4">Image</label>
             <input type='text' id='image' name='image'

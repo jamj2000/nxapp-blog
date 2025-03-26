@@ -1,7 +1,6 @@
 'use client'
-
 import { useState } from "react";
-import { MoonLoader } from "react-spinners";
+import { BarLoader } from "react-spinners";
 
 
 // const styles = {
@@ -9,12 +8,13 @@ import { MoonLoader } from "react-spinners";
 //     margin: "0 auto",
 // };
 
-function Spinner({ size, color }) {
+function Spinner1({ size, color }) {
     let [loading, setLoading] = useState(true);
 
     return (
         // <RingLoader
-        <MoonLoader
+        // <MoonLoader
+        <BarLoader
             color={color || 'currentcolor'}
             size={size || 32}
             loading={loading}
@@ -25,4 +25,4 @@ function Spinner({ size, color }) {
     );
 }
 
-export default Spinner;
+export default Spinner1;

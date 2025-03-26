@@ -1,5 +1,5 @@
 import { PAGE, PER_PAGE } from '@/lib/pagination'
-import { TrashIcon, SquareArrowOutUpRightIcon, EyeIcon, PencilIcon, PlusIcon } from "lucide-react";
+import { TrashIcon, EyeIcon, PencilIcon, PlusIcon } from "lucide-react";
 import { getAllPosts, getAllPostsByAuthor, getCategories } from '@/lib/data'
 import { auth } from "@/auth"
 import { publishPost } from '@/lib/actions';

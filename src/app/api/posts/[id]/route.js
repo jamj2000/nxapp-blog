@@ -3,7 +3,7 @@ import { deletePostJson, editPostJson } from "@/lib/actions";
 
 export async function GET(request, { params }) {
   let post = await getPost(params.id);
-  console.log(post)
+  // console.log(post)
 
   return Response.json(post)
 }
@@ -16,7 +16,7 @@ export async function PUT(request, { params }) {
 
 
   const postModificado = await request.json()
-  console.log(postModificado)
+  // console.log(postModificado)
 
   const post = await editPostJson({ postId: params.id, ...postModificado });
 

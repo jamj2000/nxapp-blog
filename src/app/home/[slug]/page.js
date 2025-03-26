@@ -1,8 +1,7 @@
 import { Suspense } from "react"
 import Spinner1 from "@/components/spinner1"
 import BackButton from "@/components/back-button"
-
-import Category from "@/components/categories/item"
+import Post from "@/components/posts/item"
 
 
 
@@ -12,10 +11,10 @@ async function page({ params }) {
     return (
         <div>
             <BackButton />
-            <div className="h-20"></div>
+            <div className="h-20">{/* Hueco de separación */}</div>
 
             <Suspense fallback={<Spinner1 />}>
-                <Category slug={slug} />
+                <Post slug={slug} />
             </Suspense>
         </div>
     )
