@@ -1,4 +1,4 @@
-import { PencilIcon, SquareArrowOutUpRightIcon, TrashIcon } from "lucide-react";
+import { PencilIcon, TrashIcon } from "lucide-react";
 import { getCategoryBySlug, getPosts } from "@/lib/data";
 import { auth } from "@/auth";
 import { incrementarVista, publishCategory } from "@/lib/actions";
@@ -6,8 +6,8 @@ import Modal from "@/components/modal";
 import CategoryModificar from "@/components/categories/modificar";
 import CategoryEliminar from "@/components/categories/eliminar";
 import { notFound } from "next/navigation";
-import CategoryVer from "./ver";
-import PostVer from "../posts/ver";
+import CategoryVer from "@/components/categories/ver";
+import PostVer from "@/components/posts/ver";
 
 
 async function Category({ slug, className }) {

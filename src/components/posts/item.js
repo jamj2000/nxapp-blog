@@ -30,7 +30,7 @@ async function Post({ slug, className, children }) {
     return (
         <div className={className}>
             {/* Título */}
-            <div className="flex flex-col-reverse justify-between md:flex-row">
+            <div className="flex flex-col-reverse gap-1 md:flex-row md:justify-between">
 
                 <div className="flex gap-2 items-start">
                     <h1 className="text-4xl font-black">{post.title}</h1>

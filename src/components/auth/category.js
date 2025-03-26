@@ -1,8 +1,8 @@
 import Button from "@/components/button"
-import { getCategory } from "@/lib/data";
+import { getCategoryById } from "@/lib/data";
 
 async function Form({ action, title, id, disabled }) {
-    const category = await getCategory(id);
+    const category = await getCategoryById(id);
 
     // Verificar si la categoria es null o undefined antes de usarlo
     if (!category) {

@@ -48,7 +48,7 @@ export async function getCategories() {
 }
 
 
-export async function getCategory(categoryId) {
+export async function getCategoryById(categoryId) {
   const id = Number(categoryId)
   try {
     const category = await prisma.category.findUnique({
