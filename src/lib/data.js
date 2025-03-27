@@ -88,6 +88,34 @@ export async function getCategoryBySlug(slug) {
 
 
 
+export async function getPostsByCategory(categorySlug, session) {
+  // const session = await auth();
+
+  if (!session?.user) {
+    throw new Error("No autorizado");
+  }
+
+  const { role, id } = session.user; // Obtener rol y ID del usuario directamente de la sesión
+
+  return prisma.post.findMany({
+    where: {
+      categories: {
+        some: { slug: categorySlug }, // Filtra por categoría
+      },
+      ...(role !== "ADMIN" && { authorId: id }), // Si no es ADMIN, solo ve sus posts
+    },
+    include: {
+      author: true,
+      categories: true,
+    },
+  });
+}
+
+
+
+
+
+
 
 // ----------------------------  POST ---------------------------
 

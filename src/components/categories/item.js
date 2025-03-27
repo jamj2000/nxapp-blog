@@ -1,5 +1,5 @@
 import { PencilIcon, TrashIcon } from "lucide-react";
-import { getCategoryBySlug, getPosts } from "@/lib/data";
+import { getCategoryBySlug, getPosts, getPostsByCategory } from "@/lib/data";
 import { auth } from "@/auth";
 import { incrementarVista, publishCategory } from "@/lib/actions";
 import Modal from "@/components/modal";
@@ -15,8 +15,10 @@ async function Category({ slug, className }) {
 
     if (!category) notFound()
 
-    const posts = await getPosts()
+    // const posts = await getPosts()
     const session = await auth()
+    const posts = await getPostsByCategory(slug, session)
+
 
 
     return (
