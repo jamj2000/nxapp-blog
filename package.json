@@ -23,7 +23,7 @@
     "bcryptjs": "^3.0.2",
     "cloudinary": "^2.5.1",
     "lucide-react": "^0.479.0",
-    "next": "15.2.1",
+    "next": "^15.2.4",
     "next-auth": "^5.0.0-beta.25",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

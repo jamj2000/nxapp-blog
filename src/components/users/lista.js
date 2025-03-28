@@ -4,8 +4,8 @@ import Modal from '@/components/modal';
 import UserVer from '@/components/users/ver'
 import UserModificar from '@/components/users/modificar';
 import UserEliminar from '@/components/users/eliminar';
-import { getUsers } from "@/lib/data";
-import UserInsertar from "./insertar";
+import { getUsers } from "@/lib/data/auth";
+import UserInsertar from "@/components/users/insertar";
 
 async function Users() {
     const session = await auth()

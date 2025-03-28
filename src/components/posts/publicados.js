@@ -1,4 +1,4 @@
-import { getPublishedPosts } from "@/lib/data"
+import { getPublishedPosts } from "@/lib/data/posts"
 import Post from "@/components/posts/item";
 import Link from "next/link";
 import { ArrowUpRightIcon } from "lucide-react";

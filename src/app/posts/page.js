@@ -1,4 +1,3 @@
-import { auth } from "@/auth"
 import { Suspense } from 'react';
 import Spinner1 from '@/components/spinner1';
 import Posts from '@/components/posts/lista'

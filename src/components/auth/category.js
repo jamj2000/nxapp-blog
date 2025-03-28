@@ -1,5 +1,5 @@
 import Button from "@/components/button"
-import { getCategoryById } from "@/lib/data";
+import { getCategoryById } from "@/lib/data/categories";
 
 async function Form({ action, title, id, disabled }) {
     const category = await getCategoryById(id);

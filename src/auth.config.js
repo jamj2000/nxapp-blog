@@ -3,9 +3,9 @@ import GitHub from '@auth/core/providers/github'
 import Spotify from '@auth/core/providers/spotify'
 import Gitlab from '@auth/core/providers/gitlab'
 import Credentials from "@auth/core/providers/credentials"
-import { getUserByEmail } from "@/lib/data"
+import { getUserByEmail } from "@/lib/data/auth"
 
-const AuthConfig ={
+const AuthConfig = {
     providers: [
         Google,
         GitHub,

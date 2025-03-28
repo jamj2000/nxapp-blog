@@ -3,7 +3,7 @@ import cloudinary from "@/lib/cloudinary"
 import bcrypt from 'bcryptjs'
 import prisma from '@/lib/prisma'
 import { signIn, signOut } from '@/auth'
-import { getUserByEmail } from '@/lib/data'
+import { getUserByEmail } from '@/lib/data/auth'
 import { redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
 import slugify from 'slugify'

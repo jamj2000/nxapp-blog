@@ -1,5 +1,6 @@
 import { PencilIcon, TrashIcon } from "lucide-react";
-import { getCategoryBySlug, getPosts, getPostsByCategory } from "@/lib/data";
+import { getCategoryBySlug } from "@/lib/data/categories";
+import { getPosts } from "@/lib/data/posts";
 import { auth } from "@/auth";
 import { incrementarVista, publishCategory } from "@/lib/actions";
 import Modal from "@/components/modal";
@@ -15,10 +16,13 @@ async function Category({ slug, className }) {
 
     if (!category) notFound()
 
-    // const posts = await getPosts()
     const session = await auth()
-    const posts = await getPostsByCategory(slug, session)
 
+    let posts
+    if (session?.user.role === 'ADMIN')
+        posts = await getPosts({ categorySlug: slug })  // Posts de todos los autores
+    else
+        posts = await getPosts({ authorId: session?.user.id, categorySlug: slug })
 
 
     return (
@@ -51,7 +55,7 @@ async function Category({ slug, className }) {
             <div>
                 <p className="font-bold my-4">Posts en esta categoría</p>
                 <div className="flex flex-col gap-1">
-                    {category.posts?.map(post =>
+                    {posts?.map(post =>
                         <Modal key={post.id}
                             openElement={
                                 <div className="cursor-pointer">

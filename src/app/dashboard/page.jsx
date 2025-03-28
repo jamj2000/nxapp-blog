@@ -1,4 +1,5 @@
 import { auth } from "@/auth";
+import Posts from "@/components/posts/lista";
 import Spinner1 from "@/components/spinner1";
 import Users from "@/components/users/lista";
 import { logout } from "@/lib/actions";
@@ -38,12 +39,22 @@ async function Dashboard() {
                 </div>
             </div>
 
+
             {session.user.role === 'ADMIN' &&
                 <>
-                    <h1 className="text-xl font-bold mt-15">Lista de usuarios</h1>
+                    <h1 className="text-xl font-bold mt-15">Usuarios</h1>
                     <Suspense fallback={<Spinner1 />}>
                         <Users />
                     </Suspense>
+                </>
+            }
+
+            {session.user.role === 'USER' &&
+                <>
+                    <h1 className="text-xl font-bold mt-15">Posts creados</h1>
+                    {/* <Suspense fallback={<Spinner1 />}>
+                        <PostsFromAuthor author={session.user.id} />
+                    </Suspense> */}
                 </>
             }
 

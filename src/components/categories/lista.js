@@ -1,6 +1,7 @@
 import { PAGE, PER_PAGE } from '@/lib/pagination'
 import { TrashIcon, EyeIcon, PencilIcon, PlusIcon } from "lucide-react";
-import { getCategories, getPosts } from '@/lib/data'
+import { getPosts } from '@/lib/data/posts'
+import { getCategories } from '@/lib/data/categories'
 import { auth } from "@/auth"
 import Modal from '@/components/modal';
 import CategoryVer from '@/components/categories/ver'
@@ -16,7 +17,7 @@ async function Categories({ searchParams }) {
     const { page = PAGE, per_page = PER_PAGE } = await searchParams
 
     const categories = await getCategories()
-    const posts = await getPosts()
+    const posts = await getPosts({})
 
     // console.log(categories);
     // mocked, skipped and limited in the real app

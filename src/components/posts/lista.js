@@ -1,8 +1,10 @@
 import { PAGE, PER_PAGE } from '@/lib/pagination'
 import { TrashIcon, EyeIcon, PencilIcon, PlusIcon } from "lucide-react";
-import { getAllPosts, getAllPostsByAuthor, getCategories } from '@/lib/data'
+import { getPosts } from '@/lib/data/posts'
+import { getCategories } from '@/lib/data/categories'
 import { auth } from "@/auth"
 import { publishPost } from '@/lib/actions';
+import { redirect } from 'next/navigation';  // IMPORTANTE: importar desde next/navigation
 import Link from 'next/link';
 import Modal from '@/components/modal';
 import PostVer from '@/components/posts/ver'
@@ -10,8 +12,7 @@ import PostInsertar from '@/components/posts/insertar';
 import PostModificar from '@/components/posts/modificar';
 import PostEliminar from '@/components/posts/eliminar';
 import PaginationControls from '@/components/pagination-control'
-import { redirect } from 'next/navigation';  // IMPORTANTE: importar desde next/navigation
-import PublishButton from '../publish-button';
+import PublishButton from '@/components/publish-button';
 
 
 
@@ -26,10 +27,11 @@ async function Posts({ searchParams }) {
 
     let posts = []
     if (session.user?.role === 'ADMIN') {
-        posts = await getAllPosts(page)
+        // posts = await getAllPosts(page)
+        posts = await getPosts({})
     }
     else {
-        posts = await getAllPostsByAuthor(session.user?.id, page)
+        posts = await getPosts({ authorId: session.user?.id })
     }
 
     // if (category) {
