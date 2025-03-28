@@ -52,9 +52,9 @@ async function Dashboard() {
             {session.user.role === 'USER' &&
                 <>
                     <h1 className="text-xl font-bold mt-15">Posts creados</h1>
-                    {/* <Suspense fallback={<Spinner1 />}>
-                        <PostsFromAuthor author={session.user.id} />
-                    </Suspense> */}
+                    <Suspense fallback={<Spinner1 />}>
+                        <Posts />
+                    </Suspense>
                 </>
             }
 

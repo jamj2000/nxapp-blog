@@ -16,7 +16,7 @@ import PublishButton from '@/components/publish-button';
 
 
 
-async function Posts({ searchParams }) {
+async function Posts({ searchParams = {} }) {
     const session = await auth()
 
     if (!session) redirect('/')
@@ -78,9 +78,14 @@ async function Posts({ searchParams }) {
                                 </form>
                             }
 
-                            <Link href={`/posts/${post.slug}`} className="font-bold cursor-pointer">
-                                {post.title}
-                            </Link>
+                            {post.is_draft
+                                ?
+                                <p className='text-stone-500'>{post.title}</p>
+                                :
+                                <Link href={`/posts/${post.slug}`} className="font-bold cursor-pointer">
+                                    {post.title}
+                                </Link>
+                            }
                         </div>
 
 
