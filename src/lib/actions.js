@@ -194,8 +194,9 @@ async function uploadImage(file) {
     // console.log(result);
     return result.secure_url;
   } catch (error) {
-    console.log(error);
-    return null;
+    // console.log(error);
+    // return null;
+    return { error }
   }
 }
 
@@ -211,6 +212,8 @@ export async function newPost(prevState, formData) {
     let image;
 
     const imageFile = formData.get("file");
+
+    if (imageFile && imageFile.size > 1024 * 1024) return { error: "Archivo mayor de 1MB. Seleccione una imagen con menor tamaño" }
 
     if (imageFile && imageFile.size > 0) {
       image = await uploadImage(imageFile);
@@ -256,6 +259,8 @@ export async function editPost(prevState, formData) {
   let image;
 
   const imageFile = formData.get("file");
+
+  if (imageFile && imageFile.size > 1024 * 1024) return { error: "Archivo mayor de 1MB. Seleccione una imagen con menor tamaño" }
 
   if (imageFile && imageFile.size > 0) {
     image = await uploadImage(imageFile);
@@ -407,10 +412,11 @@ export async function newUser(prevState, formData) {
 
   const name = formData.get('name');
   const email = formData.get('email');
+  const role = formData.get('role');
 
   try {
     await prisma.user.create({
-      data: { name, email },
+      data: { name, email, role },
     })
 
     revalidatePath('/dashboard')
@@ -426,12 +432,12 @@ export async function editUser(prevState, formData) {
   const id = formData.get('id')
   const name = formData.get('name');
   const email = formData.get('email');
-
+  const role = formData.get('role');
 
   try {
     await prisma.user.update({
       where: { id },
-      data: { name, email },
+      data: { name, email, role },
     })
     revalidatePath('/dashboard')
     return { success: 'Usuario modificado' }

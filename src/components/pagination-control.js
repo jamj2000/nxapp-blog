@@ -15,12 +15,12 @@ function PaginationControls({ hasNextPage, hasPrevPage, total }) {
   return (
     <div className='flex justify-between items-center gap-2'>
       <button
-        className='flex gap-1 items-center bg-blue-500 text-white p-2 rounded-md disabled:bg-slate-300'
+        className='flex gap-1 items-center bg-blue-500 text-white py-2 px-4 rounded-md disabled:bg-slate-300'
         disabled={!hasPrevPage}
         onClick={() => {
           router.push(`?page=${page - 1}&category=${category}`)
         }}>
-        <ChevronLeftIcon /> prev page
+        <ChevronLeftIcon />
       </button>
 
       <div className='flex-grow text-center'>
@@ -28,12 +28,12 @@ function PaginationControls({ hasNextPage, hasPrevPage, total }) {
       </div>
 
       <button
-        className='flex gap-1 items-center bg-blue-500 text-white p-2 rounded-md disabled:bg-slate-300'
+        className='flex gap-1 items-center bg-blue-500 text-white py-2 px-4 rounded-md disabled:bg-slate-300'
         disabled={!hasNextPage}
         onClick={() => {
           router.push(`?page=${page + 1}&category=${category}`)
         }}>
-        next page <ChevronRightIcon />
+        <ChevronRightIcon />
       </button>
     </div>
   )

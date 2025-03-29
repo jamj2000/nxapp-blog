@@ -47,7 +47,9 @@ function UserEliminar({ user }) {
 
                 <div>
                     <h1 className="text-xl">{user.name}</h1>
-                    <p className="text-xs text-gray-500">email: {user.email}</p>
+                    <p className="text-xs text-gray-500">{user.email}</p>
+                    <p className="text-xs text-gray-500">{user.role}</p>
+
                 </div>
             </div>
 

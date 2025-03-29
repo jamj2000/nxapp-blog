@@ -31,6 +31,16 @@ body {
 }
 
 
+input,
+select,
+option {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: 2.0;
+  padding-block: 8px;
+  padding-inline: 16px;
+}
+
 /* Tiptap editor content */
 
 .tiptap.ProseMirror {

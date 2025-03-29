@@ -24,7 +24,7 @@ async function Users() {
             {users
                 .filter(user => user.id !== session.user.id)
                 .map(user => (
-                    <div key={user.id} className="p-1 flex justify-between items-center odd:bg-slate-100">
+                    <div key={user.id} className="p-1 flex justify-between items-center odd:bg-slate-100 even:bg-slate-50">
 
                         <Modal openElement={<p className="cursor-pointer">{user.name}</p>}>
                             <UserVer user={user} />
