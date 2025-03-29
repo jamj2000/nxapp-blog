@@ -72,6 +72,8 @@ export default function PostInsertar({ authorId, categories }) {
                                     id={category.id}
                                     label={category.name}
                                     // la clase checkbox-label la hemos definido en el archivo globals.css 
+                                    // también podemos hacerlo con clases de tailwind: has-checked:bg-blue-200 has-checked:text-blue-800
+                                    // en archivo components/posts/modificar.js hemos empleamo clases tailwind en lugar de globals.css
                                     className={"checkbox-label px-2 py-1 text-gray-500 rounded-full"} />
                             </div>
                         )}

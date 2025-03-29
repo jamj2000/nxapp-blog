@@ -3,7 +3,7 @@ import { editUser } from '@/lib/actions'
 import { useActionState, useEffect, useId } from 'react'
 import { PlusIcon, RefreshCwIcon, UserIcon } from 'lucide-react';
 import { toast } from 'sonner';
-import Check from '../check';
+import Check2 from '@/components/check2';
 
 
 
@@ -44,6 +44,13 @@ export default function UserModificar({ user }) {
             <div className='flex flex-col md:flex-row md:gap-10'>
 
                 <div className='w-full md:w-2/3 flex flex-col gap-2'>
+
+                    <Check2
+                        id={'active'}
+                        defaultChecked={user.active}
+                        label=''
+                        className={"text-xs w-fit after:content-['_Cuenta_no_activa'] has-checked:after:content-['_Cuenta_activa'] has-checked:bg-green-200 has-checked:text-green-800  px-2 py-1 text-gray-500 rounded-full"} />
+
 
                     <div className="flex flex-col md:flex-row items-center md:space-x-4">
                         <label htmlFor='name' className="font-bold w-full md:w-1/4">Nombre</label>

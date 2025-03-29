@@ -12,6 +12,10 @@ function UserVer({ user }) {
 
                 <div>
                     <h1 className="text-xl">{user.name}</h1>
+                    {user.active
+                        ? <p className="text-xs text-green-500">Cuenta activada</p>
+                        : <p className="text-xs text-red-500">Cuenta desactivada</p>
+                    }
                     <p className="text-xs text-gray-500">{user.email}</p>
                     <p className="text-xs text-gray-500">{user.role}</p>
                 </div>

@@ -54,6 +54,12 @@ export async function login(prevState, formData) {
   if (!user) {
     return { error: 'Usuario no registrado.' }
   }
+
+  if (!user.active) {
+    return { error: 'Usuario deshabilitado. Consulte al administrador de esta app.' }
+  }
+
+
   // Comparamos password 
   let matchPassword = false
 
@@ -61,6 +67,7 @@ export async function login(prevState, formData) {
     matchPassword = true
   else
     matchPassword = await bcrypt.compare(password, user.password)
+
 
   if (user && matchPassword)  // && user.emailVerified
   {
@@ -196,7 +203,7 @@ async function uploadImage(file) {
   } catch (error) {
     // console.log(error);
     // return null;
-    return { error }
+    return { error: error.message }
   }
 }
 
@@ -211,9 +218,9 @@ export async function newPost(prevState, formData) {
     const views = Number(formData.get('views'));
     let image;
 
+    // const imageFile = formData.get("file");
     const imageFile = formData.get("file");
 
-    if (imageFile && imageFile.size > 1024 * 1024) return { error: "Archivo mayor de 1MB. Seleccione una imagen con menor tamaño" }
 
     if (imageFile && imageFile.size > 0) {
       image = await uploadImage(imageFile);
@@ -244,7 +251,7 @@ export async function newPost(prevState, formData) {
     revalidatePath('/posts')
     return { success: 'Añadido nuevo post' }
   } catch (error) {
-    return { error }
+    return { error: error.message }
   }
 }
 
@@ -260,7 +267,7 @@ export async function editPost(prevState, formData) {
 
   const imageFile = formData.get("file");
 
-  if (imageFile && imageFile.size > 1024 * 1024) return { error: "Archivo mayor de 1MB. Seleccione una imagen con menor tamaño" }
+  // if (imageFile && imageFile.size > 1024 * 1024) return { error: "Archivo mayor de 1MB. Seleccione una imagen con menor tamaño" }
 
   if (imageFile && imageFile.size > 0) {
     image = await uploadImage(imageFile);
@@ -410,13 +417,15 @@ export async function deleteCategory(prevState, formData) {
 
 export async function newUser(prevState, formData) {
 
-  const name = formData.get('name');
-  const email = formData.get('email');
-  const role = formData.get('role');
+  const name = formData.get('name')
+  const email = formData.get('email')
+  const role = formData.get('role')
+  const active = Boolean(formData.get('active'))
+
 
   try {
     await prisma.user.create({
-      data: { name, email, role },
+      data: { name, email, role, active },
     })
 
     revalidatePath('/dashboard')
@@ -430,14 +439,15 @@ export async function newUser(prevState, formData) {
 
 export async function editUser(prevState, formData) {
   const id = formData.get('id')
-  const name = formData.get('name');
-  const email = formData.get('email');
-  const role = formData.get('role');
+  const name = formData.get('name')
+  const email = formData.get('email')
+  const role = formData.get('role')
+  const active = Boolean(formData.get('active'))
 
   try {
     await prisma.user.update({
       where: { id },
-      data: { name, email, role },
+      data: { name, email, role, active },
     })
     revalidatePath('/dashboard')
     return { success: 'Usuario modificado' }

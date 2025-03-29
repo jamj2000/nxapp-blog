@@ -103,13 +103,15 @@ export async function getPublishedPosts() {
 
 export async function getPosts({ authorId, categorySlug, page }) {
 
+
     try {
         // Consulta para obtener todos los posts
         // dentro de where, valores undefined equivalen a desactivar filtro 
         const posts = await prisma.post.findMany({
             where: {
                 authorId: authorId,
-                categories: { some: { slug: categorySlug } }, // Filtra por categoría
+                ...(categorySlug && { categories: { some: { slug: categorySlug } } }), // Si hay categorySlug, filtramos     
+                // categories: { some: { slug: categorySlug } }       // Filtramos por category slug      
             },
             include: { author: true, categories: true },
             orderBy: [ // { author: 'asc' }, { title: 'asc' },
@@ -118,7 +120,7 @@ export async function getPosts({ authorId, categorySlug, page }) {
             // skip: (page - 1) * PER_PAGE,
             // take: PER_PAGE
         })
-
+        console.log(`posts`, posts, categorySlug);
         return posts;
     } catch (error) {
         console.error('Error:', error);

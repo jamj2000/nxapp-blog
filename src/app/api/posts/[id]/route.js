@@ -1,4 +1,4 @@
-import { getPost } from "@/lib/actions";
+import { getPost } from "@/lib/data/posts";
 import { deletePostJson, editPostJson } from "@/lib/actions";
 
 export async function GET(request, { params }) {

@@ -31,14 +31,9 @@ async function Posts({ searchParams = {} }) {
         posts = await getPosts({})
     }
     else {
-        posts = await getPosts({ authorId: session.user?.id })
+        posts = await getPosts({ authorId: session.user.id })
+        console.log(`posts`, session.user.id);
     }
-
-    // if (category) {
-    //     posts = await getPostsWithCategory(category)
-    // } else {
-    //     posts = await getAllPosts(page)
-    // }
 
 
     // console.log(posts);
