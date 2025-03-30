@@ -7,6 +7,11 @@ const { auth } = NextAuth(authConfig);
 export default auth((req) => {
     console.log(' MIDDLEWARE', req.nextUrl.pathname, req.auth);
 
+    if (req.headers.get("content-length") > 4 * 1024 * 1024) { // 4MB declarado en next.config.js
+        console.error("Solicitud rechazada: El archivo es demasiado grande.");
+        return Response.json({ error: "El archivo es demasiado grande. Máximo permitido: 4MB." }, { status: 413 });
+    }
+
     if (!req.auth) {  // NO AUTENTICADO
 
         let callbackUrl = req.nextUrl.pathname;

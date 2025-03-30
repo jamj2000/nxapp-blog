@@ -1,5 +1,5 @@
 'use client'
-import { editPost } from '@/lib/actions'
+import { editPost } from '@/lib/actions/posts'
 import { useActionState, useEffect, useId } from 'react'
 import { PlusIcon, RefreshCwIcon } from 'lucide-react';
 import { toast } from 'sonner';

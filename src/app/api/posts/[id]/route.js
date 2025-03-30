@@ -1,5 +1,5 @@
 import { getPost } from "@/lib/data/posts";
-import { deletePostJson, editPostJson } from "@/lib/actions";
+import { deletePostJson, editPostJson } from "@/lib/actions/api";
 
 export async function GET(request, { params }) {
   let post = await getPost(params.id);

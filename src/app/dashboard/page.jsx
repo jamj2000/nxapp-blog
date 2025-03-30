@@ -2,7 +2,7 @@ import { auth } from "@/auth";
 import Posts from "@/components/posts/lista";
 import Spinner1 from "@/components/spinner1";
 import Users from "@/components/users/lista";
-import { logout } from "@/lib/actions";
+import { logout } from "@/lib/actions/auth";
 import { LockIcon } from "lucide-react";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
@@ -52,9 +52,11 @@ async function Dashboard() {
             {session.user.role === 'USER' &&
                 <>
                     <h1 className="text-xl font-bold mt-15">Posts creados</h1>
-                    <Suspense fallback={<Spinner1 />}>
-                        <Posts authorId={session?.user.id} />
-                    </Suspense>
+                    <div className='flex flex-col gap-4 justify-center'>
+                        <Suspense fallback={<Spinner1 />}>
+                            <Posts authorId={session?.user.id} />
+                        </Suspense>
+                    </div>
                 </>
             }
 

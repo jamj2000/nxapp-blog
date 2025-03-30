@@ -2,7 +2,7 @@ import { PencilIcon, TrashIcon } from "lucide-react";
 import { getCategoryBySlug } from "@/lib/data/categories";
 import { getPosts } from "@/lib/data/posts";
 import { auth } from "@/auth";
-import { incrementarVista, publishCategory } from "@/lib/actions";
+import { incrementarVista, publishCategory } from "@/lib/actions/posts";
 import Modal from "@/components/modal";
 import CategoryModificar from "@/components/categories/modificar";
 import CategoryEliminar from "@/components/categories/eliminar";

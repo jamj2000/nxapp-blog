@@ -1,9 +1,9 @@
 "use client"
-import { newUser, newuser } from '@/lib/actions'
+import { newUser } from '@/lib/actions/users'
 import { useActionState, useEffect, useId } from 'react'
 import { PlusIcon, RefreshCwIcon } from 'lucide-react';
 import { toast } from 'sonner';
-import Check2 from '@/components/check2';
+import Check from '@/components/check';
 
 
 
@@ -37,10 +37,10 @@ export default function UserInsertar() {
             <div className='flex flex-col md:flex-row md:gap-10'>
                 <div className='w-full md:w-2/3 flex flex-col gap-2'>
 
-                    <Check2
+                    <Check
                         id={'active'}
-                        defaultChecked={true}
                         label=''
+                        defaultChecked={true}
                         className={"text-xs w-fit after:content-['_Cuenta_no_activa'] has-checked:after:content-['_Cuenta_activa'] has-checked:bg-green-200 has-checked:text-green-800  px-2 py-1 text-gray-500 rounded-full"} />
 
                     <div className="flex flex-col md:flex-row items-center md:space-x-4">

@@ -1,17 +1,11 @@
 'use client';
-// Only run in production
-import { useEffect } from 'react';
+
 
 export default function Error({ error, reset }) {
-    useEffect(() => {
-        // Optionally log the error to an error reporting service
-        console.error(error);
-    }, [error]);
-
     return (
         <div className='grid place-content-center min-h-screen'>
-            <h2 className='text-red-400 text-2xl font-bold'>Hubo una excepción no capturada</h2>
-            <p>{error.message}</p>
+            <h2 className='text-red-400 text-2xl font-bold'>Se produjo un error inesperado</h2>
+            {/* <p>{error.message}</p> */}
 
             <ul className='list-disc p-4'>
                 <li className='text-red-700'>¿Has intentado subir una imagen mayor de 4MB?</li>

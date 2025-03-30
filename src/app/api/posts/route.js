@@ -1,5 +1,5 @@
 import { PAGE, PER_PAGE } from '@/lib/pagination';
-import { getPostsWithCategoryApi, getAllPostsApi, getTotalPostsCount } from '@/lib/actions';
+import { getPostsWithCategoryApi, getAllPostsApi, getTotalPostsCount } from '@/lib/actions/api';
 
 
 export async function GET(request) {

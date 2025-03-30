@@ -3,7 +3,7 @@ import { TrashIcon, EyeIcon, PencilIcon, PlusIcon } from "lucide-react";
 import { getPosts } from '@/lib/data/posts'
 import { getCategories } from '@/lib/data/categories'
 import { auth } from "@/auth"
-import { publishPost } from '@/lib/actions';
+import { publishPost } from '@/lib/actions/posts';
 import { redirect } from 'next/navigation';  // IMPORTANTE: importar desde next/navigation
 import Link from 'next/link';
 import Modal from '@/components/modal';
@@ -27,16 +27,12 @@ async function Posts({ searchParams = {} }) {
 
     let posts = []
     if (session.user?.role === 'ADMIN') {
-        // posts = await getAllPosts(page)
         posts = await getPosts({})
     }
     else {
         posts = await getPosts({ authorId: session.user.id })
-        console.log(`posts`, session.user.id);
     }
 
-
-    // console.log(posts);
     // mocked, skipped and limited in the real app
     const start = (page - 1) * per_page // 0, 5, 10 ...
     const end = start + per_page    // 5, 10, 15 ...

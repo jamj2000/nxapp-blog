@@ -1,6 +1,6 @@
 'use client'
 import { useActionState, useEffect } from 'react';
-import { login } from '@/lib/actions'
+import { login } from '@/lib/actions/auth'
 import { toast } from 'sonner';
 import Spinner2 from '@/components/spinner2';
 

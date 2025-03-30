@@ -1,5 +1,5 @@
 import { BookTextIcon, HomeIcon, KeyRoundIcon, LetterTextIcon, LockIcon, MenuIcon, UserIcon, XIcon } from 'lucide-react'
-import { logout } from '@/lib/actions';
+import { logout } from '@/lib/actions/auth';
 import { auth } from '@/auth';
 import MenuLink from '@/components/menu-link';
 import Link from 'next/link'

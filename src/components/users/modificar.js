@@ -1,9 +1,9 @@
 'use client'
-import { editUser } from '@/lib/actions'
+import { editUser } from '@/lib/actions/users'
 import { useActionState, useEffect, useId } from 'react'
 import { PlusIcon, RefreshCwIcon, UserIcon } from 'lucide-react';
 import { toast } from 'sonner';
-import Check2 from '@/components/check2';
+import Check from '@/components/check';
 
 
 
@@ -45,10 +45,10 @@ export default function UserModificar({ user }) {
 
                 <div className='w-full md:w-2/3 flex flex-col gap-2'>
 
-                    <Check2
+                    <Check
                         id={'active'}
-                        defaultChecked={user.active}
                         label=''
+                        defaultChecked={user.active}
                         className={"text-xs w-fit after:content-['_Cuenta_no_activa'] has-checked:after:content-['_Cuenta_activa'] has-checked:bg-green-200 has-checked:text-green-800  px-2 py-1 text-gray-500 rounded-full"} />
 
 

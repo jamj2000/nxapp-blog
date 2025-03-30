@@ -1,11 +1,8 @@
 'use client'
-import { newCategory } from '@/lib/actions'
+import { newCategory } from '@/lib/actions/categories'
 import { useActionState, useEffect, useId } from 'react'
 import { PlusIcon, RefreshCwIcon } from 'lucide-react';
 import { toast } from 'sonner';
-import Tiptap from '@/components/tiptap';
-import InputImage from '@/components/input-image';
-
 
 
 

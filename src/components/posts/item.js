@@ -1,11 +1,11 @@
 import { PencilIcon, TrashIcon } from "lucide-react";
-import Modal from "@/components/modal";
-import PostModificar from "@/components/posts/modificar";
-import PostEliminar from "@/components/posts/eliminar";
 import { getCategories } from "@/lib/data/categories";
 import { getPostBySlug } from "@/lib/data/posts";
 import { auth } from "@/auth";
-import { incrementarVista, publishPost } from "@/lib/actions";
+import { incrementarVista, publishPost } from "@/lib/actions/posts";
+import Modal from "@/components/modal";
+import PostModificar from "@/components/posts/modificar";
+import PostEliminar from "@/components/posts/eliminar";
 import PublishButton from "@/components/publish-button";
 import { notFound } from "next/navigation";
 

@@ -39,49 +39,6 @@ export async function getPostBySlug(slug) {
 
 
 
-// export async function getPosts() {
-//     try {
-//         // Consulta para obtener todos los posts
-//         const posts = await prisma.post.findMany({
-//             orderBy: [ // { author: 'asc' }, { title: 'asc' },
-//                 { title: 'asc' }
-//             ],
-//             // skip: (page - 1) * PER_PAGE,
-//             // take: PER_PAGE
-//         })
-
-//         return posts;
-//     } catch (error) {
-//         console.error('Error:', error);
-//         return null;
-//     }
-// }
-
-
-// ??
-// export async function getAllPosts(page) {
-//     try {
-//         // Consulta para obtener todos los posts
-//         const posts = await prisma.post.findMany({
-//             include: { author: true, categories: true },
-//             orderBy: [ // { author: 'asc' }, { title: 'asc' },
-//                 { created: 'desc' }
-//             ],
-//             // skip: (page - 1) * PER_PAGE,
-//             // take: PER_PAGE
-//         })
-
-//         return posts;
-//     } catch (error) {
-//         console.error('Error:', error);
-//         return null;
-//     }
-// }
-
-
-
-
-
 export async function getPublishedPosts() {
     try {
         const posts = await prisma.post.findMany({
@@ -103,7 +60,6 @@ export async function getPublishedPosts() {
 
 export async function getPosts({ authorId, categorySlug, page }) {
 
-
     try {
         // Consulta para obtener todos los posts
         // dentro de where, valores undefined equivalen a desactivar filtro 
@@ -120,7 +76,6 @@ export async function getPosts({ authorId, categorySlug, page }) {
             // skip: (page - 1) * PER_PAGE,
             // take: PER_PAGE
         })
-        console.log(`posts`, posts, categorySlug);
         return posts;
     } catch (error) {
         console.error('Error:', error);

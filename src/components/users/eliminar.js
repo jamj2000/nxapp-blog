@@ -1,5 +1,5 @@
 'use client'
-import { deleteUser } from "@/lib/actions";
+import { deleteUser } from "@/lib/actions/users";
 import { RefreshCwIcon, TrashIcon, UserIcon } from "lucide-react";
 import { useRouter } from "next/navigation";   // IMPORTANTE: No importar desde next/router
 import { useActionState, useEffect, useId } from "react";

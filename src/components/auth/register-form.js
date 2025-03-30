@@ -1,9 +1,8 @@
 'use client'
 import { useActionState, useEffect } from 'react';
-import { register } from '@/lib/actions'
-import Spinner from '../spinner1';
+import { register } from '@/lib/actions/auth'
 import { toast } from 'sonner';
-import Spinner2 from '../spinner2';
+import Spinner2 from '@/components/spinner2';
 
 
 function RegisterForm() {

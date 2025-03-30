@@ -1,4 +1,4 @@
-import { logout } from "@/lib/actions"
+import { logout } from "@/lib/actions/auth"
 import { redirect } from "next/navigation"
 import { auth } from "@/auth"
 import { Lock } from "lucide-react"
