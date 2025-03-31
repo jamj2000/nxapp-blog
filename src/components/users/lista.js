@@ -1,11 +1,14 @@
 import { TrashIcon, PencilIcon, PlusIcon } from "lucide-react";
 import { auth } from "@/auth"
+import { getUsers } from "@/lib/data/auth";
 import Modal from '@/components/modal';
+import ActiveButton from "@/components/active-button";
 import UserVer from '@/components/users/ver'
+import UserInsertar from "@/components/users/insertar";
 import UserModificar from '@/components/users/modificar';
 import UserEliminar from '@/components/users/eliminar';
-import { getUsers } from "@/lib/data/auth";
-import UserInsertar from "@/components/users/insertar";
+import { activeUser } from "@/lib/actions/users";
+
 
 async function Users() {
     const session = await auth()
@@ -23,13 +26,20 @@ async function Users() {
 
             {users
                 .filter(user => user.id !== session.user.id)
+                .sort((a, b) => a.name.localeCompare(b.name))
                 .map(user => (
                     <div key={user.id} className="p-1 flex justify-between items-center odd:bg-slate-100 even:bg-slate-50">
 
-                        <Modal openElement={<p className="cursor-pointer">{user.name}</p>}>
-                            <UserVer user={user} />
-                        </Modal>
-
+                        <div className="flex gap-2 items-center">
+                            {session.user?.role === 'ADMIN' &&
+                                <form action={activeUser.bind(null, user)}>
+                                    <ActiveButton user={user} />
+                                </form>
+                            }
+                            <Modal openElement={<p className="cursor-pointer">{user.name}</p>}>
+                                <UserVer user={user} />
+                            </Modal>
+                        </div>
 
                         {session?.user?.role === 'ADMIN' &&
                             <div className='flex justify-center items-center gap-1'>

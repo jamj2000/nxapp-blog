@@ -1,4 +1,4 @@
-import { UserIcon } from "lucide-react";
+import { UserRoundIcon } from "lucide-react";
 
 
 function UserVer({ user }) {
@@ -7,14 +7,14 @@ function UserVer({ user }) {
             <div className="grid md:grid-cols-[80px_auto]">
                 {user.image
                     ? <img src={user.image} alt="Imagen de usuario" width={64} />
-                    : <UserIcon className="size-16" />
+                    : <UserRoundIcon className="size-16" />
                 }
 
                 <div>
                     <h1 className="text-xl">{user.name}</h1>
                     {user.active
-                        ? <p className="text-xs text-green-500">Cuenta activada</p>
-                        : <p className="text-xs text-red-500">Cuenta desactivada</p>
+                        ? <p className="text-xs text-green-700">Cuenta activada</p>
+                        : <p className="text-xs text-red-700">Cuenta desactivada</p>
                     }
                     <p className="text-xs text-gray-500">{user.email}</p>
                     <p className="text-xs text-gray-500">{user.role}</p>

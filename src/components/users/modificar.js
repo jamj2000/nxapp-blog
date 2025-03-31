@@ -1,7 +1,7 @@
 'use client'
 import { editUser } from '@/lib/actions/users'
 import { useActionState, useEffect, useId } from 'react'
-import { PlusIcon, RefreshCwIcon, UserIcon } from 'lucide-react';
+import { PlusIcon, RefreshCwIcon, UserRoundIcon } from 'lucide-react';
 import { toast } from 'sonner';
 import Check from '@/components/check';
 
@@ -38,7 +38,7 @@ export default function UserModificar({ user }) {
 
             {user.image
                 ? <img src={user.image} alt="Imagen de usuario" width={64} />
-                : <UserIcon className="size-16" />
+                : <UserRoundIcon className="size-16" />
             }
 
             <div className='flex flex-col md:flex-row md:gap-10'>
@@ -48,7 +48,7 @@ export default function UserModificar({ user }) {
                     <Check
                         id={'active'}
                         label=''
-                        defaultChecked={user.active}
+                        defaultChecked={user.active == true}
                         className={"text-xs w-fit after:content-['_Cuenta_no_activa'] has-checked:after:content-['_Cuenta_activa'] has-checked:bg-green-200 has-checked:text-green-800  px-2 py-1 text-gray-500 rounded-full"} />
 
 

@@ -62,4 +62,15 @@ export async function deleteUser(prevState, formData) {
 }
 
 
+export async function activeUser(user) {
+    if (user) {
+        await prisma.user.update({
+            where: { id: user.id },
+            data: { active: !user.active },
+        })
+
+        revalidatePath("/dashboard");
+    }
+}
+
 
