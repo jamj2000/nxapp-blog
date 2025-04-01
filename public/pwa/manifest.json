@@ -1,11 +1,12 @@
 {
-  "theme_color": "#ffffff",
-  "background_color": "#f69435",
-  "display": "standalone",
-  "scope": "/",
-  "start_url": "/",
   "name": "Blog",
   "short_name": "blog",
+  "theme_color": "#fff",
+  "background_color": "#f69435",
+  "display": "standalone",
+  "orientation": "",
+  "scope": "/",
+  "start_url": "/",
   "icons": [
     {
       "src": "/pwa/icon-192x192.png",
