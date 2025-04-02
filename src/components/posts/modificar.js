@@ -5,7 +5,7 @@ import { PlusIcon, RefreshCwIcon } from 'lucide-react';
 import { toast } from 'sonner';
 import Tiptap from '@/components/tiptap';
 import InputImage from '@/components/input-image';
-import Check from '@/components/check';
+import Check from '@/components/check-box';
 
 
 

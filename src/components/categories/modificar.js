@@ -3,7 +3,7 @@ import { editCategory } from '@/lib/actions/categories'
 import { useActionState, useEffect, useId } from 'react'
 import { PlusIcon, RefreshCwIcon } from 'lucide-react';
 import { toast } from 'sonner';
-import Check from '@/components/check';
+import Check from '@/components/check-box';
 
 
 
