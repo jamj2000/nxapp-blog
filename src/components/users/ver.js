@@ -19,16 +19,23 @@ function UserVer({ user }) {
                 </div>
             </div>
 
-            <p className="font-bold my-4">Post realizados</p>
-            <p className="flex flex-col gap-1">
+            <h2 className="font-bold mt-4">Posts realizados</h2>
+            <div className="flex flex-col gap-1">
                 {user.posts
-                    ?.sort((a, b) => a.slug.localeCompare(b.slug))
+                    .sort((a, b) => a.created > b.created)
                     .map(post =>
-                        <span key={post.id} className="">
-                            {post.title}
-                        </span>
+                        <p key={post.id} className="flex gap-4">
+                            <span>
+                                {post.created.toLocaleString(Intl.DateTimeFormat("es-ES", {
+                                    dateStyle: "full",
+                                    timeStyle: "long",
+                                    timeZone: "Europe/Madrid",
+                                }))}
+                            </span>
+                            <span>{post.title}</span>
+                        </p>
                     )}
-            </p>
+            </div>
         </div>
     );
 }
