@@ -16,9 +16,17 @@ export async function newUser(prevState, formData) {
 
     const hashedPassword = await bcrypt.hash(password, 10)
 
+
     try {
         await prisma.user.create({
-            data: { name, email, password: hashedPassword, role, active, image },
+            data: {
+                name,
+                email,
+                password: hashedPassword,
+                role,
+                active,
+                image
+            }
         })
 
         revalidatePath('/dashboard')
@@ -39,12 +47,21 @@ export async function editUser(prevState, formData) {
     const active = Boolean(formData.get('active'))
     const image = formData.get('image')
 
-    const hashedPassword = await bcrypt.hash(password, 10)
+    let hashedPassword
+    if (password)
+        hashedPassword = await bcrypt.hash(password, 10)
 
     try {
         await prisma.user.update({
             where: { id },
-            data: { name, email, password: hashedPassword, role, active, image },
+            data: {
+                name,
+                email,
+                ...(password && { password: hashedPassword }),
+                role,
+                active,
+                image
+            }
         })
         revalidatePath('/dashboard')
         return { success: 'Usuario modificado' }
@@ -59,7 +76,7 @@ export async function deleteUser(prevState, formData) {
         const id = formData.get('id')
 
         await prisma.user.delete({
-            where: { id },
+            where: { id }
         })
         revalidatePath('/dashboard')
         return { success: 'Usuario eliminado' }

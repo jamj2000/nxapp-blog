@@ -22,6 +22,19 @@ export const options = {
         }
     },
     callbacks: {
+        async jwt({ token }) {
+            if (!token.sub) return token;
+
+            const user = await getUserById(token.sub)
+            if (user) {
+                token.name = user.name
+                token.email = user.email
+                token.image = user.image
+                token.role = user.role
+            }
+
+            return token
+        },
         async session({ session, token }) {
             session.user.id = token?.sub;     // Para incluir ID de usuario
             session.user.name = token?.name
@@ -29,37 +42,10 @@ export const options = {
             session.user.image = token?.image
             session.user.role = token?.role
 
-            // Obtener la información actualizada del usuario en cada petición
-            // const updatedUser = await getUserById(session.user.id)
-
-            // if (updatedUser) {
-            //     session.user.name = updatedUser.name; // Actualizar el nombre en la sesión
-            //     session.user.email = updatedUser.email; // Actualizar el nombre en la sesión
-            //     session.user.image = updatedUser.image; // Actualizar la imagen en la sesión
-            // }
-
             return session
-        },
-        async jwt({ token }) {
-            if (!token.sub) return token;
-            try {
-                const user = await getUserById(token.sub)
-                if (user) {
-                    token = {
-                        ...token,
-                        name: user.name,
-                        email: user.email,
-                        image: user.image,
-                        role: user.role
-                    }
-                }
-            } catch (error) {
-                console.error("Error obteniendo datos de usuario:", error)
-            }
-
-            return token
         }
-    },
+
+    }
 }
 
 
