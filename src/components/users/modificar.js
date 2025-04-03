@@ -9,7 +9,7 @@ import CheckRadio from '@/components/check-radio';
 
 
 
-export default function UserModificar({ user }) {
+export default function UserModificar({ session, user }) {
     const formId = useId()
     const [state, action, pending] = useActionState(editUser, {})
 
@@ -58,17 +58,28 @@ export default function UserModificar({ user }) {
                 </CheckRadio>
             </div>
 
+            {session.user.role === 'ADMIN'
+                ?
+                <CheckBox
+                    name={'active'}
+                    defaultChecked={user.active == true}
+                    className={"text-xs w-fit after:content-['_Cuenta_no_activa'] has-checked:after:content-['_Cuenta_activa'] has-checked:bg-green-200 has-checked:text-green-800  px-2 py-1 text-gray-500 rounded-full"}
+                >
+                </CheckBox>
+                :
+                <input type="hidden" name="active" defaultValue={user.active} />
+            }
 
             <div className='flex flex-col md:flex-row md:gap-10'>
 
                 <div className='w-full md:w-2/3 flex flex-col gap-2'>
 
-                    <CheckBox
+                    {/* <CheckBox
                         name={'active'}
                         defaultChecked={user.active == true}
                         className={"text-xs w-fit after:content-['_Cuenta_no_activa'] has-checked:after:content-['_Cuenta_activa'] has-checked:bg-green-200 has-checked:text-green-800  px-2 py-1 text-gray-500 rounded-full"}
                     >
-                    </CheckBox>
+                    </CheckBox> */}
 
 
                     <div className="flex flex-col md:flex-row items-center md:space-x-4">
@@ -80,7 +91,7 @@ export default function UserModificar({ user }) {
                     </div>
 
                     <div className="flex flex-col md:flex-row items-center md:space-x-4">
-                        <label htmlFor='email' className="font-bold w-full md:w-1/4">email</label>
+                        <label htmlFor='email' className="font-bold w-full md:w-1/4">Email</label>
                         <input type='text' id='email' name='email'
                             defaultValue={user.email}
                             className="w-full md:w-3/4 px-3 py-2 rounded-lg focus:outline-none focus:border-blue-400 bg-gray-100"
@@ -88,7 +99,15 @@ export default function UserModificar({ user }) {
                     </div>
 
                     <div className="flex flex-col md:flex-row items-center md:space-x-4">
-                        <label htmlFor='role' className="font-bold w-full md:w-1/4">role</label>
+                        <label htmlFor='password' className="font-bold w-full md:w-1/4">Contraseña</label>
+                        <input type='text' id='password' name='password'
+                            defaultValue={user.password}
+                            className="w-full md:w-3/4 px-3 py-2 rounded-lg focus:outline-none focus:border-blue-400 bg-gray-100"
+                        />
+                    </div>
+
+                    <div className="flex flex-col md:flex-row items-center md:space-x-4">
+                        <label htmlFor='role' className="font-bold w-full md:w-1/4">Rol</label>
                         <select
                             key={user.role}
                             id="role"

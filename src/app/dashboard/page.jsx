@@ -1,11 +1,16 @@
-import { auth } from "@/auth";
-import Posts from "@/components/posts/lista";
-import Spinner1 from "@/components/spinner1";
-import Users from "@/components/users/lista";
-import { logout } from "@/lib/actions/auth";
-import { LockIcon } from "lucide-react";
-import { redirect } from "next/navigation";
-import { Suspense } from "react";
+import Modal from "@/components/modal"
+import Posts from "@/components/posts/lista"
+import Spinner1 from "@/components/spinner1"
+import Users from "@/components/users/lista"
+import UserModificar from "@/components/users/modificar"
+import { logout } from "@/lib/actions/auth"
+import { getUserById } from "@/lib/data/auth"
+import { LockIcon, PencilIcon } from "lucide-react"
+import { redirect } from "next/navigation"
+import { Suspense } from "react"
+import { auth } from "@/auth"
+
+
 
 async function Dashboard() {
     const session = await auth()
@@ -13,6 +18,9 @@ async function Dashboard() {
     if (!session) redirect('/auth/login')
 
     const { user: { name, email, image, role } } = session
+
+    // obtenemos toda la información del usuario
+    const usuario = await getUserById(session.user.id)
 
     return (
         <div>
@@ -27,13 +35,32 @@ async function Dashboard() {
 
 
             {/* <div className="flex flex-col items-center gap-4 md:flex-row md:justify-start"> */}
-            <div className="grid md:grid-cols-[150px_auto]">
+            {/* <div className="grid md:grid-cols-[150px_auto]">
                 {image
                     ? <img src={image} className="size-30" />
                     : <img src="https://upload.wikimedia.org/wikipedia/commons/5/59/User-avatar.svg" className="size-30" />
                 }
                 <div className="my-2 flex flex-col gap-2">
                     <p className="font-bold">{name}</p>
+                    <p>{email}</p>
+                    <p>{role}</p>
+                </div>
+            </div> */}
+
+            <div className="grid md:grid-cols-[160px_auto]">
+
+                <img src={image || '/images/avatar-80.png'} className="size-36" alt="Imagen de usuario" />
+
+                <div className="flex flex-col gap-1">
+                    <div className="flex gap-2 items-center">
+                        <p className="font-bold">{name}</p>
+                        <Modal openElement={
+                            <div className='size-8 grid place-content-center rounded-full border border-amber-500 text-amber-700 bg-amber-200 hover:bg-amber-500 hover:text-white hover:cursor-pointer'>
+                                <PencilIcon className='size-4' />
+                            </div>}>
+                            <UserModificar session={session} user={usuario} />
+                        </Modal>
+                    </div>
                     <p>{email}</p>
                     <p>{role}</p>
                 </div>
