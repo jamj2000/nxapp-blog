@@ -5,7 +5,7 @@ import { PlusIcon, RefreshCwIcon } from 'lucide-react';
 import { toast } from 'sonner';
 import CheckBox from '@/components/check-box';
 import CheckRadio from '@/components/check-radio';
-import Image from 'next/image';
+
 
 
 
@@ -54,7 +54,7 @@ export default function UserInsertar({ session }) {
                     defaultChecked={true}
                     className="size-14 has-checked:col-span-5 has-checked:row-span-3 has-checked:-order-1 has-checked:size-36 has-checked:bg-green-200 px-2 py-1 rounded-md"
                 >
-                    <Image src={`/images/avatar-80.png`} alt='avatar' />
+                    <img src={`/images/avatar-80.png`} alt='avatar' />
                 </CheckRadio>
             </div>
 

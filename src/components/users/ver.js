@@ -6,7 +6,7 @@ function UserVer({ user }) {
         <div>
             <div className="grid md:grid-cols-[120px_auto] gap-4">
 
-                <Image src={user.image || '/images/avatar-80.png'} alt='avatar' width={192} />
+                <img src={user.image || '/images/avatar-80.png'} alt='avatar' width={192} />
 
                 <div>
                     {user.active

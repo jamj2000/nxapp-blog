@@ -50,7 +50,7 @@ async function Dashboard() {
 
             <div className="grid md:grid-cols-[160px_auto]">
 
-                <Image src={image || '/images/avatar-80.png'} alt='avatar' className="size-36" />
+                <img src={image || '/images/avatar-80.png'} alt='avatar' className="size-36" />
 
                 <div className="flex flex-col gap-1">
                     <div className="flex gap-2 items-center">
