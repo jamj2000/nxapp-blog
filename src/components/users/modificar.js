@@ -38,7 +38,7 @@ export default function UserModificar({ session, user }) {
             </button>
 
             <div className='grid place-items-center grid-cols-[repeat(auto-fill,minmax(40px,1fr))]'>
-                {/* Avatares 00 .. 80 */}
+                {/* Avatares 00 .. 79 */}
                 {[...Array(81)].map((_, index) => (
                     <CheckRadio key={index}
                         name='image'
@@ -49,7 +49,7 @@ export default function UserModificar({ session, user }) {
                     </CheckRadio>
                 ))}
                 {/* por defecto */}
-                <CheckRadio key={81}
+                <CheckRadio key={80}
                     name='image'
                     defaultValue={user.image || '/images/avatar-80.png'}
                     defaultChecked={true}
