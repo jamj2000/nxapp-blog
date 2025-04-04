@@ -1,7 +1,7 @@
 'use client'
 import { editUser } from '@/lib/actions/users'
 import { useActionState, useEffect, useId } from 'react'
-import { EyeIcon, EyeOffIcon, PlusIcon, RefreshCwIcon } from 'lucide-react';
+import { PlusIcon, RefreshCwIcon } from 'lucide-react';
 import { toast } from 'sonner';
 import CheckBox from '@/components/check-box';
 import CheckRadio from '@/components/check-radio';
