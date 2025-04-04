@@ -7,9 +7,11 @@ const prisma = new PrismaClient();
 const N_POSTS = 51
 
 const AUTHORS = [
-  { name: "Pepe Viyuela", email: "pepe@pepe.com", image: 'https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/128/27.jpg', role: 'USER' },
-  { name: "Ana Alferez", email: "ana@ana.com", image: faker.image.personPortrait({ sex: 'female', size: '128' }), role: 'USER' },
-  { name: "Jose López", email: "jose@jose.com", image: faker.image.personPortrait({ sex: 'male', size: '128' }), role: 'ADMIN' }
+  { name: "Eva García", email: "eva@eva.es", role: 'USER' },
+  { name: "Pepe Viyuela", email: "pepe@pepe.es", image: '/images/avatar-77.png', role: 'USER' },
+  { name: "Ana Alferez", email: "ana@ana.es", image: '/images/avatar-78.png', role: 'USER' },
+  { name: "Jose López", email: "jose@jose.es", image: '/images/avatar-79.png', role: 'ADMIN' },
+  { name: "FedeSoft SL", email: "fede@fedesoft.es", image: '/images/avatar-79.png', role: 'ADMIN' }
 ];
 
 const CATEGORIES = [
@@ -48,9 +50,10 @@ const generateRandomPost = () => {
 };
 
 const resetDatabase = async () => {
-  // Eliminar posts y categories
+  // Eliminar posts, categories y usuarios
   await prisma.category.deleteMany();
   await prisma.post.deleteMany();
+  await prisma.user.deleteMany();
 
   // Reiniciar el contador de ID en la tabla posts y categories
   await prisma.$executeRaw`ALTER SEQUENCE "Category_id_seq" RESTART WITH 1;`;
@@ -70,7 +73,7 @@ const load = async () => {
           author: {
             connectOrCreate: {
               where: { email: post.author.email },
-              create: { email: post.author.email, name: post.author.name, image: post.author.image },
+              create: { email: post.author.email, name: post.author.name, image: post.author.image, role: post.author.role },
             }
           },
           title: post.title,
