@@ -42,7 +42,9 @@ export default async function Header() {
             <Link
               href="/dashboard"
               className="w-full rounded-full hover:outline hover:outline-slate-600 cursor-pointer">
-              <Image src={session.user.image || '/images/avatar-80.png'} alt='avatar' className='size-10 rounded-full' />
+              <Image src={session.user.image || '/images/avatar-80.png'}
+                width={40} height={40}
+                alt='avatar' className='size-10 rounded-full' />
             </Link>
 
             <form className="flex gap-2 items-center">
