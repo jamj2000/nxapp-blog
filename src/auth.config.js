@@ -14,7 +14,9 @@ const AuthConfig = {
         Credentials({
             async authorize(credentials) {
                 console.log('AUTHORIZE');
-                return getUserByEmail(credentials.email)
+                // return getUserByEmail(credentials.email)
+                const user = await getUserByEmail(credentials?.email);
+                return user;
             },
         }),
     ]

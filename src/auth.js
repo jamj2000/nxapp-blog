@@ -5,6 +5,8 @@ import { getUserById } from "@/lib/data/auth"
 import authConfig from "@/auth.config"
 
 
+
+
 export const options = {
     session: { strategy: 'jwt' },
     adapter: PrismaAdapter(prisma),
@@ -32,7 +34,6 @@ export const options = {
                 token.image = user.image
                 token.role = user.role
             }
-
             return token
         },
         async session({ session, token }) {
@@ -44,7 +45,6 @@ export const options = {
 
             return session
         }
-
     }
 }
 

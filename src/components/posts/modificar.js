@@ -3,9 +3,9 @@ import { editPost } from '@/lib/actions/posts'
 import { useActionState, useEffect, useId } from 'react'
 import { PlusIcon, RefreshCwIcon } from 'lucide-react';
 import { toast } from 'sonner';
-import Tiptap from '@/components/tiptap';
+import Tiptap from '@/components/tiptap.old';
 import InputImage from '@/components/input-image';
-import Check from '@/components/check-box';
+import CheckBox from '@/components/check-box';
 
 
 
@@ -68,11 +68,12 @@ export default function PostModificar({ post, categories }) {
                     <div className="text-xs flex flex-wrap gap-3">
                         {categories?.map(category =>
                             <div key={category.id}>
-                                <Check
-                                    id={category.id}
-                                    label={category.name}
+                                <CheckBox
+                                    name={category.id}
                                     defaultChecked={IDs.includes(category.id)}
-                                    className={"has-checked:bg-blue-200 has-checked:text-blue-800 px-2 py-1 text-gray-500 rounded-full"} />
+                                    className={"has-checked:bg-blue-200 has-checked:text-blue-800 px-2 py-1 text-gray-500 rounded-full"}>
+                                    {category.name}
+                                </CheckBox>
                             </div>
                         )}
                     </div>
