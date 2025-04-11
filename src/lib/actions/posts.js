@@ -40,35 +40,37 @@ async function uploadImage(file) {
 // ------------------------  POSTS --------------------------------
 
 export async function newPost(prevState, formData) {
+
+  const authorId = formData.get('authorId');
+  const title = formData.get('title');
+  const post = formData.get('post');
+  const slug = slugify(title.toLowerCase())
+  const views = Number(formData.get('views'));
+  let image;
+
+  console.log({ authorId, title, image, post, slug, views });
+
+  const imageFile = formData.get("file");
+
+  if (imageFile && imageFile.size > 0) {
+    image = await uploadImage(imageFile);
+  }
+  else {
+    image = '/pwa/icon-256x256.png'
+  }
+
+  // Array con IDs de todas las categories. Formato: [ {id: 1}, {id: 2}, ...]
+  const categoriesIDs = await prisma.category.findMany({
+    select: { id: true }
+  })
+
+  const connect = categoriesIDs.filter(category => formData.get(category.id) !== null)
+  const categories = { connect }
+
+  // Información para depuración
+  // console.log('POST CATEGORIES ', categories);
+
   try {
-    const authorId = formData.get('authorId');
-    const title = formData.get('title');
-    const post = formData.get('post');
-    const slug = slugify(title.toLowerCase())
-    const views = Number(formData.get('views'));
-    let image;
-
-    const imageFile = formData.get("file");
-
-    if (imageFile && imageFile.size > 0) {
-      image = await uploadImage(imageFile);
-    }
-    else {
-      image = '/pwa/icon-256x256.png'
-    }
-
-    // Array con IDs de todas las categories. Formato: [ {id: 1}, {id: 2}, ...]
-    const categoriesIDs = await prisma.category.findMany({
-      select: { id: true }
-    })
-
-    const connect = categoriesIDs.filter(category => formData.get(category.id) !== null)
-    const categories = { connect }
-
-    // Información para depuración
-    // console.log('POST CATEGORIES ', categories);
-
-
     await prisma.post.create({
       data: {
         authorId, title, image, post, slug, views,
@@ -80,12 +82,12 @@ export async function newPost(prevState, formData) {
     return { success: 'Añadido nuevo post' }
   } catch (error) {
 
-    if (error.message.includes("Body exceeded 4mb limit")) {
-      console.error("Error de tamaño de cuerpo:", error);
-      return { success: false, message: "El archivo es demasiado grande. Reduce su tamaño." };
-    }
-    return { success: false, message: "Ocurrió un error inesperado." };
-    // return { error: error.message }
+    // if (error.message.includes("Body exceeded 4mb limit")) {
+    //   console.error("Error de tamaño de cuerpo:", error);
+    //   return { success: false, message: "El archivo es demasiado grande. Reduce su tamaño." };
+    // }
+    // return { success: false, message: "Ocurrió un error inesperado." };
+    return { error: error.message }
   }
 }
 

@@ -2,46 +2,56 @@
 // https://tiptap.dev/docs/editor/examples/default
 // https://lucide.dev/icons/
 
-import { Heading } from '@tiptap/extension-heading'
-import { Color } from '@tiptap/extension-color'
-import ListItem from '@tiptap/extension-list-item'
-import TextStyle from '@tiptap/extension-text-style'
+import { useState } from 'react'
 import { EditorProvider, useCurrentEditor } from '@tiptap/react'
 import { generateHTML } from '@tiptap/html'
 import StarterKit from '@tiptap/starter-kit'
+import Underline from "@tiptap/extension-underline";
 import {
-    Bold,
-    Italic,
-    Strikethrough,
-    Type,
-    WrapText,
-    List,
-    ListOrdered,
-    Heading1,
-    Heading2,
-    Heading3,
-    Heading4,
-    Heading5,
-    Heading6,
+    Heading1Icon,
+    Heading2Icon,
+    Heading3Icon,
+    BoldIcon,
+    ItalicIcon,
+    UnderlineIcon,
+    StrikethroughIcon,
+    TypeIcon,
+    RemoveFormattingIcon,
+    ListIcon,
+    ListOrderedIcon,
+    RedoIcon,
+    UndoIcon,
     Minus,
-    Undo,
-    Redo,
     Palette,
     Codepen,
     Code,
     Quote,
-    RemoveFormatting,
     Delete,
-    Eye
+    Eye,
+    WrapTextIcon,
 } from 'lucide-react'
-import React from 'react'
-import { useState } from 'react'
 
 
 
 
-const MenuBar = ({ setMessage }) => {
+export default function Tiptap({ contenido }) {
+    const [message, setMessage] = useState('')
+    return (
+        <EditorProvider
+            slotBefore={<Toolbar setMessage={setMessage} />}
+            extensions={[StarterKit, Underline]}
+            immediatelyRender={false}
+            content={contenido}
+        >
+            <p>{message}</p>
+            {/* <EditorContent /> */}
+        </EditorProvider>
+    )
+}
 
+
+function Toolbar({ setMessage }) {
+    // const [headingLevel, setHeadingLevel] = useState(1);
     const { editor } = useCurrentEditor()
     const [color, setColor] = useState('#000000')
     const [texto, setTexto] = useState(editor.getHTML())
@@ -62,128 +72,127 @@ const MenuBar = ({ setMessage }) => {
 
 
     return (
-        <div className='flex gap-1 py-1'>
+        /* Barra de botones */
+        < div className="flex flex-wrap" >
             <input type="hidden" name='post' defaultValue={texto} />  {/* Campo asociado dentro del formulario padre */}
 
-            <Bold strokeWidth={4}
-                onClick={() => editor.chain().focus().toggleBold().run()}
-                disabled={
-                    !editor.can()
-                        .chain()
-                        .focus()
-                        .toggleBold()
-                        .run()
-                }
-                className={editor.isActive('bold') ? 'rounded-sm inline bg-slate-500 text-white' : 'rounded-sm inline'}
-            />
 
-            <Italic
-                onClick={() => editor.chain().focus().toggleItalic().run()}
-                disabled={
-                    !editor.can()
-                        .chain()
-                        .focus()
-                        .toggleItalic()
-                        .run()
-                }
-                className={editor.isActive('italic') ? 'rounded-sm inline bg-slate-500 text-white' : 'rounded-sm inline'}
-            />
+            <div className="info">
+                <Heading1Icon strokeWidth={2} size={28}
+                    onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
+                    className={`p-1 ${editor.isActive('heading', { level: 1 }) ? 'bg-slate-600 text-white' : ''}`}
+                />
+                <span className="tooltip">Título 1</span>
+            </div>
 
-            <Strikethrough
-                onClick={() => editor.chain().focus().toggleStrike().run()}
-                disabled={
-                    !editor.can()
-                        .chain()
-                        .focus()
-                        .toggleStrike()
-                        .run()
-                }
-                className={editor.isActive('strike') ? 'rounded-sm inline bg-slate-500 text-white' : 'rounded-sm inline'}
-            />
+            <div className="info">
+                <Heading2Icon strokeWidth={2} size={28}
+                    onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+                    className={`p-1 ${editor.isActive('heading', { level: 2 }) ? 'bg-slate-600 text-white' : ''}`}
+                />
+                <span className="tooltip">Título 2</span>
+            </div>
 
-            <WrapText
-                onClick={() => editor.chain().focus().setHardBreak().run()}
-                className='rounded-sm inline'
-            />
+            <div className="info">
+                <Heading3Icon strokeWidth={2} size={28}
+                    onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
+                    className={`p-1 ${editor.isActive('heading', { level: 3 }) ? 'bg-slate-600 text-white' : ''}`}
+                />
+                <span className="tooltip">Título 3</span>
+            </div>
 
-            <Type
-                onClick={() => editor.chain().focus().setParagraph().run()}
-                className={editor.isActive('paragraph') ? 'rounded-sm inline bg-slate-500 text-white' : 'rounded-sm inline'}
-            />
+            <div className="info">
+                <BoldIcon strokeWidth={4} size={28}
+                    onClick={() => editor.chain().focus().toggleBold().run()}
+                    className={`p-1 ${editor.isActive('bold') ? 'bg-slate-600 text-white' : ''}`}
+                />
+                <span className="tooltip">Negrita</span>
+            </div>
 
-            <Heading1
-                onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-                className={editor.isActive('heading', { level: 1 }) ? 'rounded-sm inline bg-slate-500 text-white' : 'rounded-sm inline'}
-            />
+            <div className="info">
+                <ItalicIcon strokeWidth={2} size={28}
+                    onClick={() => editor.chain().focus().toggleItalic().run()}
+                    className={`p-1 ${editor.isActive('italic') ? 'bg-slate-600 text-white' : ''}`}
+                />
+                <span className="tooltip">Cursiva</span>
+            </div>
 
-            <Heading2
-                onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-                className={editor.isActive('heading', { level: 2 }) ? 'rounded-sm inline bg-slate-500 text-white' : 'rounded-sm inline'}
-            />
+            <div className="info">
+                <UnderlineIcon strokeWidth={2} size={28}
+                    onClick={() => editor.chain().focus().toggleUnderline().run()}
+                    className={`p-1 ${editor.isActive('underline') ? 'bg-slate-600 text-white' : ''}`}
+                />
+                <span className="tooltip">Subrayado</span>
+            </div>
 
-            <Heading3
-                onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-                className={editor.isActive('heading', { level: 3 }) ? 'rounded-sm inline bg-slate-500 text-white' : 'rounded-sm inline'}
-            />
+            <div className="info">
+                <StrikethroughIcon strokeWidth={2} size={28}
+                    onClick={() => editor.chain().focus().toggleStrike().run()}
+                    className={`p-1 ${editor.isActive('strike') ? 'bg-slate-600 text-white' : ''}`}
+                />
+                <span className="tooltip">Tachado</span>
+            </div>
 
-            <Heading4
-                onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
-                className={editor.isActive('heading', { level: 4 }) ? 'rounded-sm inline bg-slate-500 text-white' : 'rounded-sm inline'}
-            />
+            <div className="info">
+                <TypeIcon strokeWidth={2} size={28}
+                    onClick={() => editor.chain().focus().setParagraph().run()}
+                    className={`info p-1 ${editor.isActive('paragraph') ? 'bg-slate-600 text-white' : ''}`}
+                />
+                <span className="tooltip">Párrafo</span>
+            </div>
 
-            <Heading5
-                onClick={() => editor.chain().focus().toggleHeading({ level: 5 }).run()}
-                className={editor.isActive('heading', { level: 5 }) ? 'rounded-sm inline bg-slate-500 text-white' : 'rounded-sm inline'}
-            />
+            <div className="info">
+                <RemoveFormattingIcon strokeWidth={2} size={28}
+                    onClick={() => editor.chain().focus().unsetAllMarks().run()}
+                    className='p-1'
+                />
+                <span className="tooltip">Eliminar formato</span>
+            </div>
 
-            <Heading6
-                onClick={() => editor.chain().focus().toggleHeading({ level: 6 }).run()}
-                className={editor.isActive('heading', { level: 6 }) ? 'rounded-sm inline bg-slate-500 text-white' : 'rounded-sm inline'}
-            />
+            <div className="info">
+                <ListIcon strokeWidth={2} size={28}
+                    onClick={() => editor.chain().focus().toggleBulletList().run()}
+                    className={`p-1 ${editor.isActive('bulletList') ? 'bg-slate-600 text-white' : ''}`}
+                />
+                <span className="tooltip">Lista con viñetas</span>
+            </div>
 
-            <List
-                onClick={() => editor.chain().focus().toggleBulletList().run()}
-                className={editor.isActive('bulletList') ? 'rounded-sm inline bg-slate-500 text-white' : 'rounded-sm inline'}
-            />
+            <div className="info">
+                <ListOrderedIcon strokeWidth={2} size={28}
+                    onClick={() => editor.chain().focus().toggleOrderedList().run()}
+                    className={`p-1 ${editor.isActive('orderedList') ? 'bg-slate-600 text-white' : ''}`}
+                />
+                <span className="tooltip">Lista numerada</span>
+            </div>
 
-            <ListOrdered
-                onClick={() => editor.chain().focus().toggleOrderedList().run()}
-                className={editor.isActive('orderedList') ? 'rounded-sm inline bg-slate-500 text-white' : 'rounded-sm inline'}
-            />
+            <div className="info">
+                <UndoIcon strokeWidth={2} size={28}
+                    onClick={() => editor.chain().focus().undo().run()}
+                    // disabled={!editor.can().chain().focus().undo().run()}
+                    className='p-1'
+                />
+                <span className="tooltip">Deshacer</span>
+            </div>
 
-            <Undo
-                onClick={() => editor.chain().focus().undo().run()}
-                disabled={
-                    !editor.can()
-                        .chain()
-                        .focus()
-                        .undo()
-                        .run()
-                }
-                className='rounded-sm inline'
-            />
+            <div className="info">
+                <RedoIcon strokeWidth={2} size={28}
+                    onClick={() => editor.chain().focus().redo().run()}
+                    // disabled={!editor.can().chain().focus().redo().run()}
+                    className='p-1'
+                />
+                <span className="tooltip">Rehacer</span>
+            </div>
 
-            <Redo
-                onClick={() => editor.chain().focus().redo().run()}
-                disabled={
-                    !editor.can()
-                        .chain()
-                        .focus()
-                        .redo()
-                        .run()
-                }
-                className='rounded-sm inline'
-            />
+            <div className="info">
+                <WrapTextIcon strokeWidth={2} size={28}
+                    onClick={() => editor.chain().focus().setHardBreak().run()}
+                    className='p-1'
+                />
+                <span className="tooltip">Salto de línea</span>
+            </div>
 
             <Code
                 onClick={() => editor.chain().focus().toggleCode().run()}
-                disabled={
-                    !editor.can()
-                        .chain()
-                        .focus()
-                        .toggleCode()
-                        .run()
-                }
                 className={editor.isActive('code') ? 'rounded-sm inline bg-slate-500 text-white' : 'rounded-sm inline'}
             />
 
@@ -203,10 +212,7 @@ const MenuBar = ({ setMessage }) => {
                 className='rounded-sm inline'
             />
 
-            <RemoveFormatting
-                onClick={() => editor.chain().focus().unsetAllMarks().run()}
-                className='rounded-sm inline'
-            />
+
 
             <Delete
                 onClick={() => editor.chain().focus().clearNodes().run()}
@@ -235,41 +241,14 @@ const MenuBar = ({ setMessage }) => {
                 }}
                 className='rounded-sm inline'
             />
-            {/* <Eye
+            <Eye
                 onClick={showMessage}
                 className='rounded-sm inline'
-            /> */}
-        </div>
+            />
+
+        </div >
     )
 }
 
-const extensions = [
-    Heading.configure({ levels: [1, 2, 3] }),
-    Color.configure({ types: [TextStyle.name, ListItem.name] }),
-    TextStyle.configure({ types: [ListItem.name] }),
-    StarterKit.configure({
-        bulletList: {
-            keepMarks: true,
-            keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
-        },
-        orderedList: {
-            keepMarks: true,
-            keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
-        },
-    }),
-]
 
 
-export default function Editor({ contenido }) {
-    const [message, setMessage] = useState('')
-    return (
-        <EditorProvider
-            slotBefore={<MenuBar setMessage={setMessage} />}
-            extensions={extensions}
-            immediatelyRender={false}
-            content={contenido}
-        >
-            <p>{message}</p>
-        </EditorProvider>
-    )
-}

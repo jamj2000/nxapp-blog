@@ -41,6 +41,40 @@ option {
   padding-inline: 16px;
 }
 
+
+input[type=color] {
+  margin: 0;
+  padding: 0;
+  width: 24px;
+}
+
+
+/* Tooltip */
+
+.info {
+  cursor: help;
+}
+
+.info:hover .tooltip {
+  display: block;
+}
+
+.tooltip {
+  display: none;
+  font-size: 12px;
+  background-color: lavender;
+  padding: 4px;
+  border-radius: 10px;
+  margin-top: -50px;
+  margin-left: 0;
+  position: absolute;
+  z-index: 1000;
+}
+
+
+
+
+
 /* Tiptap editor content */
 
 .tiptap.ProseMirror {
@@ -82,10 +116,13 @@ option {
   list-style-type: number;
 }
 
+
 .tiptap blockquote::before {
-  content: '❝'
+  content: '❝';
+  color: gray;
 }
 
 .tiptap blockquote::after {
-  content: '❞'
+  content: '❞';
+  color: gray;
 }

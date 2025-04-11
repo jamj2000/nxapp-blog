@@ -3,7 +3,7 @@ import { newPost } from '@/lib/actions/posts'
 import { useActionState, useEffect, useId } from 'react'
 import { PlusIcon, RefreshCwIcon } from 'lucide-react';
 import { toast } from 'sonner';
-import Tiptap from '@/components/tiptap.old';
+import Tiptap from '@/components/tiptap';
 import InputImage from '@/components/input-image';
 import CheckBox from '@/components/check-box';
 
@@ -17,10 +17,9 @@ export default function PostInsertar({ authorId, categories }) {
 
 
     useEffect(() => {
-        if (state?.success) {
-            toast.success(state.success)
-            document.getElementById(formId).closest('dialog')?.close() // Si el padre es un dialog, lo cerramos
-        }
+        document.getElementById(formId).closest('dialog')?.close() // Si el padre es un dialog, lo cerramos
+
+        if (state?.success) toast.success(state.success)
         if (state?.error) toast.error(state.error)
 
     }, [formId, state])
@@ -39,7 +38,7 @@ export default function PostInsertar({ authorId, categories }) {
                 }
             </button>
 
-            <div className='flex flex-col md:flex-row md:gap-10'>
+            <div className='flex flex-col gap-8 md:flex-row'>
                 <InputImage imgUrl={'/pwa/icon-256x256.png'} className="w-full md:w-1/3 object-cover" />
 
                 <div className='w-full md:w-2/3 flex flex-col gap-2'>
@@ -83,10 +82,9 @@ export default function PostInsertar({ authorId, categories }) {
                 </div>
             </div>
 
-            <div className="mt-10 flex flex-col">
-                <p className="font-bold mb-4">Contenido</p>
-                <Tiptap contenido='' name='post' />
-            </div>
+            {/* Editor Tiptap  */}
+            <Tiptap contenido='' />
+
 
 
         </form>

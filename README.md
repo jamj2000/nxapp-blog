@@ -92,6 +92,7 @@ Este proyecto hace uso de las siguientes dependencias:
 - @tiptap/extension-color
 - @tiptap/extension-list-item 
 - @tiptap/extension-text-style
+- @tiptap/extension-underline
 
 
 ## Diagrama E-R simplificado
