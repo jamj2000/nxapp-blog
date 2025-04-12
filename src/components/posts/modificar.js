@@ -39,7 +39,7 @@ export default function PostModificar({ post, categories }) {
             </button>
 
             <div className='flex flex-col gap-8 md:flex-row'>
-                <InputImage imgUrl={post.image || '/pwa/icon-256x256.png'} className="w-full md:w-1/3 object-cover" />
+                <InputImage imgUrl={post.image || '/pwa/icon-256x256.png'} className="self-center w-[60%] md:w-1/3 object-cover" />
 
                 <div className='w-full md:w-2/3 flex flex-col gap-2'>
 
