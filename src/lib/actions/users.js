@@ -15,8 +15,8 @@ export async function newUser(prevState, formData) {
     const active = Boolean(formData.get('active'))
     const image = formData.get('image')
 
-    const registeredEmail = await getUserByEmail(email)
-    if (registeredEmail)
+    const user = await getUserByEmail(email)
+    if (user)
         return { error: 'Este email ya está registrado.' }
 
 
@@ -52,8 +52,8 @@ export async function editUser(prevState, formData) {
     const active = Boolean(formData.get('active'))
     const image = formData.get('image')
 
-    const registeredEmail = await getUserByEmail(email)
-    if (registeredEmail)
+    const user = await getUserByEmail(email)
+    if (user && user.id != id)
         return { error: 'Este email ya está registrado.' }
 
 
