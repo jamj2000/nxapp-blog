@@ -99,6 +99,7 @@ export async function editPost(prevState, formData) {
   const post = formData.get('post');
   const slug = slugify(title.toLowerCase())
   const views = Number(formData.get('views'));
+  const is_draft = Boolean(formData.get('is_draft'));
   let image;
 
   const imageFile = formData.get("file");
@@ -122,7 +123,7 @@ export async function editPost(prevState, formData) {
   try {
     await prisma.post.update({
       where: { id },
-      data: { title, image, post, slug, views, categories },
+      data: { title, image, post, slug, views, categories, is_draft },
     })
     revalidatePath('/posts')
     return { success: 'Post actualizado' }

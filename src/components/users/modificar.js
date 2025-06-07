@@ -15,12 +15,10 @@ export default function UserModificar({ session, user }) {
     const [state, action, pending] = useActionState(editUser, {})
 
     useEffect(() => {
-        if (state?.success) {
-            toast.success(state.success)
-            document.getElementById(formId).closest('dialog')?.close() // Si el padre es un dialog, lo cerramos
-        }
+        if (state?.success) toast.success(state.success)
         if (state?.error) toast.error(state.error)
 
+        document.getElementById(formId).closest('dialog')?.close() // Si el padre es un dialog, lo cerramos
     }, [formId, state])
 
 
@@ -37,9 +35,19 @@ export default function UserModificar({ session, user }) {
                 }
             </button>
 
+            {session.user.role === 'ADMIN'
+                ? <CheckBox
+                    key={user.active}   // Para actualizar VDOM al detectar cambio
+                    name='active'
+                    defaultChecked={user.active}
+                    className={"self-end mb-4 text-xs w-fit after:content-['_Cuenta_no_activa'] has-checked:after:content-['_Cuenta_activa'] bg-transparent text-gray-500 has-checked:bg-green-200 has-checked:text-green-700 px-2 py-1 rounded-full"}
+                />
+                : <input type="hidden" name="active" defaultValue={user.active} />
+            }
+
             <div className='grid place-items-center grid-cols-[repeat(auto-fill,minmax(40px,1fr))]'>
                 {/* Avatares 00 .. 79 */}
-                {[...Array(81)].map((_, index) => (
+                {Array(80).fill().map((_, index) => (
                     <CheckRadio key={index}
                         name='image'
                         defaultValue={`/images/avatar-${String(index).padStart(2, '0')}.png`}
@@ -59,29 +67,10 @@ export default function UserModificar({ session, user }) {
                 </CheckRadio>
             </div>
 
-            {session.user.role === 'ADMIN'
-                ?
-                <CheckBox
-                    name={'active'}
-                    defaultChecked={user.active == true}
-                    className={"text-xs w-fit after:content-['_Cuenta_no_activa'] has-checked:after:content-['_Cuenta_activa'] has-checked:bg-green-200 has-checked:text-green-800  px-2 py-1 text-gray-500 rounded-full"}
-                >
-                </CheckBox>
-                :
-                <input type="hidden" name="active" defaultValue={user.active} />
-            }
 
             <div className='flex flex-col md:flex-row md:gap-10'>
 
                 <div className='w-full md:w-2/3 flex flex-col gap-2'>
-
-                    {/* <CheckBox
-                        name={'active'}
-                        defaultChecked={user.active == true}
-                        className={"text-xs w-fit after:content-['_Cuenta_no_activa'] has-checked:after:content-['_Cuenta_activa'] has-checked:bg-green-200 has-checked:text-green-800  px-2 py-1 text-gray-500 rounded-full"}
-                    >
-                    </CheckBox> */}
-
 
                     <div className="flex flex-col md:flex-row items-center md:space-x-4">
                         <label htmlFor='name' className="font-bold w-full md:w-1/4">Nombre</label>

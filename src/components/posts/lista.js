@@ -70,10 +70,8 @@ async function Posts({ searchParams = {} }) {
                             }
 
                             {post.is_draft
-                                ?
-                                <p className='text-stone-500'>{post.title}</p>
-                                :
-                                <Link href={`/posts/${post.slug}`} className="font-bold cursor-pointer">
+                                ? <p className='text-stone-500'>{post.title}</p>
+                                : <Link href={`/posts/${post.slug}`} className="font-bold cursor-pointer">
                                     {post.title}
                                 </Link>
                             }
@@ -95,7 +93,7 @@ async function Posts({ searchParams = {} }) {
                                     <div className='size-8 grid place-content-center rounded-full border border-amber-500 text-amber-700 bg-amber-200 hover:bg-amber-500 hover:text-white hover:cursor-pointer'>
                                         <PencilIcon className='size-4' />
                                     </div>}>
-                                    <PostModificar post={post} categories={categories} />
+                                    <PostModificar session={session} post={post} categories={categories} />
                                 </Modal>
                                 :
                                 <div className='size-8 grid place-content-center rounded-full border border-slate-500 text-slate-700 bg-slate-200'>

@@ -7,7 +7,7 @@ import UserVer from '@/components/users/ver'
 import UserInsertar from "@/components/users/insertar";
 import UserModificar from '@/components/users/modificar';
 import UserEliminar from '@/components/users/eliminar';
-import { activeUser } from "@/lib/actions/users";
+import { activeUser, setActive, userActive } from "@/lib/actions/users";
 
 
 async function Users() {
@@ -32,7 +32,7 @@ async function Users() {
 
                         <div className="flex gap-2 items-center">
                             {session.user?.role === 'ADMIN' &&
-                                <form action={activeUser.bind(null, user)}>
+                                <form action={activeUser.bind(null, user.id, !user.active)}>
                                     <ActiveButton user={user} />
                                 </form>
                             }

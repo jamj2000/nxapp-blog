@@ -8,10 +8,7 @@ import InputImage from '@/components/input-image';
 import CheckBox from '@/components/check-box';
 
 
-
-
-
-export default function PostModificar({ post, categories }) {
+export default function PostModificar({ session, post, categories }) {
     const formId = useId()
     const [state, action, pending] = useActionState(editPost, {})
 
@@ -38,7 +35,18 @@ export default function PostModificar({ post, categories }) {
                 }
             </button>
 
-            <div className='flex flex-col gap-8 md:flex-row'>
+            {session.user?.role === 'ADMIN'
+                ? <CheckBox
+                    key={post.is_draft}   // Para actualizar VDOM al detectar cambio
+                    name='is_draft'
+                    defaultChecked={post.is_draft}
+                    className={"self-end text-xs w-fit after:content-['_Publicado'] border has-checked:after:content-['_Borrador'] has-checked:bg-transparent has-checked:text-gray-500 bg-green-200 text-green-700 px-2 py-1 rounded-full"}
+                />
+                : <input type="hidden" name="is_draft" defaultValue={post.is_draft} />
+            }
+
+
+            <div className='flex flex-col gap-8 md:flex-row mt-4'>
                 <InputImage imgUrl={post.image || '/pwa/icon-256x256.png'} className="self-center w-[60%] md:w-1/3 object-cover" />
 
                 <div className='w-full md:w-2/3 flex flex-col gap-2'>

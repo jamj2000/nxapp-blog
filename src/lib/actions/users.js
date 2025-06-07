@@ -2,6 +2,7 @@
 import prisma from '@/lib/prisma'
 import bcrypt from 'bcryptjs'
 import { revalidatePath } from 'next/cache'
+import { getUserByEmail } from '@/lib/data/auth'
 
 
 
@@ -14,8 +15,12 @@ export async function newUser(prevState, formData) {
     const active = Boolean(formData.get('active'))
     const image = formData.get('image')
 
-    const hashedPassword = await bcrypt.hash(password, 10)
+    const registeredEmail = await getUserByEmail(email)
+    if (registeredEmail)
+        return { error: 'Este email ya está registrado.' }
 
+
+    const hashedPassword = await bcrypt.hash(password, 10)
 
     try {
         await prisma.user.create({
@@ -46,6 +51,11 @@ export async function editUser(prevState, formData) {
     const role = formData.get('role')
     const active = Boolean(formData.get('active'))
     const image = formData.get('image')
+
+    const registeredEmail = await getUserByEmail(email)
+    if (registeredEmail)
+        return { error: 'Este email ya está registrado.' }
+
 
     let hashedPassword
     if (password)
@@ -87,15 +97,13 @@ export async function deleteUser(prevState, formData) {
 }
 
 
-export async function activeUser(user) {
-    if (user) {
-        await prisma.user.update({
-            where: { id: user.id },
-            data: { active: !user.active },
-        })
+export async function activeUser(id, active) {
 
-        revalidatePath("/dashboard");
-    }
+    await prisma.user.update({
+        where: { id },
+        data: { active }
+    })
+
+    revalidatePath("/dashboard");
 }
-
 
