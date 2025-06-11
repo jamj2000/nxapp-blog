@@ -37,7 +37,7 @@ export default function UserModificar({ session, user }) {
 
             {session.user.role === 'ADMIN'
                 ? <CheckBox
-                    key={user.active}   // Para actualizar VDOM al detectar cambio
+                    key={`active-${user.active}`}  // Para actualizar VDOM al detectar cambio
                     name='active'
                     defaultChecked={user.active}
                     className={"self-end mb-4 text-xs w-fit after:content-['_Cuenta_no_activa'] has-checked:after:content-['_Cuenta_activa'] bg-transparent text-gray-500 has-checked:bg-green-200 has-checked:text-green-700 px-2 py-1 rounded-full"}

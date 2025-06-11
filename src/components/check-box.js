@@ -1,6 +1,6 @@
 function CheckBox({ name, defaultChecked = false, className, children }) {
     return (
-        <label className={className} >
+        <label className={className}>
             <input
                 type="checkbox"
                 name={name}
