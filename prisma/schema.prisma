@@ -14,7 +14,7 @@ model User {
   password      String?
   emailVerified DateTime?
   image         String?
-  role          String?   @default("USER")
+  role          String?   @default("USER") // "ADMIN"
   active        Boolean   @default(true)
   accounts      Account[]
   posts         Post[]
