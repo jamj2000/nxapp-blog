@@ -62,23 +62,19 @@ async function Posts({ searchParams }) {
                                 </form>
                             }
 
-                            {post.is_draft
-                                ? <p className='text-stone-500'>{post.title}</p>
-                                : <Link href={`/posts/${post.slug}`} className="font-bold cursor-pointer">
+                            <Modal openElement={
+                                <p className={post.is_draft ? `text-stone-500 cursor-pointer` : `text-black cursor-pointer`}>
                                     {post.title}
-                                </Link>
-                            }
+                                </p>
+                            }>
+                                <PostVer post={post} />
+                            </Modal>
+
+
                         </div>
 
 
                         <div className='flex justify-center items-center gap-1'>
-
-                            <Modal openElement={
-                                <div className='size-8 grid place-content-center rounded-full border border-blue-500 text-blue-700 bg-blue-200 hover:bg-blue-500 hover:text-white hover:cursor-pointer'>
-                                    <EyeIcon className='size-4' />
-                                </div>}>
-                                <PostVer post={post} />
-                            </Modal>
 
                             {post.is_draft
                                 ?
