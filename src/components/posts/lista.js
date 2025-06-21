@@ -27,7 +27,7 @@ async function Posts({ searchParams = {} }) {
 
     let posts = []
     if (session.user?.role === 'ADMIN') {
-        posts = await getPosts({})
+        posts = await getPosts({ categorySlug: category })
     }
     else {
         posts = await getPosts({ authorId: session.user.id })
