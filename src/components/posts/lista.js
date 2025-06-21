@@ -16,31 +16,24 @@ import PublishButton from '@/components/publish-button';
 
 
 
-async function Posts({ searchParams = {} }) {
+async function Posts({ searchParams }) {
     const session = await auth()
-
     if (!session) redirect('/')
 
+    // CUIDADO: Dentro de searchParams, tanto page como per_page tienen tipo String
     const { page = PAGE, per_page = PER_PAGE, category = '' } = await searchParams
 
     const categories = await getCategories()
 
-    let posts = []
-    if (session.user?.role === 'ADMIN') {
-        posts = await getPosts({ categorySlug: category })
-    }
-    else {
-        posts = await getPosts({ authorId: session.user.id })
-    }
+    const { posts, total } = await getPosts(
+        session.user?.role === 'ADMIN'
+            ? { categorySlug: category, page, per_page }                           // posts de todos los autores
+            : { authorId: session.user.id, categorySlug: category, page, per_page }
+    )
 
-    // mocked, skipped and limited in the real app
-    const start = (page - 1) * per_page // 0, 5, 10 ...
-    const end = start + per_page    // 5, 10, 15 ...
+    const start = (page - 1) * per_page     // 0, 5, 10 ...
+    const end = start + Number(per_page)    // 5, 10, 15 ...
 
-    let entries = []
-
-    if (start >= 0 && start < posts.length)   // check limits
-        entries = posts.slice(start, end)     // get posts slice
 
     return (
         <>
@@ -53,12 +46,12 @@ async function Posts({ searchParams = {} }) {
 
             <PaginationControls
                 currentPage={page}
-                hasNextPage={end < posts.length}
+                hasNextPage={end < total}
                 hasPrevPage={start > 0}
-                total={posts.length}
+                total={total}
             />
             <div>
-                {entries.map((post) => (
+                {posts.map((post) => (
                     <div key={post.id} className="p-1 flex justify-between items-center odd:bg-slate-100">
 
                         <div className='flex gap-1 items-center'>

@@ -1,6 +1,6 @@
 'use server'
 import prisma from '@/lib/prisma'
-
+import { PER_PAGE } from '../pagination'
 
 
 
@@ -58,25 +58,31 @@ export async function getPublishedPosts() {
 
 
 
-export async function getPosts({ authorId, categorySlug, page }) {
+export async function getPosts({ authorId, categorySlug, page, per_page }) {
 
     try {
-        // Consulta para obtener todos los posts
-        // dentro de where, valores undefined equivalen a desactivar filtro 
-        const posts = await prisma.post.findMany({
-            where: {
-                authorId: authorId,
-                ...(categorySlug && { categories: { some: { slug: categorySlug } } }), // Si hay categorySlug, filtramos     
-                // categories: { some: { slug: categorySlug } }       // Filtramos por category slug      
-            },
-            include: { author: true, categories: true },
-            orderBy: [ // { author: 'asc' }, { title: 'asc' },
-                { created: 'desc' }
-            ],
-            // skip: (page - 1) * PER_PAGE,
-            // take: PER_PAGE
-        })
-        return posts;
+        // Dentro de where, valores undefined equivalen a desactivar filtro 
+        const [posts, total] = await prisma.$transaction([
+            prisma.post.findMany({
+                where: {
+                    authorId: authorId,
+                    ...(categorySlug && { categories: { some: { slug: categorySlug } } }), // Si hay categorySlug, filtramos     
+                },
+                include: { author: true, categories: true },
+                orderBy: [ // { author: 'asc' }, { title: 'asc' },
+                    { created: 'desc' }
+                ],
+                skip: (page - 1) * per_page,    // tipo number
+                take: +per_page                 // convertimos per_page a number
+            }),
+            prisma.post.count({})
+        ]);
+
+        // console.log(total, posts.map(p => p.title));
+        return {
+            posts,  // paginated posts 
+            total   // count of all posts
+        };
     } catch (error) {
         console.error('Error:', error);
         return null;
@@ -84,29 +90,4 @@ export async function getPosts({ authorId, categorySlug, page }) {
 }
 
 
-
-export async function getPaginatedPosts({ orderBy, start, end }) {
-    try {
-        const [total, posts] = await Promise.all([
-            prisma.post.count(),
-            prisma.post.findMany({
-                take: end - start,
-                skip: start,
-                include: { author: true, categories: true },
-                orderBy,
-            })
-        ])
-        // const total = await prisma.post.count()
-        // const posts = await prisma.post.findMany({
-        //   take: end - start,
-        //   skip: start,
-        //   include: { categories: true }
-        // })
-
-        return { posts, total };
-    } catch (error) {
-        console.log(error);
-        return null;
-    }
-}
 

@@ -16,7 +16,7 @@ function PaginationControls({ hasNextPage, hasPrevPage, total }) {
     const params = new URLSearchParams()
     params.set('page', String(newPage))
     if (category) params.set('category', category)
-    // if (per_page) params.set('per_page', per_page)
+    if (per_page) params.set('per_page', per_page)
     return `?${params.toString()}`
   }
 
