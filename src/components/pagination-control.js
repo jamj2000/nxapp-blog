@@ -30,6 +30,7 @@ function PaginationControls({ hasNextPage, hasPrevPage, total }) {
           href={getHref(page - 1)}
           className='flex gap-1 items-center bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors'
           prefetch
+          replace
         >
           <ChevronLeftIcon />
         </Link>
@@ -49,6 +50,7 @@ function PaginationControls({ hasNextPage, hasPrevPage, total }) {
           href={getHref(page + 1)}
           className='flex gap-1 items-center bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors'
           prefetch
+          replace
         >
           <ChevronRightIcon />
         </Link>
