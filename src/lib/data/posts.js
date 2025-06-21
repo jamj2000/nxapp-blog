@@ -1,6 +1,5 @@
 'use server'
 import prisma from '@/lib/prisma'
-import { PER_PAGE } from '../pagination'
 
 
 
@@ -75,7 +74,12 @@ export async function getPosts({ authorId, categorySlug, page, per_page }) {
                 skip: (page - 1) * per_page,    // tipo number
                 take: +per_page                 // convertimos per_page a number
             }),
-            prisma.post.count({})
+            prisma.post.count({
+                where: {
+                    authorId: authorId,
+                    ...(categorySlug && { categories: { some: { slug: categorySlug } } }), // Si hay categorySlug, filtramos     
+                },
+            })
         ]);
 
         // console.log(total, posts.map(p => p.title));
