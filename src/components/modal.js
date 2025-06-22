@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useEffect, useState } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 
 export default function Modal({ openElement, children }) {
     const [isOpen, setIsOpen] = useState(false)
@@ -55,7 +55,11 @@ export default function Modal({ openElement, children }) {
                             ❌
                         </button>
 
-                        {children}
+                        {/* {children} */}
+                        {React.isValidElement(children)
+                            ? React.cloneElement(children, { onClose: closeModal })
+                            : children}
+
                     </div>
                 </div>
             )}

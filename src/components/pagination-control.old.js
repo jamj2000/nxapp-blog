@@ -16,18 +16,22 @@ function PaginationControls({ hasNextPage, hasPrevPage, total }) {
     const params = new URLSearchParams()
     params.set('page', String(newPage))
     if (category) params.set('category', category)
+    if (per_page) params.set('per_page', per_page)
     return `?${params.toString()}`
   }
+
 
 
   return (
     <div className='flex justify-between items-center gap-2'>
 
       {/* Enlace anterior */}
-      {/* button no proporciona prefetch: carga de página más lenta */}
       <button
         className='flex gap-1 items-center bg-blue-500 text-white py-2 px-4 rounded-md disabled:bg-slate-300'
         disabled={!hasPrevPage}
+        onMouseEnter={() =>
+          router.prefetch(`?page=${page - 1}&category=${category}`)
+        }
         onClick={() => {
           router.push(`?page=${page - 1}&category=${category}`)
         }}>
@@ -41,10 +45,12 @@ function PaginationControls({ hasNextPage, hasPrevPage, total }) {
 
 
       {/* Enlace siguiente */}
-      {/* button no proporciona prefetch: carga de página más lenta */}
       <button
         className='flex gap-1 items-center bg-blue-500 text-white py-2 px-4 rounded-md disabled:bg-slate-300'
         disabled={!hasNextPage}
+        onMouseEnter={() =>
+          router.prefetch(`?page=${page + 1}&category=${category}`)
+        }
         onClick={() => {
           router.push(`?page=${page + 1}&category=${category}`)
         }}>
