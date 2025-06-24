@@ -24,13 +24,6 @@ export default function PostInsertar({ authorId, categories }) {
 
     }, [formId, state])
 
-    const [selectedAvatar, setSelectedAvatar] = useState(user?.image || '/images/avatar-80.png');
-
-
-    const avatares = Array.from({ length: 80 }, (_, index) =>
-        `/images/avatar-${String(index).padStart(2, '0')}.png`
-    );
-
 
     return (
         <form id={formId} action={action} className="w-full flex flex-col px-4">
